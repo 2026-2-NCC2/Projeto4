@@ -14,7 +14,7 @@ Vide tutoriais do PI.
 
 ## Nome do Grupo
 
-## Integrantes: <a href="https://www.linkedin.com/in/nicolas-coimbra-de-campos/">Nicolas Coimbra</a>, <a href="https://www.linkedin.com/in/kau%C3%AA-alves-andrade-786515386/">Kauê Alvez Andrade</a>, <a href="https://github.com/2026-2-NCC2/Projeto4">Henrique Mathias Bondesan</a>, <a href="https://www.linkedin.com/in/erick-osawa-71ba2a333/">Erick Akauan Osawa Nishino Chinen</a>
+## Integrantes: <a href="https://www.linkedin.com/in/nicolas-coimbra-de-campos/">Nicolas Coimbra</a>, <a href="https://www.linkedin.com/in/kau%C3%AA-alves-andrade-786515386/">Kauê Alvez Andrade</a>, <a href="https://www.linkedin.com/in/henrique-bondesan-ab5b0b41b">Henrique Mathias Bondesan</a>, <a href="https://www.linkedin.com/in/erick-osawa-71ba2a333/">Erick Akauan Osawa Nishino Chinen</a>
 
 ## Professores Orientadores: <a href="https://www.linkedin.com/in/victorbarq/">Dr. Victor Von Doom</a>, <a href="https://www.linkedin.com/in/victorbarq/">Me. Saitama</a>, <a href="https://www.linkedin.com/in/victorbarq/">Dr. Strange</a>, <a href="https://www.linkedin.com/in/victorbarq/">Me. Yoda</a>, <a href="https://www.linkedin.com/in/victorbarq/">Dr. Gero</a>
 
