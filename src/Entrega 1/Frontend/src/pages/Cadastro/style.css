@@ -1,0 +1,213 @@
+@import '../../componentes/Cabecalho/style.css';
+@import '../../componentes/Rodape/style.css';
+
+.cadastro {
+  height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(40, 201, 74, 0.06),
+      transparent 45%
+    ),
+    var(--cor-de-fundo);
+}
+
+.conteudo-cadastro {
+  height: calc(100vh - 125px);
+  margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card-cadastro {
+  width: 100%;
+  max-width: 360px;
+  padding: 24px 28px;
+  background-color: #131715;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.card-cadastro h1 {
+  color: var(--cor-branco-titulo);
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.card-cadastro > p:first-of-type {
+  max-width: 260px;
+  margin: 6px auto 16px;
+  color: var(--cor-branco-texto);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.card-cadastro form {
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo-perfil {
+  margin: 0 0 6px;
+  color: #9e9e9eb0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tipo-cadastro {
+  display: flex;
+  min-width: 0;
+  margin-bottom: 15px;
+  padding: 3px;
+  background-color: #090c0b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+}
+
+.tipo-cadastro button {
+  width: 50%;
+  padding: 7px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--cor-branco-texto);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.tipo-cadastro button:first-child {
+  background: linear-gradient(
+    135deg,
+    var(--cor-verde),
+    var(--cor-verde-azulado)
+  );
+  color: #08100b;
+  font-weight: 600;
+}
+
+.card-cadastro label {
+  margin: 0 0 6px;
+  color: #9e9e9eb0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.card-cadastro input + label {
+  margin-top: 11px;
+}
+
+.card-cadastro input {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #090c0b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  color: var(--cor-branco-texto);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.card-cadastro input::placeholder {
+  color: var(--cor-branco-texto);
+}
+
+.card-cadastro input:focus {
+  border-color: var(--cor-verde);
+}
+
+.erro-senha {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background-color: rgba(180, 35, 35, 0.1);
+  border: 1px solid rgba(255, 65, 65, 0.2);
+  border-radius: 8px;
+  color: #e16b6b;
+  font-size: 0.58rem;
+}
+
+.card-cadastro form > button[type="submit"] {
+  width: 100%;
+  margin-top: 16px;
+  padding: 11px;
+  background: linear-gradient(
+    135deg,
+    var(--cor-verde),
+    var(--cor-verde-azulado)
+  );
+  border: none;
+  border-radius: 9px;
+  color: #07110b;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.card-cadastro form > button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(40, 201, 74, 0.25);
+}
+
+.card-cadastro > p:last-child {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--cor-branco-texto);
+  font-size: 0.68rem;
+  text-align: center;
+}
+
+.card-cadastro > p:last-child a {
+  color: var(--cor-verde);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card-cadastro > p:last-child a:hover {
+  text-decoration: underline;
+}
+
+.selos-cadastro {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.selos-cadastro span {
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.212);
+  border-radius: 999px;
+  color: var(--cor-branco-texto);
+  font-size: 0.62rem;
+}
+
+@media (max-width: 500px) {
+  .conteudo-cadastro {
+    padding: 40px 16px;
+  }
+
+  .card-cadastro {
+    padding: 22px 18px;
+  }
+
+  .selos-cadastro {
+    flex-direction: column;
+    align-items: center;
+  }
+}
