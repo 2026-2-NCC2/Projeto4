@@ -1,0 +1,31 @@
+
+:root {
+  --cor-de-fundo: #0f1113;
+  --cor-de-fundo-entrar: #fcfcfc1f;
+  --cor-verde: #28c94a;
+  --cor-verde-azulado: #34d9a5;
+  --cor-branco: #ffffff;
+  --cor-branco-titulo: #f0f0f0;
+  --cor-branco-texto: #fffdfd83;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--cor-de-fundo);
+  color: var(--cor-branco);
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.destaque {
+  background: linear-gradient(135deg, var(--cor-verde), var(--cor-verde-azulado));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
