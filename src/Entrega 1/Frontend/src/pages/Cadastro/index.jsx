@@ -8,7 +8,7 @@ function Cadastro() {
     <div className="cadastro">
       <Cabecalho
         textoBotao="Voltar"
-        destino="/"
+        destino="/login"
       />
 
       <main className="conteudo-cadastro">

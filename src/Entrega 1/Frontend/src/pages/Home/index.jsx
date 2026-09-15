@@ -1,4 +1,5 @@
 import './style.css'
+import { Link } from 'react-router-dom'
 
 import Cabecalho from '../../componentes/Cabecalho'
 import Rodape from '../../componentes/Rodape'
@@ -25,9 +26,9 @@ function Home() {
         </p>
 
         <div className="div-botao">
-          <button className="botao-cadastro">
+          <Link to="/cadastro" className="botao-cadastro">
             Cadastrar-se →
-          </button>
+          </Link>
         </div>
 
       </main>

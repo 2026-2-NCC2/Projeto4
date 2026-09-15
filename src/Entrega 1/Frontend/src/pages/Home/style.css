@@ -51,24 +51,20 @@
 }
 
 .botao-cadastro {
+  display: inline-block;
+  text-decoration: none;
   font-family: 'Poppins', sans-serif;
-
   background: linear-gradient(
     135deg,
     var(--cor-verde),
     var(--cor-verde-azulado)
   );
-
   color: #0f1113;
-
   padding: 12px 26px;
-
   border-radius: 24px;
   border: none;
-
   font-size: 16px;
   cursor: pointer;
-
   transition: all 0.2s ease;
 }
 
