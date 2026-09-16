@@ -1,0 +1,119 @@
+.menu-lateral {
+  width: 210px;
+  min-width: 210px;
+  height: fit-content;
+
+  padding: 12px;
+
+  background-color: #0d1012;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.menu-lateral nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.menu-lateral nav a {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 11px 14px;
+
+  color: var(--cor-branco-texto);
+
+  border-radius: 8px;
+
+  font-size: 0.75rem;
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.menu-lateral nav a:hover {
+  color: var(--cor-branco);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.menu-lateral nav .menu-ativo {
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.1);
+
+  border: 1px solid rgba(40, 201, 74, 0.2);
+}
+
+.menu-lateral svg {
+  width: 17px;
+  height: 17px;
+
+  flex-shrink: 0;
+}
+
+@media (max-width: 700px) {
+  .menu-lateral {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+    min-width: 0;
+    height: 64px;
+
+    padding: 5px 8px;
+
+    background-color: #0b0e0f;
+
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 0;
+  }
+
+  .menu-lateral nav {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 0;
+  }
+
+  .menu-lateral nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    padding: 4px 2px;
+
+    background: transparent;
+    border: none;
+
+    font-size: 0.55rem;
+  }
+
+  .menu-lateral nav .menu-ativo {
+    color: var(--cor-verde);
+
+    background: transparent;
+    border: none;
+  }
+
+  .menu-lateral svg {
+    width: 19px;
+    height: 19px;
+  }
+}

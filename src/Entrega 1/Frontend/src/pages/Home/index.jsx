@@ -1,8 +1,8 @@
 import './style.css'
 import { Link } from 'react-router-dom'
 
-import Cabecalho from '../../componentes/Cabecalho'
-import Rodape from '../../componentes/Rodape'
+import Cabecalho from '../../componentes/cabecalho'
+import Rodape from '../../componentes/rodape'
 
 function Home() {
   return (
