@@ -2,7 +2,7 @@ import './style.css'
 import Logo from '../../assets/Logo.svg'
 import { Link } from 'react-router-dom'
 
-function Cabecalho({ textoBotao = "Entrar", destino = "/login" }) {
+function Cabecalho({ textoBotao, destino }) {
   return (
     <header>
 
@@ -17,7 +17,7 @@ function Cabecalho({ textoBotao = "Entrar", destino = "/login" }) {
           Troca<span className="destaque">Ticket</span>
         </span>
       </Link>
-
+      
       <nav>
         <Link to={destino}>
           {textoBotao}

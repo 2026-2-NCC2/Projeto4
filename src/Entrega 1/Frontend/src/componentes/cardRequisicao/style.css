@@ -1,0 +1,119 @@
+.card-requisicao {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px;
+  background-color: #101416;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card-requisicao:hover {
+  transform: translateY(-2px);
+  border-color: rgba(40, 201, 74, 0.22);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.card-requisicao h3 {
+  color: var(--cor-branco-titulo);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.card-requisicao p {
+  margin: 0;
+  color: var(--cor-branco-texto);
+  font-size: 0.65rem;
+  line-height: 1.5;
+}
+
+.categoria-requisicao {
+  color: var(--cor-branco-texto);
+  font-size: 0.62rem;
+}
+
+.status-requisicao {
+  width: fit-content;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-aberta {
+  color: #60a5fa;
+  background-color: rgba(96, 165, 250, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+}
+
+.status-pendente {
+  color: #fbbf24;
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.status-aceita {
+  color: var(--cor-verde);
+  background-color: rgba(40, 201, 74, 0.1);
+  border: 1px solid rgba(40, 201, 74, 0.25);
+}
+
+.status-concluída {
+  color: var(--cor-verde-azulado);
+  background-color: rgba(52, 217, 165, 0.1);
+  border: 1px solid rgba(52, 217, 165, 0.25);
+}
+
+.status-cancelada {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.card-requisicao > a {
+  width: fit-content;
+  margin-top: 4px;
+  color: var(--cor-verde);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card-requisicao > a:hover {
+  color: var(--cor-verde-azulado);
+  transform: translateX(2px);
+}
+
+@media (max-width: 700px) {
+  .card-requisicao {
+    padding: 14px;
+    gap: 7px;
+  }
+
+  .card-requisicao h3 {
+    font-size: 0.82rem;
+  }
+
+  .card-requisicao p {
+    font-size: 0.6rem;
+  }
+
+  .categoria-requisicao {
+    font-size: 0.58rem;
+  }
+
+  .status-requisicao {
+    font-size: 0.52rem;
+  }
+}

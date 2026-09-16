@@ -225,3 +225,49 @@ Aqui estão as referências usadas no projeto.
 
 1. <https://github.com/iuricode/readme-template>
 
+
+<br>
+<br>
+
+---
+
+<br>
+<br>
+
+## area de fluxo pra desenvolvimento em casa
+*obviamente apagar na entrega 1 e 2 este tópico*
+
+1. usar primerio o comando
+```sh
+C:\Users\nicolas\OneDrive\Desktop
+```
+2. pode conferir com comando dir
+
+3. acessar o projeto 4 ja instalador/clonado
+```sh
+cd Projeto4
+```
+
+4. confira com
+```sh
+git status
+```
+
+5. vá para a branch (prentendo mudar o nome dela, só olhar o nome criado/modificado no github em Branchs)
+```sh
+git switch feat/frontend-inicial
+```
+6. agora puxe a pasta
+```sh
+git pull
+```
+
+7. comando que abre o vs code com a pasta
+```sh
+code .
+```
+
+8.
+```sh
+npm run dev
+```

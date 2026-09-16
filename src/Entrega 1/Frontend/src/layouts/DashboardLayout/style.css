@@ -1,0 +1,50 @@
+.dashboard-layout {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 60% 30%,
+      rgba(40, 201, 74, 0.04),
+      transparent 40%
+    ),
+    var(--cor-de-fundo);
+}
+
+.area-dashboard {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+  padding: 84px 24px 30px;
+
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 18px;
+
+  align-items: start;
+}
+
+.conteudo-dashboard {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 700px) {
+  .area-dashboard {
+    display: block;
+
+    width: 100%;
+    max-width: none;
+
+    padding: 74px 14px 84px;
+  }
+
+  .conteudo-dashboard {
+    width: 100%;
+    gap: 18px;
+  }
+}
