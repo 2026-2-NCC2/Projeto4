@@ -1,0 +1,34 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 5%;
+  background-color: var(--cor-de-fundo);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 100;
+}
+
+footer span {
+  color: var(--cor-branco-texto);
+  font-size: 0.85rem;
+}
+
+footer nav {
+  display: flex;
+  gap: 24px;
+}
+
+footer nav a {
+  color: var(--cor-branco-texto);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s ease;
+}
+
+footer nav a:hover {
+  color: var(--cor-branco);
+}
