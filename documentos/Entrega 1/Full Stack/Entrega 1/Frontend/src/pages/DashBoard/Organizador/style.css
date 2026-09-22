@@ -1,0 +1,57 @@
+.desempenho-geral {
+  width: 100%;
+}
+
+.titulo-secao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+}
+
+.titulo-secao h2 {
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+
+  text-transform: uppercase;
+}
+
+.titulo-secao span {
+  color: var(--cor-verde);
+
+  font-size: 0.6rem;
+}
+
+.cards-desempenho {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.requisicoes {
+  width: 100%;
+}
+
+.lista-requisicoes {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+@media (max-width: 700px) {
+  .cards-desempenho {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .lista-requisicoes {
+    grid-template-columns: 1fr;
+  }
+}

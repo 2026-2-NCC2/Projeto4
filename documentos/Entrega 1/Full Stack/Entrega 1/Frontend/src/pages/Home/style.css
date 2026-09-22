@@ -1,0 +1,76 @@
+/* Componentes utilizados pela Home */
+@import '../../componentes/Cabecalho/style.css';
+@import '../../componentes/Rodape/style.css';
+
+
+.home {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.secao-principal {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo {
+  font-size: 8vw;
+  color: var(--cor-branco-titulo);
+}
+
+.destaque {
+  background: linear-gradient(
+    135deg,
+    var(--cor-verde),
+    var(--cor-verde-azulado)
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.descricao {
+  color: var(--cor-branco-texto);
+  max-width: 650px;
+  margin: 24px auto;
+
+  text-align: center;
+  line-height: 1.6;
+}
+
+.div-botao {
+  display: flex;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.botao-cadastro {
+  display: inline-block;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(
+    135deg,
+    var(--cor-verde),
+    var(--cor-verde-azulado)
+  );
+  color: #0f1113;
+  padding: 12px 26px;
+  border-radius: 24px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.botao-cadastro:hover {
+  transform: translateY(-1.6px);
+
+  box-shadow:
+    0 4px 4px rgba(36, 199, 44, 0.3);
+}

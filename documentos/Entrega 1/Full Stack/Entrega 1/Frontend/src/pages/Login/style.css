@@ -1,0 +1,194 @@
+@import '../../componentes/Cabecalho/style.css';
+@import '../../componentes/Rodape/style.css';
+
+.login {
+  height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(40, 201, 74, 0.06),
+      transparent 45%
+    ),
+    var(--cor-de-fundo);
+}
+
+.conteudo-login {
+  height: calc(100vh - 125px);
+  margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card-login {
+  width: 100%;
+  max-width: 360px;
+  padding: 26px 28px;
+  background-color: #131715;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.card-login h1 {
+  color: var(--cor-branco-titulo);
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.card-login > p:first-of-type {
+  max-width: 260px;
+  margin: 6px auto 20px;
+  color: var(--cor-branco-texto);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.card-login form {
+  display: flex;
+  flex-direction: column;
+}
+
+.tipo-cadastro {
+  display: flex;
+  min-width: 0;
+  margin-bottom: 18px;
+  padding: 3px;
+  background-color: #090c0b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+}
+
+.tipo-cadastro button {
+  width: 50%;
+  padding: 7px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--cor-branco-texto);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.tipo-cadastro button:first-child {
+  background: linear-gradient(
+    135deg,
+    var(--cor-verde),
+    var(--cor-verde-azulado)
+  );
+  color: #08100b;
+  font-weight: 600;
+}
+
+.card-login label {
+  margin: 0 0 6px;
+  color: #9e9e9eb0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.card-login input + label {
+  margin-top: 14px;
+}
+
+.card-login input {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #090c0b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  color: var(--cor-branco-texto) ;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.card-login input::placeholder {
+  color: var(--cor-branco-texto);
+}
+
+.card-login input:focus {
+  border-color: var(--cor-verde);
+}
+
+.card-login form > button[type="submit"] {
+  width: 100%;
+  margin-top: 22px;
+  padding: 11px;
+  background: linear-gradient(
+    135deg,
+    var(--cor-verde),
+    var(--cor-verde-azulado)
+  );
+  border: none;
+  border-radius: 9px;
+  color: #07110b;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.card-login form > button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(40, 201, 74, 0.25);
+}
+
+.card-login > p:last-child {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--cor-branco-texto);
+  font-size: 0.68rem;
+  text-align: center;
+}
+
+.card-login > p:last-child a {
+  color: var(--cor-verde);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card-login > p:last-child a:hover {
+  text-decoration: underline;
+}
+
+.selos-seguranca {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.selos-seguranca span {
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.212);
+  border-radius: 999px;
+  color: var(--cor-branco-texto);
+  font-size: 0.62rem;
+}
+
+@media (max-width: 500px) {
+  .conteudo-login {
+    padding: 40px 16px;
+  }
+
+  .card-login {
+    padding: 22px 18px;
+  }
+
+  .selos-seguranca {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,55 @@
+header {
+  display: flex;
+  width: 100%;
+  padding: 16px 5%;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  z-index: 100;
+  background-color: var(--cor-de-fundo);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+}
+
+.logo-texto {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--cor-branco-titulo);
+}   
+
+header nav a { 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cor-de-fundo-entrar);
+  padding: 8px 22px;
+  border-radius: 28px;
+  backdrop-filter: blur(20px);
+  color: var(--cor-branco);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;    
+}
+
+header nav a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--cor-verde);
+  color: var(--cor-verde);
+  transform: scale(1.03);
+}
