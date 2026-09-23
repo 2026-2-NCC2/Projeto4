@@ -35,24 +35,33 @@ May the force be with you!
 
 ## 🛠 Estrutura de pastas
 
--Raiz<br>
-|<br>
-|-->documentos<br>
-  &emsp;|-->Banco de Dados<br>
-  &emsp;|-->Cálculo II<br>
-  &emsp;|-->FullStack<br>
-  &emsp;|-->Gestão Empresárial<br>
-  &emsp;|-->Projeto Interdiciplinar<br>
-  |&emsp;|Documentação.docx<br>
-|-->executáveis<br>
-  &emsp;|-->windows<br>
-  &emsp;|-->android<br>
-  &emsp;|-->HTML<br>
-|-->imagens<br>
-|-->src<br>
-  &emsp;|-->Backend<br>
-  &emsp;|-->Frontend<br>
-|readme.md<br>
+## Estrutura do Projeto
+
+```text
+-Raiz
+|
+|-->documentos
+|   |
+|   |-->Entrega 1
+|   |   |-->Banco de Dados
+|   |   |-->Cálculo II
+|   |   |-->Full Stack
+|   |   |-->Gestão Empresarial
+|   |   |-->Projeto Interdisciplinar
+|   |
+|   |-->Entrega 2
+|       |-->Banco de Dados
+|       |-->Cálculo II
+|       |-->Full Stack
+|       |-->Gestão Empresarial
+|       |-->Projeto Interdisciplinar
+|
+|-->imagens
+|
+|-->src
+|
+|-->README.md
+```
 
 A pasta raiz contem dois arquivos que devem ser alterados:
 
