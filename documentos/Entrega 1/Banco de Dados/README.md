@@ -1,5 +1,5 @@
 # Banco de Dados
-<br>
+
 ## Diagrama
 
 ![Diagrama do Banco](diagrama.png)
