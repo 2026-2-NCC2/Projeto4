@@ -26,12 +26,7 @@ Vide tutoriais do PI.
 </p>
 
 
-De um a dois parágrafos sobre o que é seu projeto e o que ele faz.
-<br><br>
-Meu projeto ajuda estudantes FECAP a configurarem seus githubs.
-<br><br>
-May the force be with you!
-<br><br>
+O TrocaTicket é uma plataforma web voltada ao planejamento financeiro e operacional de eventos, conectando organizadores, fornecedores e administradores em um único ambiente. O sistema permite que organizadores cadastrem eventos, definam itens de custo e analisem propostas enviadas por fornecedores. A partir da consolidação desses custos, do público previsto e da margem definida, a plataforma auxilia na estimativa do valor do ingresso. O administrador acompanha os cadastros e eventos, enquanto os fornecedores encontram oportunidades de cotação e enviam propostas para os serviços e produtos necessários a cada evento.
 
 ## 🛠 Estrutura de pastas
 
