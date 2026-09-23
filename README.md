@@ -25,6 +25,9 @@ Vide tutoriais do PI.
   Game by <a href="http://www.nyphotographic.com/">Nick Youngson</a> <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> <a href="http://pix4free.org/">Pix4free</a>
 </p>
 
+<br>
+<br>
+<br>
 
 O TrocaTicket é uma plataforma web voltada ao planejamento financeiro e operacional de eventos, conectando organizadores, fornecedores e administradores em um único ambiente. O sistema permite que organizadores cadastrem eventos, definam itens de custo e analisem propostas enviadas por fornecedores. A partir da consolidação desses custos, do público previsto e da margem definida, a plataforma auxilia na estimativa do valor do ingresso. O administrador acompanha os cadastros e eventos, enquanto os fornecedores encontram oportunidades de cotação e enviam propostas para os serviços e produtos necessários a cada evento.
 
