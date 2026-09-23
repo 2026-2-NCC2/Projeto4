@@ -34,23 +34,13 @@
 - dataEvento
 - status
 
-### Relacionamentos
-
-**Organizador - Cria - Evento**
-- Organizador: (0,n)
-- Evento: (1,1)
-
-**Evento - Possui - Requerimento**
-- Evento: (1,n)
-- Requerimento: (1,1)
-
-**Requerimento - Recebe - Proposta**
-- Requerimento: (0,n)
-- Proposta: (1,1)
-
-**Fornecedor - Cria - Proposta**
-- Fornecedor: (0,n)
-- Proposta: (1,1)
+### Requerimento
+- idRequerimento (PK)
+- idEvento (FK)
+- quantidade
+- categoria
+- descricao
+- status
 
 ### Fornecedor
 - idFornecedor (PK)
@@ -77,10 +67,21 @@
 
 ## Relacionamentos
 
-- Organizador cria Evento (1:N)
-- Evento possui Requerimento (1:N)
-- Requerimento recebe Proposta (1:N)
-- Fornecedor cria Proposta (1:N)
+**Organizador - Cria - Evento**
+- Organizador: (0,n)
+- Evento: (1,1)
+
+**Evento - Possui - Requerimento**
+- Evento: (1,n)
+- Requerimento: (1,1)
+
+**Requerimento - Recebe - Proposta**
+- Requerimento: (0,n)
+- Proposta: (1,1)
+
+**Fornecedor - Cria - Proposta**
+- Fornecedor: (0,n)
+- Proposta: (1,1)
 
 ## SQL
 
