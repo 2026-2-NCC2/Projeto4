@@ -1,5 +1,9 @@
 import './style.css'
-import { Link } from 'react-router-dom'
+
+import {
+  Link,
+  useLocation
+} from 'react-router-dom'
 
 import {
   House,
@@ -7,7 +11,9 @@ import {
   Search,
   CirclePlus,
   User,
-  FileText
+  FileText,
+  Users,
+  ClipboardCheck
 } from 'lucide-react'
 
 const icones = {
@@ -16,10 +22,14 @@ const icones = {
   procurar: Search,
   criar: CirclePlus,
   perfil: User,
-  propostas: FileText
+  propostas: FileText,
+  usuarios: Users,
+  cadastros: ClipboardCheck
 }
 
 function MenuLateral({ itens }) {
+  const location = useLocation()
+
   return (
     <aside className="menu-lateral">
 
@@ -28,14 +38,20 @@ function MenuLateral({ itens }) {
         {itens.map((item) => {
           const Icone = icones[item.icone]
 
+          const ativo =
+            location.pathname === item.destino
+
           return (
             <Link
               key={item.destino}
               to={item.destino}
-              className={item.ativo ? 'menu-ativo' : ''}
+              className={ativo ? 'menu-ativo' : ''}
             >
               <Icone />
-              <span>{item.texto}</span>
+
+              <span>
+                {item.texto}
+              </span>
             </Link>
           )
         })}

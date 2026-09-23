@@ -1,29 +1,36 @@
 import './style.css'
+
 import { Link } from 'react-router-dom'
 import { TriangleAlert } from 'lucide-react'
 
-function CardCadastroPendente() {
+function CardCadastroPendente({ destinoCadastro }) {
   return (
     <section className="card-cadastro-pendente">
+
       <span className="icone-alerta">
         <TriangleAlert />
       </span>
 
       <div className="conteudo-cadastro-pendente">
-        <h2>Cadastro pendente</h2>
+
+        <h2>
+          Cadastro pendente
+        </h2>
 
         <p>
-          Complete a verificação da sua conta de organizador e dados bancários
-          para liberar o repasse automático das vendas e emissão de ingressos.
+          Complete as informações obrigatórias do seu cadastro
+          para enviar seus dados para análise da equipe TrocaTicket.
         </p>
+
       </div>
 
       <Link
-        to="/organizador/perfil"
+        to={destinoCadastro}
         className="botao-completar-cadastro"
       >
         Completar cadastro
       </Link>
+
     </section>
   )
 }

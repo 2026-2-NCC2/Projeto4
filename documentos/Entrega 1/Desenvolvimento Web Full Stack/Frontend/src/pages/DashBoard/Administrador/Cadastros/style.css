@@ -1,0 +1,169 @@
+
+.pagina-cadastros-admin {
+  width: 100%;
+}
+
+.titulo-cadastros-admin {
+  margin-bottom: 18px;
+}
+
+.titulo-cadastros-admin h1 {
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.titulo-cadastros-admin p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.lista-cadastros-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-cadastro-admin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.dados-cadastro-admin > span {
+  color: var(--cor-verde);
+
+  font-size: 0.52rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.dados-cadastro-admin h2 {
+  margin-top: 4px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.82rem;
+}
+
+.dados-cadastro-admin p {
+  margin-top: 3px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.6rem;
+}
+
+.status-cadastro-admin {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-admin {
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  font-size: 0.52rem;
+}
+
+.status-admin.pendente {
+  color: #fbbf24;
+
+  background-color: rgba(245, 158, 11, 0.08);
+
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.status-admin.aprovado {
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.08);
+
+  border: 1px solid rgba(40, 201, 74, 0.2);
+}
+
+.status-admin.rejeitado {
+  color: #ef7777;
+
+  background-color: rgba(239, 68, 68, 0.08);
+
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.acoes-cadastro-admin {
+  display: flex;
+  gap: 7px;
+}
+
+.acoes-cadastro-admin button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 7px 10px;
+
+  border-radius: 999px;
+
+  font-size: 0.58rem;
+
+  cursor: pointer;
+}
+
+.acoes-cadastro-admin svg {
+  width: 13px;
+  height: 13px;
+}
+
+.aprovar-cadastro {
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.07);
+
+  border: 1px solid rgba(40, 201, 74, 0.18);
+}
+
+.rejeitar-cadastro {
+  color: #ef7777;
+
+  background-color: rgba(239, 68, 68, 0.06);
+
+  border: 1px solid rgba(239, 68, 68, 0.16);
+}
+
+@media (max-width: 700px) {
+  .card-cadastro-admin {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .status-cadastro-admin {
+    width: 100%;
+
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .acoes-cadastro-admin {
+    width: 100%;
+  }
+
+  .acoes-cadastro-admin button {
+    flex: 1;
+    justify-content: center;
+  }
+}
