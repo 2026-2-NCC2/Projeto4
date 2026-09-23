@@ -16,7 +16,7 @@ Vide tutoriais do PI.
 
 ## Integrantes: <a href="https://www.linkedin.com/in/nicolas-coimbra-de-campos/">Nicolas Coimbra</a>, <a href="https://www.linkedin.com/in/kau%C3%AA-alves-andrade-786515386/">Kauê Alvez Andrade</a>, <a href="https://www.linkedin.com/in/henrique-bondesan-ab5b0b41b">Henrique Mathias Bondesan</a>, <a href="https://www.linkedin.com/in/erick-osawa-71ba2a333/">Erick Akauan Osawa Nishino Chinen</a>
 
-## Professores Orientadores: <a href="https://www.linkedin.com/">David de Oliveira Lemes</a>, <a href="https://www.linkedin.com/">Francisco de Souza Escobar</a>, <a href="https://www.linkedin.com/">Jésus Gomes</a>, <a href="https://www.linkedin.com/">Kátia Bossi</a>, <a href="https://www.linkedin.com/">Paula Astorino</a>
+## Professores Orientadores: <a href="https://www.linkedin.com/in/dolemes/">David de Oliveira Lemes</a>, <a href="https://www.linkedin.com/in/francisco-escobar/">Francisco de Souza Escobar</a>, <a href="https://www.linkedin.com/in/jesuslisboagomes/">Jésus Gomes</a>, <a href="https://www.linkedin.com/in/katia-bossi/">Kátia Bossi</a>, <a href="https://www.linkedin.com/in/paula-astorino-432b5812a/">Paula Astorino</a>
 
 ## Descrição
 
