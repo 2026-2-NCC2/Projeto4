@@ -10,9 +10,9 @@ Vide tutoriais do PI.
 <a href= "https://www.fecap.br/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhZPrRa89Kma0ZZogxm0pi-tCn_TLKeHGVxywp-LXAFGR3B1DPouAJYHgKZGV0XTEf4AE&usqp=CAU" alt="FECAP - Fundação de Comércio Álvares Penteado" border="0"></a>
 </p>
 
-# Nome do Projeto
+# TrocaTicket
 
-## Nome do Grupo
+## Nome do Grupo: No Coding
 
 ## Integrantes: <a href="https://www.linkedin.com/in/nicolas-coimbra-de-campos/">Nicolas Coimbra</a>, <a href="https://www.linkedin.com/in/kau%C3%AA-alves-andrade-786515386/">Kauê Alvez Andrade</a>, <a href="https://www.linkedin.com/in/henrique-bondesan-ab5b0b41b">Henrique Mathias Bondesan</a>, <a href="https://www.linkedin.com/in/erick-osawa-71ba2a333/">Erick Akauan Osawa Nishino Chinen</a>
 
