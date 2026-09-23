@@ -237,6 +237,10 @@ Utilize o link <https://chooser-beta.creativecommons.org/> para fazer uma licen�
 Aqui estão as referências usadas no projeto.
 
 1. <https://github.com/iuricode/readme-template>
+2. <https://www.youtube.com/watch?v=0pKBT0tj7Ik&t=2157s>
+3. <https://www.youtube.com/watch?v=_gHr2Pe5LCY&t=1335s>
+4. <https://www.youtube.com/watch?v=2RWsLmu8yVc>
+
 
 
 <br>
