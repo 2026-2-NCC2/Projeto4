@@ -86,4 +86,4 @@
 ## SQL
 
 Link para o
-README da pasta BD:  [banco.sql](banco.sql)
+README da pasta BD: [banco.sql](banco.sql)
