@@ -62,18 +62,6 @@ O TrocaTicket é uma plataforma web voltada ao planejamento financeiro e operaci
 |-->README.md
 ```
 
-A pasta raiz contem dois arquivos que devem ser alterados:
-
-<b>README.MD</b>: Arquivo que serve como guia e explicação geral sobre seu projeto. O mesmo que você está lendo agora.
-
-Há também 4 pastas que seguem da seguinte forma:
-
-<b>documentos</b>: Toda a documentação estará nesta pasta.
-
-<b>imagens</b>: Imagens do sistema
-
-<b>src</b>: Pasta que contém o código fonte.
-
 <br>
 
 ## 🛠 Instalação
@@ -237,51 +225,3 @@ Aqui estão as referências usadas no projeto.
 2. <https://www.youtube.com/watch?v=0pKBT0tj7Ik&t=2157s>
 3. <https://www.youtube.com/watch?v=_gHr2Pe5LCY&t=1335s>
 4. <https://www.youtube.com/watch?v=2RWsLmu8yVc>
-
-
-
-<br>
-<br>
-
----
-
-<br>
-<br>
-
-## area de fluxo pra desenvolvimento em casa
-*obviamente apagar na entrega 1 e 2 este tópico*
-
-1. usar primerio o comando
-```sh
-C:\Users\nicolas\OneDrive\Desktop
-```
-2. pode conferir com comando dir
-
-3. acessar o projeto 4 ja instalador/clonado
-```sh
-cd Projeto4
-```
-
-4. confira com
-```sh
-git status
-```
-
-5. vá para a branch (prentendo mudar o nome dela, só olhar o nome criado/modificado no github em Branchs)
-```sh
-git switch feat/frontend-inicial
-```
-6. agora puxe a pasta
-```sh
-git pull
-```
-
-7. comando que abre o vs code com a pasta
-```sh
-code .
-```
-
-8.
-```sh
-npm run dev
-```
