@@ -1,4 +1,5 @@
-.desempenho-fornecedor {
+.desempenho-fornecedor,
+.propostas-recentes {
   width: 100%;
 }
 
@@ -6,6 +7,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  gap: 15px;
 
   margin-bottom: 10px;
 }
@@ -18,10 +21,13 @@
   text-transform: uppercase;
 }
 
-.titulo-secao-fornecedor span {
+.titulo-secao-fornecedor span,
+.titulo-secao-fornecedor a {
   color: var(--cor-verde);
 
   font-size: 0.6rem;
+
+  text-decoration: none;
 }
 
 .cards-fornecedor {
@@ -32,10 +38,45 @@
   gap: 12px;
 }
 
-@media (max-width: 700px) {
-  .cards-fornecedor {
-    grid-template-columns: 1fr;
+.lista-propostas-recentes {
+  display: grid;
 
-    gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.nenhuma-proposta {
+  padding: 30px;
+
+  text-align: center;
+
+  background-color: #101416;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.nenhuma-proposta p {
+  color: var(--cor-branco-texto);
+  font-size: 0.68rem;
+}
+
+.nenhuma-proposta a {
+  display: inline-block;
+
+  margin-top: 12px;
+
+  color: var(--cor-verde);
+
+  font-size: 0.65rem;
+
+  text-decoration: none;
+}
+
+@media (max-width: 800px) {
+  .cards-fornecedor,
+  .lista-propostas-recentes {
+    grid-template-columns: 1fr;
   }
 }

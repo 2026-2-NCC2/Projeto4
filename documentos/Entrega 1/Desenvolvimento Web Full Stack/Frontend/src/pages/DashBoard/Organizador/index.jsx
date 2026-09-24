@@ -4,39 +4,11 @@ import DashboardLayout from '../../../layouts/DashboardLayout'
 import CardCadastroPendente from '../../../componentes/cardCadastroPendente'
 import CardDesempenho from '../../../componentes/cardDesempenho'
 import CardRequisicao from '../../../componentes/cardRequisicao'
+import menuOrganizador from './menuOrganizador'
 
 import { Link } from 'react-router-dom'
 
 function Organizador() {
-  const menuOrganizador = [
-    {
-      texto: 'Início',
-      destino: '/organizador',
-      icone: 'inicio',
-      ativo: true
-    },
-    {
-      texto: 'Eventos',
-      destino: '/organizador/eventos',
-      icone: 'eventos'
-    },
-    {
-      texto: 'Procurar',
-      destino: '/organizador/procurar',
-      icone: 'procurar'
-    },
-    {
-      texto: 'Criar Evento',
-      destino: '/organizador/criar-evento',
-      icone: 'criar'
-    },
-    {
-      texto: 'Perfil',
-      destino: '/organizador/perfil',
-      icone: 'perfil'
-    }
-  ]
-
   const requisicoes = []
 
   return (
@@ -46,7 +18,9 @@ function Organizador() {
       itensMenu={menuOrganizador}
     >
 
-      <CardCadastroPendente />
+      <CardCadastroPendente
+        destinoCadastro="/organizador/completar-cadastro"
+      />
 
       <section className="desempenho-geral">
 

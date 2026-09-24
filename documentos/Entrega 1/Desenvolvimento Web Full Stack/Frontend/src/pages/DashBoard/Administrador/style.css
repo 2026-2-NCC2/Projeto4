@@ -1,0 +1,36 @@
+.dashboard-administrador {
+  width: 100%;
+}
+
+.titulo-administrador {
+  margin-bottom: 20px;
+}
+
+.titulo-administrador h1 {
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.titulo-administrador p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.cards-administrador {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+@media (max-width: 800px) {
+  .cards-administrador,
+  .fluxo-administrativo {
+    grid-template-columns: 1fr;
+  }
+}

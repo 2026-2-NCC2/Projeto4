@@ -10,9 +10,9 @@ Vide tutoriais do PI.
 <a href= "https://www.fecap.br/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhZPrRa89Kma0ZZogxm0pi-tCn_TLKeHGVxywp-LXAFGR3B1DPouAJYHgKZGV0XTEf4AE&usqp=CAU" alt="FECAP - Fundação de Comércio Álvares Penteado" border="0"></a>
 </p>
 
-# Nome do Projeto
+# TrocaTicket
 
-## Nome do Grupo
+## Nome do Grupo: No Coding
 
 ## Integrantes: <a href="https://www.linkedin.com/in/nicolas-coimbra-de-campos/">Nicolas Coimbra</a>, <a href="https://www.linkedin.com/in/kau%C3%AA-alves-andrade-786515386/">Kauê Alvez Andrade</a>, <a href="https://www.linkedin.com/in/henrique-bondesan-ab5b0b41b">Henrique Mathias Bondesan</a>, <a href="https://www.linkedin.com/in/erick-osawa-71ba2a333/">Erick Akauan Osawa Nishino Chinen</a>
 
@@ -25,13 +25,12 @@ Vide tutoriais do PI.
   Game by <a href="http://www.nyphotographic.com/">Nick Youngson</a> <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> <a href="http://pix4free.org/">Pix4free</a>
 </p>
 
+<br>
+<br>
 
-De um a dois parágrafos sobre o que é seu projeto e o que ele faz.
-<br><br>
-Meu projeto ajuda estudantes FECAP a configurarem seus githubs.
-<br><br>
-May the force be with you!
-<br><br>
+O TrocaTicket é uma plataforma web voltada ao planejamento financeiro e operacional de eventos, conectando organizadores, fornecedores e administradores em um único ambiente. O sistema permite que organizadores cadastrem eventos, definam itens de custo e analisem propostas enviadas por fornecedores. A partir da consolidação desses custos, do público previsto e da margem definida, a plataforma auxilia na estimativa do valor do ingresso. O administrador acompanha os cadastros e eventos, enquanto os fornecedores encontram oportunidades de cotação e enviam propostas para os serviços e produtos necessários a cada evento.
+
+<br>
 
 ## 🛠 Estrutura de pastas
 
@@ -62,20 +61,6 @@ May the force be with you!
 |
 |-->README.md
 ```
-
-A pasta raiz contem dois arquivos que devem ser alterados:
-
-<b>README.MD</b>: Arquivo que serve como guia e explicação geral sobre seu projeto. O mesmo que você está lendo agora.
-
-Há também 4 pastas que seguem da seguinte forma:
-
-<b>documentos</b>: Toda a documentação estará nesta pasta.
-
-<b>executáveis</b>: Binários e executáveis do projeto devem estar nesta pasta.
-
-<b>imagens</b>: Imagens do sistema
-
-<b>src</b>: Pasta que contém o código fonte.
 
 <br>
 
@@ -240,51 +225,3 @@ Aqui estão as referências usadas no projeto.
 2. <https://www.youtube.com/watch?v=0pKBT0tj7Ik&t=2157s>
 3. <https://www.youtube.com/watch?v=_gHr2Pe5LCY&t=1335s>
 4. <https://www.youtube.com/watch?v=2RWsLmu8yVc>
-
-
-
-<br>
-<br>
-
----
-
-<br>
-<br>
-
-## area de fluxo pra desenvolvimento em casa
-*obviamente apagar na entrega 1 e 2 este tópico*
-
-1. usar primerio o comando
-```sh
-C:\Users\nicolas\OneDrive\Desktop
-```
-2. pode conferir com comando dir
-
-3. acessar o projeto 4 ja instalador/clonado
-```sh
-cd Projeto4
-```
-
-4. confira com
-```sh
-git status
-```
-
-5. vá para a branch (prentendo mudar o nome dela, só olhar o nome criado/modificado no github em Branchs)
-```sh
-git switch feat/frontend-inicial
-```
-6. agora puxe a pasta
-```sh
-git pull
-```
-
-7. comando que abre o vs code com a pasta
-```sh
-code .
-```
-
-8.
-```sh
-npm run dev
-```

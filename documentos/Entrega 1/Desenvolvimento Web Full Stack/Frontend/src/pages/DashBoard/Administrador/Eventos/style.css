@@ -1,0 +1,105 @@
+
+.eventos-administrador {
+  width: 100%;
+}
+
+.titulo-eventos-administrador {
+  margin-bottom: 18px;
+}
+
+.titulo-eventos-administrador h1 {
+  color: var(--cor-branco-titulo);
+  font-size: 1.4rem;
+}
+
+.titulo-eventos-administrador p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.lista-eventos-administrador {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.evento-administrador {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 15px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.evento-administrador span {
+  color: var(--cor-verde);
+
+  font-size: 0.52rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.evento-administrador h2 {
+  margin-top: 4px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.82rem;
+}
+
+.evento-administrador p {
+  margin-top: 3px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.6rem;
+}
+
+.publico-evento-admin {
+  display: flex;
+  flex-direction: column;
+
+  text-align: right;
+}
+
+.publico-evento-admin small {
+  color: var(--cor-branco-texto);
+
+  font-size: 0.52rem;
+}
+
+.publico-evento-admin strong {
+  margin-top: 3px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.68rem;
+}
+
+.sem-eventos-administrador {
+  padding: 35px;
+
+  color: var(--cor-branco-texto);
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+  .evento-administrador {
+    align-items: flex-start;
+  }
+}

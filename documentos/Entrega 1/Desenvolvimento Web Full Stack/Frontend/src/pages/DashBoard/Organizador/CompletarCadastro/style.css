@@ -1,0 +1,206 @@
+.completar-cadastro-organizador {
+  width: 100%;
+  max-width: 720px;
+}
+
+.titulo-completar-cadastro {
+  margin-bottom: 18px;
+}
+
+.titulo-completar-cadastro > span {
+  color: var(--cor-verde);
+
+  font-size: 0.55rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.titulo-completar-cadastro h1 {
+  margin-top: 6px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.titulo-completar-cadastro p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.formulario-completar-cadastro {
+  display: flex;
+  flex-direction: column;
+
+  padding: 22px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.formulario-completar-cadastro label {
+  margin-bottom: 6px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.6rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+.formulario-completar-cadastro input,
+.formulario-completar-cadastro select {
+  width: 100%;
+
+  margin-bottom: 15px;
+  padding: 11px 12px;
+
+  color: var(--cor-branco);
+
+  background-color: #090c0b;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+
+  font-family: 'Poppins', sans-serif;
+
+  outline: none;
+}
+
+.formulario-completar-cadastro input:focus,
+.formulario-completar-cadastro select:focus {
+  border-color: var(--cor-verde);
+}
+
+.linha-cadastro {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.linha-cadastro > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo-upload {
+  min-height: 105px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  padding: 15px;
+
+  color: var(--cor-branco-texto);
+
+  border: 1px dashed rgba(40, 201, 74, 0.3);
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  text-align: center;
+}
+
+.campo-upload svg {
+  width: 22px;
+  height: 22px;
+
+  color: var(--cor-verde);
+}
+
+.campo-upload small {
+  color: var(--cor-branco-texto);
+
+  font-size: 0.52rem;
+
+  text-transform: none;
+}
+
+.input-arquivo {
+  display: none;
+}
+
+.erro-cadastro-completo,
+.sucesso-cadastro-completo {
+  margin-top: 12px;
+  padding: 9px 11px;
+
+  border-radius: 8px;
+
+  font-size: 0.62rem;
+}
+
+.erro-cadastro-completo {
+  color: #ef7777;
+
+  background-color: rgba(239, 68, 68, 0.07);
+
+  border: 1px solid rgba(239, 68, 68, 0.18);
+}
+
+.sucesso-cadastro-completo {
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.07);
+
+  border: 1px solid rgba(40, 201, 74, 0.18);
+}
+
+.botao-enviar-cadastro {
+  margin-top: 14px;
+  padding: 11px;
+
+  color: #07110b;
+
+  background: linear-gradient(
+    135deg,
+    var(--cor-verde),
+    var(--cor-verde-azulado)
+  );
+
+  border: none;
+  border-radius: 9px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.botao-enviar-cadastro:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 12px rgba(40, 201, 74, 0.18);
+}
+
+@media (max-width: 700px) {
+  .completar-cadastro-organizador {
+    max-width: none;
+  }
+
+  .formulario-completar-cadastro {
+    padding: 16px;
+  }
+
+  .linha-cadastro {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
