@@ -43,6 +43,7 @@ function ItensCusto() {
       return
     }
 
+    // O item é vinculado ao evento atual; a tela relê o evento para atualizar a lista.
     adicionarItemCusto(id, formulario)
 
     setEvento(buscarEventoPorId(id))

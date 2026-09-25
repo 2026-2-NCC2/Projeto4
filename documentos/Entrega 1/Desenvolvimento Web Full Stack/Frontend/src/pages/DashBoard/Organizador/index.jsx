@@ -1,15 +1,31 @@
 import './style.css'
 
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+
 import DashboardLayout from '../../../layouts/DashboardLayout'
 import CardCadastroPendente from '../../../componentes/cardCadastroPendente'
 import CardDesempenho from '../../../componentes/cardDesempenho'
 import CardRequisicao from '../../../componentes/cardRequisicao'
 import menuOrganizador from './menuOrganizador'
-
-import { Link } from 'react-router-dom'
+import { carregarResumoDashboard } from '../../../services/dashboard'
 
 function Organizador() {
   const requisicoes = []
+
+  const [carregando, setCarregando] = useState(true)
+  const [erroCarregamento, setErroCarregamento] = useState('')
+
+  useEffect(() => {
+    carregarResumoDashboard()
+      .then(() => {
+        setCarregando(false)
+      })
+      .catch((erro) => {
+        setErroCarregamento(erro.message)
+        setCarregando(false)
+      })
+  }, [])
 
   return (
     <DashboardLayout
@@ -17,20 +33,29 @@ function Organizador() {
       statusVerificacao="Conta em verificação"
       itensMenu={menuOrganizador}
     >
+      {carregando && (
+        <div className="estado-carregamento">
+          Carregando informações...
+        </div>
+      )}
+
+      {erroCarregamento && (
+        <div className="estado-erro">
+          {erroCarregamento}
+        </div>
+      )}
 
       <CardCadastroPendente
         destinoCadastro="/organizador/completar-cadastro"
       />
 
       <section className="desempenho-geral">
-
         <div className="titulo-secao">
           <h2>Desempenho Geral</h2>
           <span>Atualizado há 5 min</span>
         </div>
 
         <div className="cards-desempenho">
-
           <CardDesempenho
             titulo="Eventos ativos"
             valor="3"
@@ -49,14 +74,11 @@ function Organizador() {
             detalhe="Serviços finalizados"
             destaque
           />
-
         </div>
-
       </section>
 
       {requisicoes.length > 0 && (
         <section className="requisicoes">
-
           <div className="titulo-secao">
             <h2>Requisições Recentes</h2>
 
@@ -66,19 +88,15 @@ function Organizador() {
           </div>
 
           <div className="lista-requisicoes">
-
             {requisicoes.map((requisicao) => (
               <CardRequisicao
                 key={requisicao.id}
                 {...requisicao}
               />
             ))}
-
           </div>
-
         </section>
       )}
-
     </DashboardLayout>
   )
 }

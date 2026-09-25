@@ -1,6 +1,7 @@
 import './style.css'
 import Logo from '../../assets/Logo.svg'
 import { Link } from 'react-router-dom'
+import BotaoSair from '../botaoSair'
 
 function CabecalhoDashboard({
   textoBotao,
@@ -45,9 +46,7 @@ function CabecalhoDashboard({
         </button>
 
         <nav>
-          <Link to={destino} className="botao-sair">
-            {textoBotao}
-          </Link>
+          <BotaoSair className="botao-sair" />
         </nav>
 
       </div>

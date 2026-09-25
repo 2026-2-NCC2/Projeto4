@@ -1,0 +1,115 @@
+.pagina-propostas-organizador {
+  width: 100%;
+}
+
+.pagina-propostas-organizador > h1 {
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.pagina-propostas-organizador > p {
+  margin: 5px 0 18px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.lista-propostas-organizador {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.proposta-organizador {
+  padding: 16px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.proposta-organizador > span {
+  color: var(--cor-verde);
+
+  font-size: 0.55rem;
+  font-weight: 700;
+}
+
+.proposta-organizador h2 {
+  margin-top: 6px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.85rem;
+}
+
+.proposta-organizador p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.62rem;
+}
+
+.proposta-organizador strong {
+  display: block;
+
+  margin-top: 12px;
+
+  color: var(--cor-verde);
+
+  font-size: 1rem;
+}
+
+.proposta-organizador > div {
+  display: flex;
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+.proposta-organizador button {
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+}
+
+.proposta-organizador button:first-child {
+  color: #07110b;
+
+  background-color: var(--cor-verde);
+
+  border: none;
+}
+
+.proposta-organizador button:last-child {
+  color: #ef7777;
+
+  background: transparent;
+
+  border: 1px solid rgba(239, 68, 68, 0.18);
+}
+
+.sem-propostas-organizador {
+  padding: 30px;
+
+  color: var(--cor-branco-texto);
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+  .lista-propostas-organizador {
+    grid-template-columns: 1fr;
+  }
+}

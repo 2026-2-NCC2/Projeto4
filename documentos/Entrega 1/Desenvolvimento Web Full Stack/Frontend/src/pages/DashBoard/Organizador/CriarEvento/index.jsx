@@ -54,6 +54,7 @@ function CriarEvento() {
       return
     }
 
+    // Com os dados válidos, salva o evento e retorna à lista do organizador.
     criarEvento(formulario)
 
     navigate('/organizador/eventos')

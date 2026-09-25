@@ -6,9 +6,14 @@ import { Upload } from 'lucide-react'
 
 import DashboardLayout from '../../../../layouts/DashboardLayout'
 import menuFornecedor from '../menuFornecedor'
+import {
+  obterSessao,
+  atualizarUsuario
+} from '../../../../services/usuarios'
 
 function CompletarCadastroFornecedor() {
   const navigate = useNavigate()
+  const usuario = obterSessao()
 
   const [formulario, setFormulario] = useState({
     documento: '',
@@ -73,10 +78,18 @@ function CompletarCadastroFornecedor() {
       status: 'PENDENTE'
     }
 
-    localStorage.setItem(
-      'trocaticket_perfil_fornecedor',
-      JSON.stringify(dados)
-    )
+    if (!usuario) {
+      setErro('Sessão não encontrada.')
+      return
+    }
+
+    // Salva os dados e envia a conta para análise antes de voltar ao perfil.
+    atualizarUsuario(usuario.id, {
+      ...formulario,
+      comprovante: arquivo.name,
+      cadastroCompleto: true,
+      status: 'PENDENTE'
+    })
 
     setErro('')
     setSucesso('Cadastro enviado para análise.')

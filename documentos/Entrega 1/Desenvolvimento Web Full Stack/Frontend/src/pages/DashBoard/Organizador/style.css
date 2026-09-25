@@ -55,3 +55,27 @@
     grid-template-columns: 1fr;
   }
 }
+
+.estado-carregamento, .estado-erro {
+  padding: 11px 12px;
+
+  border-radius: 8px;
+
+  font-size: 0.65rem;
+}
+
+.estado-carregamento {
+  color: var(--cor-branco-texto);
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.estado-erro {
+  color: #ef7777;
+
+  background-color: rgba(239, 68, 68, 0.07);
+
+  border: 1px solid rgba(239, 68, 68, 0.18);
+}

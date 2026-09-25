@@ -1,5 +1,7 @@
 const CHAVE_USUARIOS = 'trocaticket_usuarios'
+const CHAVE_SESSAO = 'trocaticket_sessao'
 
+// Usuários e sessão são armazenados no navegador e reutilizados pelas telas do sistema.
 export function listarUsuarios() {
   const dados = localStorage.getItem(CHAVE_USUARIOS)
 
@@ -10,31 +12,45 @@ export function listarUsuarios() {
   return JSON.parse(dados)
 }
 
-export function buscarUsuarioPorEmail(email) {
-  const usuarios = listarUsuarios()
-
-  return usuarios.find(
-    (usuario) => usuario.email === email
+export function buscarUsuarioPorId(id) {
+  return listarUsuarios().find(
+    (usuario) => String(usuario.id) === String(id)
   )
 }
 
-export function salvarUsuario(usuario) {
+export function buscarUsuarioPorEmail(email) {
+  return listarUsuarios().find(
+    (usuario) => usuario.email.toLowerCase() === email.toLowerCase()
+  )
+}
+
+export function cadastrarUsuario(dados) {
   const usuarios = listarUsuarios()
 
-  const novoUsuario = {
-    ...usuario,
-    id: Date.now(),
-    status: 'PENDENTE'
+  const existente = usuarios.find(
+    (usuario) =>
+      usuario.email.toLowerCase() === dados.email.toLowerCase()
+  )
+
+  if (existente) {
+    throw new Error('Já existe uma conta cadastrada com este e-mail.')
   }
 
-  usuarios.push(novoUsuario)
+  const usuario = {
+    id: Date.now(),
+    ...dados,
+    // O cadastro só fica pronto para análise depois que o usuário completa os dados do perfil.
+    status: 'INCOMPLETO'
+  }
+
+  usuarios.push(usuario)
 
   localStorage.setItem(
     CHAVE_USUARIOS,
     JSON.stringify(usuarios)
   )
 
-  return novoUsuario
+  return usuario
 }
 
 export function atualizarUsuario(id, dados) {
@@ -55,15 +71,80 @@ export function atualizarUsuario(id, dados) {
     CHAVE_USUARIOS,
     JSON.stringify(atualizados)
   )
+
+  const usuarioAtualizado = atualizados.find(
+    (usuario) => String(usuario.id) === String(id)
+  )
+
+  const sessao = obterSessao()
+
+  if (sessao && String(sessao.id) === String(id)) {
+    salvarSessao(usuarioAtualizado)
+  }
+
+  return usuarioAtualizado
 }
 
 export function alterarStatusUsuario(id, status) {
-  atualizarUsuario(id, { status })
+  return atualizarUsuario(id, { status })
 }
-export function buscarUsuarioPorId(id) {
+
+export function autenticarUsuario(email, senha) {
+  const usuario = buscarUsuarioPorEmail(email)
+
+  if (!usuario || usuario.senha !== senha) {
+    throw new Error('E-mail ou senha incorretos.')
+  }
+
+  // A sessão permite que outras telas identifiquem o usuário conectado.
+  salvarSessao(usuario)
+
+  return usuario
+}
+
+export function salvarSessao(usuario) {
+  localStorage.setItem(
+    CHAVE_SESSAO,
+    JSON.stringify(usuario)
+  )
+}
+
+export function obterSessao() {
+  const dados = localStorage.getItem(CHAVE_SESSAO)
+
+  if (!dados) {
+    return null
+  }
+
+  return JSON.parse(dados)
+}
+
+export function encerrarSessao() {
+  localStorage.removeItem(CHAVE_SESSAO)
+}
+
+export function criarAdministradorPadrao() {
   const usuarios = listarUsuarios()
 
-  return usuarios.find(
-    (usuario) => String(usuario.id) === String(id)
+  const existe = usuarios.some(
+    (usuario) => usuario.perfil === 'ADMINISTRADOR'
+  )
+
+  if (existe) {
+    return
+  }
+
+  usuarios.push({
+    id: 'admin',
+    nome: 'Administrador TrocaTicket',
+    email: 'admin@trocaticket.com',
+    senha: 'admin123',
+    perfil: 'ADMINISTRADOR',
+    status: 'APROVADO'
+  })
+
+  localStorage.setItem(
+    CHAVE_USUARIOS,
+    JSON.stringify(usuarios)
   )
 }

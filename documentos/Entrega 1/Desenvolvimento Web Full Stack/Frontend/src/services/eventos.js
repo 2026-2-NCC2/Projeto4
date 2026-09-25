@@ -1,5 +1,6 @@
 const CHAVE_EVENTOS = 'trocaticket_eventos'
 
+// Os eventos e seus itens de custo são mantidos juntos no armazenamento local.
 export function listarEventos() {
   const dados = localStorage.getItem(CHAVE_EVENTOS)
 
@@ -22,6 +23,7 @@ export function criarEvento(evento) {
   const novoEvento = {
     ...evento,
     id: Date.now(),
+    // O evento começa em planejamento e recebe itens de custo nas etapas seguintes.
     status: 'Planejamento'
   }
 

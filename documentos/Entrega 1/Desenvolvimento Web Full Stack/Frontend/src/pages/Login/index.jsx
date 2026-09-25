@@ -1,62 +1,148 @@
 import './style.css'
 
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import Cabecalho from '../../componentes/cabecalho'
 import Rodape from '../../componentes/rodape'
 
-function Login(){
-    return(        
-        <div className= "login">
-            <Cabecalho
-            textoBotao="Voltar"
-            destino="/"
+import { autenticarUsuario } from '../../services/usuarios'
+
+function Login() {
+  const navigate = useNavigate()
+
+  const [formulario, setFormulario] = useState({
+    email: '',
+    senha: ''
+  })
+
+  const [erro, setErro] = useState('')
+
+  function alterarCampo(evento) {
+    const { name, value } = evento.target
+
+    setFormulario({
+      ...formulario,
+      [name]: value
+    })
+  }
+
+  function enviar(evento) {
+    evento.preventDefault()
+
+    if (!formulario.email || !formulario.senha) {
+      setErro('Informe o e-mail e a senha.')
+      return
+    }
+
+    try {
+      const usuario = autenticarUsuario(
+        formulario.email,
+        formulario.senha
+      )
+
+      // O perfil define a área inicial; contas ainda incompletas vão primeiro ao formulário de dados.
+      if (usuario.perfil === 'ADMINISTRADOR') {
+        navigate('/administrador')
+        return
+      }
+
+      if (usuario.perfil === 'ORGANIZADOR') {
+        if (usuario.status === 'INCOMPLETO') {
+          navigate('/organizador/completar-cadastro')
+          return
+        }
+
+        navigate('/organizador')
+        return
+      }
+
+      if (usuario.perfil === 'FORNECEDOR') {
+        if (usuario.status === 'INCOMPLETO') {
+          navigate('/fornecedor/completar-cadastro')
+          return
+        }
+
+        navigate('/fornecedor')
+      }
+    } catch (erroLogin) {
+      setErro(erroLogin.message)
+    }
+  }
+
+  return (
+    <div className="login">
+
+      <Cabecalho
+        textoBotao="Voltar"
+        destino="/"
+      />
+
+      <main className="conteudo-login">
+
+        <section className="card-login">
+
+          <h1>Entrar na conta</h1>
+
+          <p>
+            Entre com suas credenciais para acessar sua conta.
+          </p>
+
+          <form onSubmit={enviar}>
+
+            <label htmlFor="email">
+              E-mail
+            </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={formulario.email}
+              onChange={alterarCampo}
+              placeholder="seu@email.com"
             />
-            <main className="conteudo-login">
 
-            <section className="card-login">
-                <h1>Entrar na conta</h1>
-                <p>Entre com suas credenciais para gerenciar seus ingressos.</p>
+            <label htmlFor="senha">
+              Senha
+            </label>
 
-                <form>
-                <fieldset className="tipo-cadastro">
-                    <button type="button">Organizador</button>
-                    <button type="button">Fornecedor</button>
-                </fieldset>
+            <input
+              id="senha"
+              name="senha"
+              type="password"
+              value={formulario.senha}
+              onChange={alterarCampo}
+              placeholder="Sua senha"
+            />
 
-                <label htmlFor="email">E-mail</label>
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="seu@email.com"
-                />
+            {erro && (
+              <p className="erro-login">
+                {erro}
+              </p>
+            )}
 
-                <label htmlFor="senha">Senha</label>
-                <input
-                    id="senha"
-                    type="password"
-                    placeholder="Sua senha"
-                />
+            <button type="submit">
+              Entrar →
+            </button>
 
-                <button type="submit">
-                    Entrar →
-                </button>
-                </form>
+          </form>
 
-                <p>
-                Ainda não tem conta? <a href="/cadastro">Então cadastre-se</a>
-                </p>
-            </section>
+          <p>
+            Ainda não tem conta?{' '}
+            <a href="/cadastro">
+              Cadastre-se
+            </a>
+          </p>
 
-            <aside className="selos-seguranca">
-                <span>✓ Transferência Garantida</span>
-                <span>♙ Transparencia dos Valores</span>
-            </aside>
+        </section>
 
-        </main>
-        
-        <Rodape/>
-        </div>
+      </main>
 
-    )
+      <Rodape />
+
+    </div>
+  )
 }
 
 export default Login

@@ -13,6 +13,7 @@ import DetalheEvento from './pages/DashBoard/Organizador/DetalheEvento'
 import EditarEvento from './pages/DashBoard/Organizador/EditarEvento'
 import ItensCusto from './pages/DashBoard/Organizador/ItensCusto'
 import CompletarCadastroOrganizador from './pages/DashBoard/Organizador/CompletarCadastro'
+import PropostasOrganizador from './pages/DashBoard/Organizador/Propostas'
 
 import Fornecedor from './pages/DashBoard/Fornecedor'
 import ProcurarEvento from './pages/DashBoard/Fornecedor/ProcurarEvento'
@@ -22,6 +23,8 @@ import MinhasPropostas from './pages/DashBoard/Fornecedor/MinhasPropostas'
 import PerfilFornecedor from './pages/DashBoard/Fornecedor/Perfil'
 import CompletarCadastroFornecedor from './pages/DashBoard/Fornecedor/CompletarCadastro'
 
+import NaoEncontrada from './pages/NaoEncontrada'
+
 import Administrador from './pages/DashBoard/Administrador'
 import CadastrosAdministrador from './pages/DashBoard/Administrador/Cadastros'
 import EventosAdministrador from './pages/DashBoard/Administrador/Eventos'
@@ -30,10 +33,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Páginas públicas de entrada e criação de conta. */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
 
+        {/* Área do organizador: eventos, itens de custo e propostas recebidas. */}
         <Route path="/organizador" element={<Organizador />} />
         <Route path="/organizador/eventos" element={<Eventos />} />
         <Route path="/organizador/procurar" element={<Procurar />} />
@@ -43,7 +48,9 @@ function App() {
         <Route path="/organizador/eventos/:id/itens-custo" element={<ItensCusto />} />
         <Route path="/organizador/perfil" element={<Perfil />} />
         <Route path="/organizador/completar-cadastro" element={<CompletarCadastroOrganizador />} />
+        <Route path="/organizador/propostas" element={<PropostasOrganizador />} />
 
+        {/* Área do fornecedor: busca de eventos e envio de propostas. */}
         <Route path="/fornecedor/completar-cadastro" element={<CompletarCadastroFornecedor />} />
         <Route path="/fornecedor" element={<Fornecedor />} />
         <Route path="/fornecedor/procurar-evento" element={<ProcurarEvento />} />
@@ -52,6 +59,9 @@ function App() {
         <Route path="/fornecedor/propostas" element={<MinhasPropostas />} />
         <Route path="/fornecedor/perfil" element={<PerfilFornecedor />} />
 
+        <Route path="*" element={<NaoEncontrada />} />
+
+        {/* Telas de administração da plataforma. */}
         <Route path="/administrador" element={<Administrador />} />
         <Route path="/administrador/cadastros" element={<CadastrosAdministrador />} />
         <Route path="/administrador/eventos" element={<EventosAdministrador />} />      

@@ -10,6 +10,7 @@ function DashboardLayout({
   children
 }) {
   return (
+    // As páginas de cada perfil compartilham o mesmo cabeçalho, menu e área de conteúdo.
     <div className="dashboard-layout">
 
       <CabecalhoDashboard

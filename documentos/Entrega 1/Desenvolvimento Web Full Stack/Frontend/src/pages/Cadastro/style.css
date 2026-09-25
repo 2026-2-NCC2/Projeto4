@@ -85,13 +85,13 @@
   cursor: pointer;
   transition: 0.2s ease;
 }
-
-.tipo-cadastro button:first-child {
+.tipo-cadastro .tipo-ativo {
   background: linear-gradient(
     135deg,
     var(--cor-verde),
     var(--cor-verde-azulado)
   );
+
   color: #08100b;
   font-weight: 600;
 }

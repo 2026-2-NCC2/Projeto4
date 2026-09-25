@@ -1,5 +1,6 @@
 const CHAVE_PROPOSTAS = 'trocaticket_propostas'
 
+// Esta camada centraliza a leitura e gravação das propostas no navegador.
 export function listarPropostas() {
   const dados = localStorage.getItem(CHAVE_PROPOSTAS)
 
@@ -16,6 +17,7 @@ export function criarProposta(proposta) {
   const novaProposta = {
     ...proposta,
     id: Date.now(),
+    // Depois do envio, a proposta aguarda a decisão do organizador.
     status: 'EM ANÁLISE',
     criadaEm: new Date().toLocaleDateString('pt-BR')
   }

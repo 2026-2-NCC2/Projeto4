@@ -20,6 +20,7 @@ function CriarProposta() {
   const eventoId = parametros.get('evento')
   const itemId = parametros.get('item')
 
+  // Os parâmetros recebidos da oportunidade identificam o evento e o item da cotação.
   const evento = buscarEventoPorId(eventoId)
 
   const item = evento?.itensCusto?.find(
@@ -66,6 +67,7 @@ function CriarProposta() {
       return
     }
 
+    // A proposta guarda referências ao evento e ao item para aparecer na análise do organizador.
     criarProposta({
       ...formulario,
       eventoId: evento.id,
