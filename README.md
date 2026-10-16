@@ -22,7 +22,7 @@ Vide tutoriais do PI.
 
 <p align="center">
 <img src="imagens/Captura de tela 2026-09-23 212858.jpg" alt="Tela Inicial do Projeto" border="0">
-<p align="center">Imagem de Autoria do própria do grupo2</p>
+<p align="center">Imagem de Autoria do própria do grupo</p>
 <br>
 <br>
 
