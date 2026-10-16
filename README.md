@@ -219,8 +219,9 @@ Esta seção será atualizada quando os testes forem implementados.
 
 Aqui estão as referências usadas no projeto.
 
-1. <https://github.com/iuricode/readme-template>
-2. <https://www.youtube.com/watch?v=0pKBT0tj7Ik&t=2157s>
-3. <https://www.youtube.com/watch?v=_gHr2Pe5LCY&t=1335s>
-4. <https://www.youtube.com/watch?v=2RWsLmu8yVc>
-5. <https://creativecommons.org/chooser/>
+1. <https://trocaticket.com.br/>
+2. <https://github.com/iuricode/readme-template>
+3. <https://www.youtube.com/watch?v=0pKBT0tj7Ik&t=2157s>
+4. <https://www.youtube.com/watch?v=_gHr2Pe5LCY&t=1335s>
+5. <https://www.youtube.com/watch?v=2RWsLmu8yVc>
+6. <https://creativecommons.org/chooser/>
