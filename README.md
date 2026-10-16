@@ -215,7 +215,7 @@ Esta seção será atualizada quando os testes forem implementados.
 <br>
 
 ## 📋 Licença/License
-<a href="https://github.com/2026-2-NCC2/Projeto4">TrocaTicket</a> © 2026 by <a href="https://github.com/fecaphub">Nicolas Coimbra, Kauê Alves Andrade, Henrique Mathias Bondesan, Erick Akauan Osawa Nishino Chinen</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+<a href="https://github.com/2026-2-NCC2/Projeto4">TrocaTicket</a> © 2026 by <a href="https://www.linkedin.com/in/nicolas-coimbra-de-campos/">Nicolas Coimbra</a>, <a href="https://www.linkedin.com/in/kau%C3%AA-alves-andrade-786515386/">Kauê Alvez Andrade</a>, <a href="https://www.linkedin.com/in/henrique-bondesan-ab5b0b41b">Henrique Mathias Bondesan</a>, <a href="https://www.linkedin.com/in/erick-osawa-71ba2a333/">Erick Akauan Osawa Nishino Chinen</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
 ## 🎓 Referências
 
