@@ -211,11 +211,21 @@ Esta seção será atualizada quando os testes forem implementados.
 
 ## 🎓 Referências
 
-Aqui estão as referências usadas no projeto.
+Aqui estão as principais referências utilizadas no desenvolvimento e na documentação do projeto:
 
-1. <https://trocaticket.com.br/>
-2. <https://github.com/iuricode/readme-template>
-3. <https://www.youtube.com/watch?v=0pKBT0tj7Ik&t=2157s>
-4. <https://www.youtube.com/watch?v=_gHr2Pe5LCY&t=1335s>
-5. <https://www.youtube.com/watch?v=2RWsLmu8yVc>
-6. <https://creativecommons.org/chooser/>
+1. [Site oficial da TrocaTicket](https://trocaticket.com.br/)
+2. [Portal de estudos de Desenvolvimento Web Full Stack — FECAP](https://fecapwebfullstack.netlify.app/)
+3. [Documentação oficial do React](https://pt-br.react.dev/reference/react)
+4. [Documentação oficial do Node.js](https://nodejs.org/docs/latest/api/)
+5. [Documentação do Express.js](https://expressjs.com/pt-br/4x/api.html)
+6. [Manual de referência do MySQL 8.0](https://dev.mysql.com/doc/refman/8.0/en/)
+7. [MDN Web Docs — HTML, CSS e JavaScript](https://developer.mozilla.org/pt-BR/docs/Web)
+8. [Stitch with Google](https://stitch.withgoogle.com/)
+9. [Template de README utilizado como referência](https://github.com/iuricode/readme-template)
+10. [Creative Commons License Chooser](https://creativecommons.org/chooser/)
+11. [Objetivos de Desenvolvimento Sustentável — ONU Brasil](https://brasil.un.org/pt-br/sdgs)
+12. [Cálculo integral — curso em português da Khan Academy](https://pt.khanacademy.org/math/integral-calculus)
+13. [Cálculo II — aulas em português da UNIVESP](https://www.youtube.com/results?search_query=UNIVESP+C%C3%A1lculo+II+curso+completo)
+14. [Material complementar em vídeo 1](https://www.youtube.com/watch?v=0pKBT0tj7Ik&t=2157s)
+15. [Material complementar em vídeo 2](https://www.youtube.com/watch?v=_gHr2Pe5LCY&t=1335s)
+16. [Material complementar em vídeo 3](https://www.youtube.com/watch?v=2RWsLmu8yVc)
