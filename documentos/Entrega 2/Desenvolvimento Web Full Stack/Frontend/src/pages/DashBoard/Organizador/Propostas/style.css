@@ -1,0 +1,137 @@
+.pagina-propostas-organizador {
+  width: 100%;
+}
+
+.pagina-propostas-organizador > h1 {
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.pagina-propostas-organizador > p {
+  margin: 5px 0 18px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.lista-propostas-organizador {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.proposta-organizador {
+  padding: 16px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.proposta-organizador > span {
+  color: var(--cor-verde);
+
+  font-size: 0.55rem;
+  font-weight: 700;
+}
+
+.proposta-organizador h2 {
+  margin-top: 6px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.85rem;
+}
+
+.proposta-organizador p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.62rem;
+}
+
+.proposta-organizador strong {
+  display: block;
+
+  margin-top: 12px;
+
+  color: var(--cor-verde);
+
+  font-size: 1rem;
+}
+
+.proposta-organizador > div {
+  display: flex;
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+.proposta-organizador button {
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+}
+
+.proposta-organizador button:first-child {
+  color: #07110b;
+
+  background-color: var(--cor-verde);
+
+  border: none;
+}
+
+.proposta-organizador button:last-child {
+  color: #ef7777;
+
+  background: transparent;
+
+  border: 1px solid rgba(239, 68, 68, 0.18);
+}
+
+.sem-propostas-organizador {
+  padding: 30px;
+
+  color: var(--cor-branco-texto);
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+  .lista-propostas-organizador {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Os dados comerciais só são renderizados quando a proposta foi aceita. */
+.contato-fornecedor-aceito {
+  margin-top: 18px;
+  padding: 15px;
+  border: 1px solid rgba(34, 197, 94, .24);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(20, 83, 45, .18), rgba(16, 20, 22, .8));
+}
+.contato-fornecedor-aceito-topo { display: flex; gap: 10px; align-items: flex-start; }
+.contato-fornecedor-aceito-icone { display: grid; place-items: center; width: 28px; height: 28px; flex: 0 0 auto; border-radius: 8px; color: #bbf7d0; background: rgba(34, 197, 94, .15); font-weight: 900; }
+.contato-fornecedor-aceito h3 { margin: 0; color: #bbf7d0; font-size: .8rem; }
+.contato-fornecedor-aceito-topo p { margin: 4px 0 0; color: #9caeaa; font-size: .7rem; line-height: 1.5; }
+.contato-fornecedor-aceito-dados { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; margin: 14px 0 0; }
+.contato-fornecedor-aceito-dados div { min-width: 0; }
+.contato-fornecedor-aceito-dados dt { color: #91a39a; font-size: .61rem; }
+.contato-fornecedor-aceito-dados dd { margin: 4px 0 0; color: #edf7f1; font-size: .72rem; overflow-wrap: anywhere; }
+.contato-fornecedor-aceito-dados a { color: #86efac; text-decoration: none; }
+.contato-fornecedor-aceito-acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.contato-fornecedor-aceito-acoes a { display: inline-flex; align-items: center; justify-content: center; padding: 8px 11px; border-radius: 8px; border: 1px solid rgba(34, 197, 94, .22); background: rgba(34, 197, 94, .1); color: #bbf7d0; font-size: .68rem; font-weight: 700; text-decoration: none; }
+.contato-fornecedor-aceito-acoes a:hover { background: rgba(34, 197, 94, .18); }
+@media (max-width: 520px) { .contato-fornecedor-aceito-dados { grid-template-columns: 1fr; } }

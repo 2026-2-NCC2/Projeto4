@@ -1,0 +1,28 @@
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid rgba(148, 163, 184, .35);
+  border-radius: 999px;
+  color: var(--cor-branco-titulo);
+  background: var(--cor-superficie, rgba(255,255,255,.06));
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.theme-toggle:hover {
+  border-color: var(--cor-verde);
+  color: var(--cor-verde);
+}
+.theme-toggle svg { flex: 0 0 auto; }
+.theme-toggle-compacto { width: 36px; min-width: 36px; padding: 7px; }
+@media (max-width: 700px) {
+  .theme-toggle:not(.theme-toggle-compacto) span { display: none; }
+  .theme-toggle:not(.theme-toggle-compacto) { width: 36px; min-width: 36px; padding: 7px; }
+}

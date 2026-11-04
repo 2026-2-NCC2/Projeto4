@@ -1,0 +1,46 @@
+.pagina-minhas-propostas {
+  width: 100%;
+}
+
+.titulo-minhas-propostas {
+  margin-bottom: 18px;
+}
+
+.titulo-minhas-propostas h1 {
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.titulo-minhas-propostas p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.lista-minhas-propostas {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.propostas-vazio {
+  padding: 35px;
+
+  color: var(--cor-branco-texto);
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+  .lista-minhas-propostas {
+    grid-template-columns: 1fr;
+  }
+}

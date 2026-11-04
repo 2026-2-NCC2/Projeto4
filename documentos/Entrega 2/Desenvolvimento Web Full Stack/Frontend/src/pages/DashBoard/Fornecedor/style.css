@@ -1,0 +1,92 @@
+.desempenho-fornecedor,
+.propostas-recentes {
+  width: 100%;
+}
+
+.titulo-secao-fornecedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 10px;
+}
+
+.titulo-secao-fornecedor h2 {
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+
+  text-transform: uppercase;
+}
+
+.titulo-secao-fornecedor span,
+.titulo-secao-fornecedor a {
+  color: var(--cor-verde);
+
+  font-size: 0.6rem;
+
+  text-decoration: none;
+}
+
+.cards-fornecedor {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.lista-propostas-recentes {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.nenhuma-proposta {
+  padding: 30px;
+
+  text-align: center;
+
+  background-color: #101416;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.nenhuma-proposta p {
+  color: var(--cor-branco-texto);
+  font-size: 0.68rem;
+}
+
+.nenhuma-proposta a {
+  display: inline-block;
+
+  margin-top: 12px;
+
+  color: var(--cor-verde);
+
+  font-size: 0.65rem;
+
+  text-decoration: none;
+}
+
+@media (max-width: 800px) {
+  .cards-fornecedor,
+  .lista-propostas-recentes {
+    grid-template-columns: 1fr;
+  }
+}
+
+.aviso-status-cadastro {
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  border: 1px solid #e6d6a5;
+  border-radius: 10px;
+  background: #fff9e8;
+  color: #694d12;
+  font-size: 14px;
+}

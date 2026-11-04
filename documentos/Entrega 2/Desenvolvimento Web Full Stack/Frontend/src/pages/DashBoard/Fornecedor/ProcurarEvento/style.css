@@ -1,0 +1,146 @@
+.pagina-procurar-evento {
+  width: 100%;
+}
+
+.titulo-procurar-evento {
+  margin-bottom: 18px;
+}
+
+.titulo-procurar-evento h1 {
+  color: var(--cor-branco-titulo);
+  font-size: 1.4rem;
+}
+
+.titulo-procurar-evento p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.busca-evento {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 0 12px;
+
+  background-color: #090c0b;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+}
+
+.busca-evento:focus-within {
+  border-color: var(--cor-verde);
+}
+
+.busca-evento svg {
+  width: 17px;
+  height: 17px;
+
+  color: var(--cor-branco-texto);
+}
+
+.busca-evento input {
+  width: 100%;
+
+  padding: 12px 0;
+
+  color: var(--cor-branco);
+
+  background: transparent;
+
+  border: none;
+  outline: none;
+}
+
+.eventos-disponiveis {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-top: 18px;
+}
+
+.evento-disponivel {
+  padding: 17px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.evento-disponivel > span {
+  color: var(--cor-verde);
+
+  font-size: 0.55rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.evento-disponivel h2 {
+  margin: 8px 0;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.9rem;
+}
+
+.evento-disponivel p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 6px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.62rem;
+}
+
+.evento-disponivel p svg {
+  width: 13px;
+  height: 13px;
+}
+
+.evento-disponivel a {
+  display: inline-block;
+
+  margin-top: 14px;
+  padding: 8px 12px;
+
+  color: #07110b;
+
+  background-color: var(--cor-verde);
+
+  border-radius: 999px;
+
+  font-size: 0.62rem;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.nenhum-evento-disponivel {
+  margin-top: 18px;
+  padding: 35px;
+
+  color: var(--cor-branco-texto);
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+  .eventos-disponiveis {
+    grid-template-columns: 1fr;
+  }
+}

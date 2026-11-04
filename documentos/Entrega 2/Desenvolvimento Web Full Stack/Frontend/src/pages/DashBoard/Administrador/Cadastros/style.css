@@ -1,0 +1,357 @@
+
+.pagina-cadastros-admin {
+  width: 100%;
+}
+
+.titulo-cadastros-admin {
+  margin-bottom: 18px;
+}
+
+.titulo-cadastros-admin h1 {
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.titulo-cadastros-admin p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.lista-cadastros-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-cadastro-admin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.dados-cadastro-admin > span {
+  color: var(--cor-verde);
+
+  font-size: 0.52rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.dados-cadastro-admin h2 {
+  margin-top: 4px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.82rem;
+}
+
+.dados-cadastro-admin p {
+  margin-top: 3px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.6rem;
+}
+
+.status-cadastro-admin {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-admin {
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  font-size: 0.52rem;
+}
+
+.status-admin.pendente {
+  color: #fbbf24;
+
+  background-color: rgba(245, 158, 11, 0.08);
+
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.status-admin.aprovado {
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.08);
+
+  border: 1px solid rgba(40, 201, 74, 0.2);
+}
+
+.status-admin.rejeitado {
+  color: #ef7777;
+
+  background-color: rgba(239, 68, 68, 0.08);
+
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.acoes-cadastro-admin {
+  display: flex;
+  gap: 7px;
+}
+
+.acoes-cadastro-admin button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 7px 10px;
+
+  border-radius: 999px;
+
+  font-size: 0.58rem;
+
+  cursor: pointer;
+}
+
+.acoes-cadastro-admin svg {
+  width: 13px;
+  height: 13px;
+}
+
+.aprovar-cadastro {
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.07);
+
+  border: 1px solid rgba(40, 201, 74, 0.18);
+}
+
+.rejeitar-cadastro {
+  color: #ef7777;
+
+  background-color: rgba(239, 68, 68, 0.06);
+
+  border: 1px solid rgba(239, 68, 68, 0.16);
+}
+
+@media (max-width: 700px) {
+  .card-cadastro-admin {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .status-cadastro-admin {
+    width: 100%;
+
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .acoes-cadastro-admin {
+    width: 100%;
+  }
+
+  .acoes-cadastro-admin button {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+.titulo-cadastros-admin {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.atualizar-cadastros-admin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 9px 13px;
+  color: var(--cor-branco-texto);
+  background: #111719;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: .68rem;
+}
+.atualizar-cadastros-admin:disabled { opacity: .5; cursor: wait; }
+.card-cadastro-admin {
+  display: block;
+}
+.cabecalho-card-cadastro-admin {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.dados-cadastro-admin p { font-size: .68rem; }
+.status-cadastro-admin {
+  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.detalhes-cadastro-admin {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.detalhes-cadastro-admin h3 {
+  margin: 0 0 12px;
+  color: var(--cor-branco-titulo);
+  font-size: .78rem;
+}
+.grade-dados-cadastro-admin {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+.campo-dado-admin {
+  min-width: 0;
+  padding: 10px 12px;
+  background: rgba(0,0,0,.16);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 8px;
+}
+.campo-dado-admin dt {
+  margin-bottom: 5px;
+  color: #94a3b8;
+  font-size: .58rem;
+  text-transform: uppercase;
+  letter-spacing: .035em;
+}
+.campo-dado-admin dd {
+  margin: 0;
+  color: #e5e7eb;
+  font-size: .72rem;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.campo-dado-largo-admin { grid-column: 1 / -1; }
+.foto-cadastro-admin {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 14px;
+  color: #94a3b8;
+  font-size: .62rem;
+}
+.foto-cadastro-admin img {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.15);
+}
+.acoes-cadastro-admin-rodape {
+  justify-content: flex-end;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.acoes-cadastro-admin button:disabled { opacity: .5; cursor: wait; }
+.estado-lista-admin, .mensagem-erro-admin, .mensagem-sucesso-admin {
+  padding: 12px 14px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-size: .75rem;
+}
+.estado-lista-admin { color: #cbd5e1; background: rgba(148,163,184,.08); }
+.mensagem-erro-admin { color: #fca5a5; background: rgba(239,68,68,.08); }
+.mensagem-sucesso-admin { color: #86efac; background: rgba(34,197,94,.08); }
+.status-admin.incompleto { color: #93c5fd; background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.2); }
+@media (max-width: 700px) {
+  .titulo-cadastros-admin, .cabecalho-card-cadastro-admin { flex-direction: column; }
+  .atualizar-cadastros-admin { width: 100%; }
+  .status-cadastro-admin { align-items: flex-start; justify-content: flex-start; }
+  .grade-dados-cadastro-admin { grid-template-columns: 1fr; }
+  .campo-dado-largo-admin { grid-column: auto; }
+}
+
+/* Separação de cadastros pendentes, verificados e incompletos */
+.abas-cadastros-admin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.aba-cadastro-admin {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  color: #aab3bf;
+  background: #111719;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 9px;
+  font-size: .7rem;
+  cursor: pointer;
+}
+.aba-cadastro-admin span {
+  display: inline-flex;
+  min-width: 21px;
+  height: 21px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  color: #dbe2e8;
+  background: rgba(255,255,255,.08);
+  border-radius: 999px;
+  font-size: .62rem;
+}
+.aba-cadastro-admin.ativa {
+  color: var(--cor-verde);
+  background: rgba(40,201,74,.08);
+  border-color: rgba(40,201,74,.3);
+}
+.aba-cadastro-admin.ativa span {
+  color: #101416;
+  background: var(--cor-verde);
+}
+.subtitulo-lista-cadastros-admin {
+  margin: 0 0 12px;
+}
+.subtitulo-lista-cadastros-admin h2 {
+  margin: 0;
+  color: var(--cor-branco-titulo);
+  font-size: .92rem;
+}
+.subtitulo-lista-cadastros-admin p {
+  margin-top: 4px;
+  color: var(--cor-branco-texto);
+  font-size: .68rem;
+}
+.reabrir-cadastro {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  color: #93c5fd;
+  background: rgba(59,130,246,.07);
+  border: 1px solid rgba(59,130,246,.2);
+  border-radius: 999px;
+  font-size: .58rem;
+  cursor: pointer;
+}
+.reabrir-cadastro:disabled { opacity: .5; cursor: wait; }
+@media (max-width: 700px) {
+  .abas-cadastros-admin { display: grid; grid-template-columns: 1fr; }
+  .aba-cadastro-admin { justify-content: space-between; }
+}

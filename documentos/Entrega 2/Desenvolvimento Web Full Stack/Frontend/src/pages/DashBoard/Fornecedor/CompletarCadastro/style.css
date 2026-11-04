@@ -1,0 +1,248 @@
+.completar-cadastro-fornecedor {
+  width: 100%;
+  max-width: 720px;
+}
+
+.titulo-cadastro-fornecedor {
+  margin-bottom: 18px;
+}
+
+.titulo-cadastro-fornecedor > span {
+  color: var(--cor-verde);
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.titulo-cadastro-fornecedor h1 {
+  margin-top: 6px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.titulo-cadastro-fornecedor p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.formulario-cadastro-fornecedor {
+  display: flex;
+  flex-direction: column;
+
+  padding: 22px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.formulario-cadastro-fornecedor label {
+  margin-bottom: 6px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.6rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+.formulario-cadastro-fornecedor input,
+.formulario-cadastro-fornecedor select,
+.formulario-cadastro-fornecedor textarea {
+  width: 100%;
+
+  margin-bottom: 15px;
+  padding: 11px 12px;
+
+  color: var(--cor-branco);
+
+  background-color: #090c0b;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+
+  outline: none;
+
+  transition: border-color 0.2s ease;
+}
+
+.formulario-cadastro-fornecedor input:focus,
+.formulario-cadastro-fornecedor select:focus,
+.formulario-cadastro-fornecedor textarea:focus {
+  border-color: var(--cor-verde);
+}
+
+.formulario-cadastro-fornecedor textarea {
+  min-height: 110px;
+
+  resize: vertical;
+}
+
+.linha-fornecedor {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.linha-fornecedor > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-fornecedor {
+  min-height: 110px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 16px;
+
+  color: var(--cor-branco-texto);
+
+  background-color: rgba(40, 201, 74, 0.02);
+
+  border: 1px dashed rgba(40, 201, 74, 0.3);
+  border-radius: 9px;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.upload-fornecedor:hover {
+  border-color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.05);
+}
+
+.upload-fornecedor svg {
+  width: 23px;
+  height: 23px;
+
+  color: var(--cor-verde);
+}
+
+.upload-fornecedor span {
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.65rem;
+
+  text-transform: none;
+}
+
+.upload-fornecedor small {
+  color: var(--cor-branco-texto);
+
+  font-size: 0.52rem;
+
+  text-transform: none;
+}
+
+.input-arquivo-fornecedor {
+  display: none !important;
+}
+
+.erro-cadastro-fornecedor,
+.sucesso-cadastro-fornecedor {
+  margin-top: 12px;
+  padding: 10px 12px;
+
+  border-radius: 8px;
+
+  font-size: 0.62rem;
+}
+
+.erro-cadastro-fornecedor {
+  color: #ef7777;
+
+  background-color: rgba(239, 68, 68, 0.07);
+
+  border: 1px solid rgba(239, 68, 68, 0.18);
+}
+
+.sucesso-cadastro-fornecedor {
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.07);
+
+  border: 1px solid rgba(40, 201, 74, 0.18);
+}
+
+.enviar-cadastro-fornecedor {
+  width: 100%;
+
+  margin-top: 14px;
+  padding: 11px;
+
+  color: #07110b;
+
+  background: linear-gradient(
+    135deg,
+    var(--cor-verde),
+    var(--cor-verde-azulado)
+  );
+
+  border: none;
+  border-radius: 9px;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.enviar-cadastro-fornecedor:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 12px rgba(40, 201, 74, 0.18);
+}
+
+.enviar-cadastro-fornecedor:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 700px) {
+  .completar-cadastro-fornecedor {
+    max-width: none;
+  }
+
+  .formulario-cadastro-fornecedor {
+    padding: 16px;
+  }
+
+  .linha-fornecedor {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .upload-fornecedor {
+    min-height: 100px;
+  }
+}
