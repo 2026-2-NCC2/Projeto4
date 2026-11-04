@@ -214,7 +214,7 @@ Esta seção será atualizada quando os testes forem implementados.
 Aqui estão as principais referências utilizadas no desenvolvimento e na documentação do projeto:
 
 1. [Site oficial da TrocaTicket](https://trocaticket.com.br/)
-2. [Portal de estudos de Desenvolvimento Web Full Stack — FECAP](https://fecapwebfullstack.netlify.app/)
+2. [Portal de estudos de Desenvolvimento Web Full Stack criado pelo orientador Francisco de Souza Escobar](https://fecapwebfullstack.netlify.app/)
 3. [Documentação oficial do React](https://pt-br.react.dev/reference/react)
 4. [Documentação oficial do Node.js](https://nodejs.org/docs/latest/api/)
 5. [Documentação do Express.js](https://expressjs.com/pt-br/4x/api.html)
