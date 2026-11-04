@@ -14,7 +14,6 @@ O diagrama apresenta as cinco tabelas implementadas, suas chaves e os relacionam
 
 ![Diagrama entidade-relacionamento da TrocaTicket](diagrama_entidade_relacionamento.png)
 
-Arquivos do modelo: [diagrama em SVG](diagrama_entidade_relacionamento.svg) · [fonte DBML editável](modelo_relacional.dbml).
 
 ## 3. Estrutura das tabelas
 
