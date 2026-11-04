@@ -15,7 +15,7 @@
 ## Descrição
 
 <p align="center">
-<img src="imagens/Home.jpg" alt="Tela Inicial do Projeto" border="0">
+<img src="imagens/Home.png" alt="Tela Inicial do Projeto" border="0">
 <p align="center">Imagem de Autoria do própria do grupo</p>
 <br>
 <br>
