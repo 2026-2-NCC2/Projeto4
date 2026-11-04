@@ -12,7 +12,7 @@ O modelo atende ao escopo de persistência do MVP: cada evento é associado a um
 
 O diagrama apresenta as cinco tabelas implementadas, suas chaves e os relacionamentos definidos por chaves estrangeiras. O vínculo entre `requisicoes_fornecedor` e `itens_custo` é indicado separadamente porque o backend grava o mesmo identificador para os dois registros, mas o SQL **não declara uma chave estrangeira direta entre essas tabelas**.
 
-![Diagrama entidade-relacionamento da TrocaTicket](diagrama_entidade_relacionamento.png)
+![Diagrama entidade-relacionamento da TrocaTicket](Diagrama_ER_TrocaTicket.png)
 
 
 ## 3. Estrutura das tabelas
