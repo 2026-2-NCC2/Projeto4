@@ -65,18 +65,17 @@ Para abrir e executar este projeto, você necessita das seguintes ferramentas:
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Node.js](https://nodejs.org/)
 - [Git](https://git-scm.com/downloads)
+- [Xampp](https://www.apachefriends.org/download.html)
 
-
-O **NPM** é instalado juntamente com o Node.js. As dependências como React, Vite e React Router serão instaladas posteriormente pelo NPM.
-
+O comando **NPM** é instalado e usado, juntamente com o Node.js. As dependências como React, Vite e React Router serão instaladas posteriormente pelo NPM.
+**Npm install**
+**Npm run dev**
 <br>
 
 ## 💻 Configuração para Desenvolvimento
-
-
 <br>
 <br>
-
+Descompacte a pasta
 Abra o terminal (comand prompt do pc) e execute:
 
 ```sh
@@ -89,23 +88,31 @@ Entre na pasta do projeto:
 cd Projeto4
 ```
 
-### 📂 Acessando o Frontend
+### 📂 Acessando o projeto
 
-O Frontend está localizado em:
+O projeto está localizado em:
 
 ```text
-src/Entrega 1/Frontend
+src/Entrega 2/
 ```
 
 Para acessar pelo terminal:
 
 ```sh
-cd "src/Entrega 1/Frontend"
+cd "src/Entrega 2/"
 ```
 
+Dentro do visual studio, crie dois terminais em CMD e acesse um para a pasta frontend e outro para backend
+
+```sh
+cd frontend
+```
+```sh
+cd backend
+```
 ### 📦 Instalando as dependências
 
-Execute:
+Execute em cada terminal:
 
 ```sh
 npm install
@@ -117,7 +124,7 @@ A pasta `node_modules` será criada automaticamente e não deve ser enviada para
 
 ### ▶️ Executando o projeto
 
-Para iniciar o servidor de desenvolvimento:
+Para iniciar o servidor de desenvolvimento, faça esse comando nos dois terminais:
 
 ```sh
 npm run dev
