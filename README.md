@@ -76,7 +76,7 @@ O comando **NPM** é instalado e usado, juntamente com o Node.js. As dependênci
 <br>
 <br>
 Descompacte a pasta
-Abra o terminal (comand prompt do pc) e execute:
+abra o terminal (comand prompt do pc) e execute:
 
 ```sh
 git clone https://github.com/2026-2-NCC2/Projeto4.git
@@ -153,64 +153,6 @@ git --version
 node --version
 npm --version
 ```
-
-### ⚠️ PowerShell do Windows
-
-Em alguns computadores, o PowerShell pode bloquear a execução do NPM:
-
-```text
-npm.ps1 não pode ser carregado porque a execução de scripts foi desabilitada neste sistema.
-```
-
-Nesse caso, utilize:
-
-```sh
-npm.cmd install
-npm.cmd run dev
-```
-
-Outra opção é utilizar o **Prompt de Comando (CMD)** no terminal do Visual Studio Code.
-
-
-
-### 🌿 Desenvolvimento com Git
-
-Antes de iniciar novas alterações:
-
-```sh
-git pull
-```
-
-Para verificar os arquivos modificados:
-
-```sh
-git status
-```
-
-Para adicionar as alterações:
-
-```sh
-git add .
-```
-
-Para registrar as alterações:
-
-```sh
-git commit -m "Descrição da alteração"
-```
-
-Para enviar as alterações ao GitHub:
-
-```sh
-git push
-```
-
-### 🧪 Testes
-
-No momento, o projeto ainda não possui testes automatizados configurados.
-
-Esta seção será atualizada quando os testes forem implementados.
-
 <br>
 
 ## 📋 Licença/License
