@@ -138,10 +138,11 @@ http://localhost:5173/
 
 Abra esse endereço no navegador para acessar o TrocaTicket.
 
-Para interromper o servidor:
+Observação para acessar perfil Administrador:
 
 ```text
-Ctrl + C
+E-mail: admin@trocaticket.com
+Senha: TrocaTicket#2026Admin
 ```
 
 ### 🔎 Verificando as instalações
