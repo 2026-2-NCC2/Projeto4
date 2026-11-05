@@ -8,11 +8,21 @@ import menuAdministrador from './menuAdministrador'
 import { listarUsuarios } from '../../../services/usuarios'
 import { listarEventos } from '../../../services/eventos'
 import { listarPropostas } from '../../../services/propostas'
+import { useEffect, useState } from 'react'
+import { listarEventosAdministracao } from '../../../services/eventos'
 
 function Administrador() {
   const usuarios = listarUsuarios()
-  const eventos = listarEventos()
+  const [eventos, setEventos] = useState(() => listarEventos())
   const propostas = listarPropostas()
+  useEffect(() => {
+    let ativo = true
+    listarEventosAdministracao().then((lista) => { if (ativo) setEventos(Array.isArray(lista) ? lista : []) }).catch(() => {})
+    const atualizar = () => setEventos(listarEventos())
+    window.addEventListener('trocaticket-api-ok', atualizar)
+    return () => { ativo = false; window.removeEventListener('trocaticket-api-ok', atualizar) }
+  }, [])
+  const comissaoMedia = eventos.reduce((soma, evento) => soma + Number(evento.comissao?.medio?.comissaoTrocaTicket ?? evento.comissao?.medio?.comissaoTicketCobertura ?? 0), 0)
 
   const pendentes = usuarios.filter(
     (usuario) => usuario.status === 'PENDENTE'
@@ -59,6 +69,12 @@ function Administrador() {
             titulo="Propostas"
             valor={propostas.length}
             detalhe="Propostas registradas"
+          />
+
+          <CardDesempenho
+            titulo="Comissão estimada da plataforma"
+            valor={comissaoMedia.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+            detalhe="Soma das projeções no cenário médio"
             destaque
           />
 

@@ -28,6 +28,20 @@ export async function alterarStatusAprovacaoEvento(id, statusAprovacao) {
   return evento
 }
 
+
+export async function atualizarTaxaPlataformaEvento(id, taxaPlataforma) {
+  const { evento } = await requisicaoApi(`/admin/events/${encodeURIComponent(id)}/commission`, {
+    method: 'PATCH', body: { taxaPlataforma: Number(taxaPlataforma) }
+  })
+  salvarCache(CHAVE_EVENTOS, listarEventos().map((item) => String(item.id) === String(id) ? evento : item))
+  return evento
+}
+
+export async function buscarOrganizadorDoServidor(id) {
+  const { organizador, eventos } = await requisicaoApi(`/organizers/${encodeURIComponent(id)}`)
+  return { organizador, eventos: Array.isArray(eventos) ? eventos : [] }
+}
+
 export function buscarEventoPorId(id) {
   return listarEventos().find((evento) => String(evento.id) === String(id))
 }

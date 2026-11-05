@@ -30,7 +30,7 @@ function CartaoCenario({ titulo, cenario, temCustos }) {
       <article className="precificacao-cenario precificacao-cenario-invalido">
         <span className="precificacao-cenario-kicker">{titulo}</span>
         <h2>Dados insuficientes</h2>
-        <p>Confira o público e a margem de lucro cadastrados no evento.</p>
+        <p>Confira o público, a comissão da TrocaTicket e a margem cadastrados no evento.</p>
       </article>
     )
   }
@@ -41,20 +41,22 @@ function CartaoCenario({ titulo, cenario, temCustos }) {
       <div className="precificacao-publico"><strong>{cenario.publico.toLocaleString('pt-BR')}</strong><span>participantes</span></div>
       <div className="precificacao-precos">
         <div>
-          <span>Ticket de equilíbrio</span>
-          <strong>{temCustos ? moeda(cenario.ticketEquilibrio) : '—'}</strong>
-          <small>Cobre os custos consolidados.</small>
+          <span>1º ticket · Cobertura dos custos</span>
+          <strong>{temCustos ? moeda(cenario.ticketCoberturaCustos ?? cenario.ticketEquilibrio) : '—'}</strong>
+          <small>Inclui a taxa da TrocaTicket; cobre os custos do evento, sem prever lucro para o organizador.</small>
         </div>
         <div className="precificacao-preco-alvo">
-          <span>Ticket-alvo estimado</span>
-          <strong>{temCustos ? moeda(cenario.ticketAlvo) : '—'}</strong>
-          <small>Considera a margem definida.</small>
+          <span>2º ticket · Com margem do organizador</span>
+          <strong>{temCustos && cenario.ticketAlvo != null ? moeda(cenario.ticketAlvo) : 'Indisponível'}</strong>
+          <small>Inclui os custos, a mesma taxa da TrocaTicket e a margem de lucro desejada pelo organizador.</small>
         </div>
       </div>
       {temCustos && (
         <div className="precificacao-projecao">
-          <div><span>Receita estimada no cenário</span><strong>{moeda(cenario.receitaEstimada)}</strong></div>
-          <div><span>Resultado estimado após custos</span><strong>{moeda(cenario.lucroEstimado)}</strong></div>
+          <div><span>Taxa TrocaTicket no ticket de cobertura ({Number(cenario.taxaPlataforma ?? 0).toLocaleString('pt-BR')}%)</span><strong>{moeda(cenario.comissaoCobertura)}</strong></div>
+          <div><span>Taxa TrocaTicket no ticket com margem ({Number(cenario.taxaPlataforma ?? 0).toLocaleString('pt-BR')}%)</span><strong>{cenario.comissaoTrocaTicket == null ? '—' : moeda(cenario.comissaoTrocaTicket)}</strong></div>
+          <div><span>Receita bruta projetada com o ticket com margem</span><strong>{cenario.receitaEstimada == null ? '—' : moeda(cenario.receitaEstimada)}</strong></div>
+          <div><span>Lucro estimado do organizador (após custos e taxa)</span><strong>{cenario.lucroEstimado == null ? '—' : moeda(cenario.lucroEstimado)}</strong></div>
         </div>
       )}
     </article>
@@ -132,9 +134,14 @@ function PrecificacaoEvento() {
                 <p>Inclui custos manuais e propostas aceitas, sem contar duas vezes o mesmo item.</p>
               </article>
               <article className="precificacao-resumo-card">
-                <span>Margem desejada sobre receita</span>
+                <span>Margem desejada do organizador</span>
                 <strong>{precificacao.margemLucro == null ? '—' : `${Number(precificacao.margemLucro).toLocaleString('pt-BR')}%`}</strong>
-                <small>Definida nos dados do evento.</small>
+                <small>Percentual pretendido sobre a receita bruta.</small>
+              </article>
+              <article className="precificacao-resumo-card">
+                <span>Comissão da TrocaTicket</span>
+                <strong>{precificacao.taxaPlataforma == null ? '—' : `${Number(precificacao.taxaPlataforma).toLocaleString('pt-BR')}%`}</strong>
+                <small>Definida pelo administrador para este evento.</small>
               </article>
               <article className="precificacao-resumo-card">
                 <span>Componentes incluídos</span>
@@ -165,6 +172,7 @@ function PrecificacaoEvento() {
               <div className="precificacao-secao-titulo"><div><span>CENÁRIOS DE PÚBLICO</span><h2>Quanto precisaria custar cada ticket?</h2></div><span className="precificacao-badge-regra"><CheckCircle2 size={14} /> Cálculo atualizado pela API</span></div>
               <div className="precificacao-grade-cenarios">
                 <CartaoCenario titulo="Cenário de público mínimo" cenario={precificacao.cenarios?.minimo} temCustos={precificacao.temCustos} />
+                <CartaoCenario titulo="Cenário de público médio" cenario={precificacao.cenarios?.medio} temCustos={precificacao.temCustos} />
                 <CartaoCenario titulo="Cenário de público máximo" cenario={precificacao.cenarios?.maximo} temCustos={precificacao.temCustos} />
               </div>
             </section>
@@ -189,8 +197,8 @@ function PrecificacaoEvento() {
             <section className="precificacao-formula">
               <div className="precificacao-formula-icone"><Calculator size={19} /></div>
               <div><span>FÓRMULAS UTILIZADAS</span><h2>Critério de cálculo</h2>
-                <p><strong>Ticket de equilíbrio:</strong> {precificacao.formulas?.equilibrio}</p>
-                <p><strong>Ticket-alvo:</strong> {precificacao.formulas?.alvo}</p>
+                <p><strong>1º ticket — cobertura dos custos, incluindo a taxa TrocaTicket:</strong> {precificacao.formulas?.equilibrio}</p>
+                <p><strong>2º ticket — cobertura dos custos + taxa TrocaTicket + margem do organizador:</strong> {precificacao.formulas?.alvo}</p>
                 <small>{precificacao.formulas?.margem} {precificacao.formulas?.arredondamento}</small>
               </div>
             </section>

@@ -15,6 +15,11 @@ const menuFornecedor = [
     icone: 'propostas'
   },
   {
+    texto: 'Relatório de propostas',
+    destino: '/fornecedor/relatorio',
+    icone: 'relatorio'
+  },
+  {
     texto: 'Perfil',
     destino: '/fornecedor/perfil',
     icone: 'perfil'

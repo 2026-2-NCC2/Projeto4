@@ -1,0 +1,1065 @@
+/*
+ * TrocaTicket — camada responsiva mobile-first
+ * Carregada depois dos estilos das páginas para padronizar os breakpoints.
+ * Base: celular; aprimoramentos progressivos em tablet e desktop.
+ */
+
+:root {
+  --tt-header-height: 58px;
+  --tt-bottom-nav-height: 68px;
+  --tt-page-gutter: 14px;
+  --tt-content-max: 1440px;
+}
+
+html {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--tt-header-height) + 12px);
+  scroll-padding-bottom: calc(var(--tt-bottom-nav-height) + 16px);
+}
+
+body {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root,
+.dashboard-layout,
+.area-dashboard,
+.conteudo-dashboard,
+.home,
+.login,
+.cadastro {
+  min-width: 0;
+  max-width: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+summary {
+  touch-action: manipulation;
+}
+
+button,
+[role='button'],
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--cor-verde, #28c94a) 58%, transparent);
+  outline-offset: 2px;
+}
+
+p,
+span,
+strong,
+small,
+label,
+h1,
+h2,
+h3,
+h4,
+li,
+a {
+  overflow-wrap: anywhere;
+}
+
+/* ------------------------------
+   Navegação: base para celular
+   ------------------------------ */
+.cabecalho-dashboard {
+  min-height: var(--tt-header-height);
+  height: var(--tt-header-height);
+  padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
+  gap: 8px;
+}
+
+.header-esquerda,
+.header-direita,
+.dashboard-logo-container {
+  min-width: 0;
+}
+
+.dashboard-logo-container {
+  gap: 6px;
+}
+
+.dashboard-logo {
+  width: 27px;
+  height: 27px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.dashboard-logo-texto {
+  font-size: clamp(.78rem, 3.5vw, .96rem);
+  white-space: nowrap;
+}
+
+.header-direita {
+  flex: 0 0 auto;
+  gap: 6px;
+}
+
+.header-direita nav {
+  display: flex;
+  align-items: center;
+}
+
+.alerta-verificacao {
+  max-width: min(34vw, 190px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-lateral {
+  position: fixed !important;
+  inset: auto 0 0 0;
+  z-index: 1000;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: var(--tt-bottom-nav-height);
+  padding: 5px max(6px, env(safe-area-inset-left)) calc(5px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-right));
+  display: block;
+  border: 0;
+  border-top: 1px solid var(--cor-borda, rgba(255,255,255,.1));
+  border-radius: 0;
+  background: var(--cor-superficie, #101416);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, .16);
+  backdrop-filter: blur(16px);
+}
+
+.menu-lateral nav {
+  display: grid;
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 2px;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+.menu-lateral nav a {
+  min-width: 0;
+  min-height: 54px;
+  width: 100%;
+  padding: 5px 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: clamp(.5rem, 1.9vw, .64rem);
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.menu-lateral nav a span {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-lateral nav a svg,
+.menu-lateral svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+}
+
+.menu-lateral nav .menu-ativo {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--cor-verde, #28c94a) 10%, transparent);
+}
+
+.perfil-menu-lateral {
+  display: none !important;
+}
+
+.area-dashboard {
+  display: block !important;
+  width: 100%;
+  max-width: var(--tt-content-max);
+  min-width: 0;
+  margin-inline: auto;
+  padding: calc(var(--tt-header-height) + 16px) var(--tt-page-gutter) calc(var(--tt-bottom-nav-height) + 22px + env(safe-area-inset-bottom));
+}
+
+.conteudo-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.conteudo-dashboard > *,
+.pagina-eventos-container > *,
+.pagina-detalhe-evento > *,
+.pagina-relatorio-financeiro > *,
+.eventos-administrador > *,
+.pagina-detalhe-fornecedor > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.alerta-sincronizacao {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  overflow-wrap: anywhere;
+}
+
+.alerta-sincronizacao button {
+  width: 100%;
+  min-height: 42px;
+}
+
+/* ------------------------------
+   Grid e cards: uma coluna na base
+   ------------------------------ */
+.cards-desempenho,
+.grid-eventos-recentes,
+.metricas-resumo-eventos,
+.grid-cards-meus-eventos,
+.cards-fornecedor,
+.lista-propostas-recentes,
+.cards-administrador,
+.grid-cards-fornecedores,
+.grid-detalhe-fornecedor,
+.lista-contatos-fornecedor,
+.evento-admin-grade-campos,
+.evento-admin-listas-relacionadas,
+.grade-dados-cadastro-admin,
+.grid-formulario-evento,
+.formulario-meu-perfil,
+.painel-alterar-senha,
+.precificacao-resumo,
+.precificacao-grade-cenarios,
+.precificacao-precos,
+.precificacao-projecao,
+.relatorio-indicadores,
+.relatorio-metas-grade,
+.relatorio-form-simulacao,
+.relatorio-cenarios-venda,
+.relatorio-fornecedores-grade,
+.grade-conteudo-detalhe-evento,
+.metricas-detalhe-evento,
+.detalhes-chave-evento,
+.grid-detalhe-organizador,
+.grade-detalhe-organizador,
+.evento-admin-comissao,
+.evento-admin-comissao-cenarios {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.cards-desempenho,
+.grid-eventos-recentes,
+.metricas-resumo-eventos,
+.grid-cards-meus-eventos,
+.cards-fornecedor,
+.lista-propostas-recentes,
+.cards-administrador,
+.grid-cards-fornecedores,
+.grid-detalhe-fornecedor,
+.lista-contatos-fornecedor,
+.evento-admin-grade-campos,
+.evento-admin-listas-relacionadas,
+.grade-dados-cadastro-admin,
+.grid-formulario-evento,
+.formulario-meu-perfil,
+.painel-alterar-senha,
+.precificacao-resumo,
+.precificacao-grade-cenarios,
+.precificacao-precos,
+.precificacao-projecao,
+.relatorio-indicadores,
+.relatorio-metas-grade,
+.relatorio-form-simulacao,
+.relatorio-cenarios-venda,
+.relatorio-fornecedores-grade,
+.grade-conteudo-detalhe-evento,
+.metricas-detalhe-evento,
+.detalhes-chave-evento,
+.grid-detalhe-organizador,
+.grade-detalhe-organizador,
+.evento-admin-comissao,
+.evento-admin-comissao-cenarios {
+  min-width: 0;
+}
+
+.card-evento,
+.card-evento-gestao,
+.card-evento-recente,
+.card-proposta,
+.card-requisicao,
+.card-fornecedor-pro,
+.card-cadastro,
+.card-cadastro-admin,
+.card-cadastro-pendente,
+.card-metrica-rapida,
+.card-desempenho,
+.painel-detalhe-evento,
+.painel-detalhe-fornecedor,
+.painel-lateral-detalhe,
+.relatorio-secao,
+.relatorio-fornecedor-card,
+.evento-admin-card,
+.precificacao-cenario,
+.precificacao-total-card,
+.precificacao-resumo-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.card-evento-gestao,
+.card-proposta,
+.card-requisicao,
+.card-cadastro-admin,
+.evento-admin-card {
+  overflow: hidden;
+}
+
+/* ------------------------------
+   Cabeçalhos, toolbars e ações
+   ------------------------------ */
+.cabecalho-eventos,
+.cabecalho-secao-eventos,
+.cabecalho-procurar,
+.cabecalho-itens-custo,
+.titulo-eventos-administrador,
+.toolbar-filtros-eventos,
+.relatorio-cabecalho,
+.relatorio-acoes,
+.relatorio-rodape,
+.rodape-detalhe-fornecedor,
+.detalhe-organizador-cabecalho,
+.titulo-secao,
+.titulo-secao-fornecedor,
+.precificacao-cabecalho,
+.precificacao-secao-titulo,
+.cabecalho-card-titulo,
+.barra-acoes-evento {
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.cabecalho-eventos h1,
+.titulo-eventos-administrador h1,
+.relatorio-cabecalho h1,
+.precificacao-cabecalho h1,
+.hero-detalhe-evento h1,
+.hero-detalhe-fornecedor h1 {
+  font-size: clamp(1.2rem, 6vw, 1.7rem);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.btn-criar-evento-topo,
+.btn-criar-novo-evento,
+.evento-admin-atualizar,
+.botao-ver-todos,
+.relatorio-botao-principal,
+.relatorio-botao-secundario,
+.btn-gerenciar-evento,
+.btn-solicitar-proposta {
+  min-height: 42px;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.btn-criar-evento-topo,
+.evento-admin-atualizar,
+.relatorio-acoes-direita,
+.relatorio-acoes-direita button,
+.relatorio-acoes-direita a {
+  width: 100%;
+  justify-content: center;
+}
+
+.banner-novo-evento,
+.banner-novo-evento-conteudo,
+.resumo-financeiro-fornecedor,
+.evento-admin-acoes,
+.acoes-proposta,
+.acoes-proposta-fornecedor,
+.acoes-proposta-organizador,
+.acoes-contraproposta-fornecedor,
+.contato-fornecedor-aceito-acoes {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.banner-novo-evento {
+  align-items: stretch;
+  flex-direction: column;
+  padding: 14px;
+}
+
+.banner-novo-evento-conteudo {
+  align-items: flex-start;
+}
+
+.btn-criar-novo-evento {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Abas não devem comprimir o texto: rolagem horizontal contida na própria barra. */
+.botoes-abas-filtro,
+.eventos-admin-abas,
+.abas-cadastros-admin,
+.abas-minhas-propostas,
+.abas-propostas-organizador {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 7px;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 2px 9px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.botoes-abas-filtro button,
+.eventos-admin-abas button,
+.abas-cadastros-admin button,
+.abas-minhas-propostas button,
+.abas-propostas-organizador button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  white-space: nowrap;
+}
+
+/* ------------------------------
+   Formulários e controles
+   ------------------------------ */
+input,
+select,
+textarea {
+  max-width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea,
+  .campo-grupo input,
+  .formulario-perfil-fornecedor input {
+    font-size: 16px !important;
+  }
+}
+
+.formulario-editar-evento,
+.formulario-item-custo,
+.formulario-proposta,
+.formulario-completar-cadastro,
+.formulario-cadastro-fornecedor,
+.formulario-meu-perfil,
+.formulario-perfil-fornecedor,
+.form-contraproposta-organizador,
+.editar-proposta-fornecedor {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.formulario-meu-perfil,
+.painel-alterar-senha {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.acoes-editar-evento,
+.acoes-formulario-custo,
+.acoes-capa-edicao,
+.acoes-alterar-senha,
+.evento-admin-acoes,
+.relatorio-acoes-direita {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.acoes-editar-evento > *,
+.acoes-formulario-custo > *,
+.acoes-capa-edicao > *,
+.acoes-alterar-senha > *,
+.evento-admin-acoes > * {
+  min-width: min(100%, 130px);
+  min-height: 42px;
+  flex: 1 1 auto;
+}
+
+/* ------------------------------
+   Tabelas, imagens e mídia
+   ------------------------------ */
+.precificacao-tabela-wrap,
+.relatorio-tabela-wrap,
+.tabela-responsiva,
+.table-responsive,
+.tabela-custos-wrap,
+.tabela-propostas-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.precificacao-tabela,
+.relatorio-tabela,
+.tabela-responsiva table,
+.table-responsive table,
+.tabela-custos-wrap table,
+.tabela-propostas-wrap table {
+  max-width: 100%;
+}
+
+.hero-detalhe-evento,
+.hero-detalhe-fornecedor,
+.evento-admin-cabecalho-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.hero-detalhe-evento {
+  min-height: 240px;
+  padding: 20px;
+}
+
+.hero-detalhe-fornecedor {
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.hero-detalhe-fornecedor-avatar {
+  width: 76px;
+  height: 76px;
+}
+
+.evento-admin-cabecalho-card {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.evento-admin-capa,
+.evento-admin-capa img {
+  width: 100%;
+  max-height: 220px;
+}
+
+.lista-contatos-fornecedor {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.painel-detalhe-fornecedor,
+.painel-lateral-detalhe,
+.relatorio-secao,
+.precificacao-componentes-secao {
+  padding: 14px;
+}
+
+/* Login e cadastro: permitir rolagem quando o teclado virtual estiver aberto. */
+.login,
+.cadastro {
+  height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: visible;
+}
+
+.conteudo-login,
+.conteudo-cadastro {
+  width: 100%;
+  min-height: calc(100vh - 110px);
+  min-height: calc(100dvh - 110px);
+  height: auto;
+  margin-top: var(--tt-header-height);
+  padding: 24px 14px 34px;
+}
+
+.card-login,
+.card-cadastro {
+  width: min(100%, 440px);
+  padding: 22px 18px;
+}
+
+/* Home e navegação pública. */
+.cabecalho-publico {
+  min-height: 58px;
+  padding: 9px 14px;
+  gap: 8px;
+}
+
+.cabecalho-publico .logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.cabecalho-publico .logo-texto {
+  font-size: clamp(.9rem, 4vw, 1.1rem);
+  white-space: nowrap;
+}
+
+.cabecalho-publico nav {
+  gap: 6px;
+}
+
+.cabecalho-publico nav a {
+  min-height: 38px;
+  padding: 7px 10px;
+  font-size: .72rem;
+  white-space: nowrap;
+}
+
+.home {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.secao-principal {
+  flex: 1;
+  min-height: calc(100vh - 58px);
+  min-height: calc(100dvh - 58px);
+  padding: 82px 16px 36px;
+}
+
+.titulo {
+  max-width: 100%;
+  font-size: clamp(2.25rem, 10vw, 4.5rem);
+  line-height: 1.05;
+  text-align: center;
+}
+
+.descricao {
+  width: min(100%, 620px);
+  margin: 18px auto;
+  font-size: .9rem;
+}
+
+.div-botao {
+  width: min(100%, 340px);
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.div-botao a,
+.div-botao button {
+  width: 100%;
+  min-height: 44px;
+  text-align: center;
+}
+
+.rodape-publico {
+  position: static;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+}
+
+.rodape-publico nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+/* Estados vazios, mensagens e conteúdo longo. */
+.estado-lista-admin,
+.eventos-vazio-card,
+.nenhum-evento-disponivel,
+.nenhuma-proposta,
+.propostas-vazio,
+.evento-admin-vazio,
+.evento-fornecedor-inexistente {
+  min-width: 0;
+  max-width: 100%;
+  padding: 18px 14px;
+  overflow-wrap: anywhere;
+}
+
+.navegacao-voltar-pagina button,
+.evento-fornecedor-voltar,
+.detalhe-organizador-voltar {
+  min-height: 40px;
+}
+
+/* ------------------------------
+   Celular maior: 2 colunas seletivas
+   ------------------------------ */
+@media (min-width: 560px) {
+  :root {
+    --tt-page-gutter: 18px;
+  }
+
+  .cards-desempenho,
+  .metricas-resumo-eventos,
+  .cards-fornecedor,
+  .cards-administrador,
+  .relatorio-indicadores,
+  .relatorio-metas-grade,
+  .precificacao-resumo,
+  .precificacao-grade-cenarios,
+  .evento-admin-grade-campos,
+  .evento-admin-listas-relacionadas,
+  .lista-contatos-fornecedor,
+  .grid-detalhe-fornecedor {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .grid-eventos-recentes,
+  .grid-cards-meus-eventos,
+  .lista-propostas-recentes {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .formulario-meu-perfil,
+  .painel-alterar-senha {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .hero-detalhe-fornecedor {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .rodape-detalhe-fornecedor {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .evento-admin-comissao {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .evento-admin-comissao-cenarios {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* ------------------------------
+   Tablet: navegação inferior mantida
+   para não apertar a área de conteúdo
+   ------------------------------ */
+@media (min-width: 768px) {
+  :root {
+    --tt-page-gutter: 24px;
+  }
+
+  .area-dashboard {
+    padding-top: calc(var(--tt-header-height) + 22px);
+    padding-bottom: calc(var(--tt-bottom-nav-height) + 28px);
+  }
+
+  .conteudo-dashboard {
+    gap: 20px;
+  }
+
+  .cards-desempenho,
+  .metricas-resumo-eventos,
+  .cards-fornecedor,
+  .cards-administrador,
+  .relatorio-indicadores,
+  .relatorio-metas-grade,
+  .precificacao-resumo {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .grid-detalhe-fornecedor,
+  .grid-detalhe-organizador,
+  .grade-detalhe-organizador {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .hero-detalhe-evento {
+    min-height: 280px;
+    padding: 28px;
+  }
+
+  .evento-admin-cabecalho-card {
+    grid-template-columns: minmax(220px, 34%) minmax(0, 1fr) !important;
+  }
+
+  .evento-admin-grade-campos,
+  .evento-admin-listas-relacionadas,
+  .lista-contatos-fornecedor {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .relatorio-acoes {
+    align-items: center;
+  }
+
+  .relatorio-acoes-direita {
+    width: auto;
+  }
+
+  .relatorio-acoes-direita button,
+  .relatorio-acoes-direita a {
+    width: auto;
+  }
+}
+
+/* ------------------------------
+   Desktop: sidebar lateral
+   ------------------------------ */
+@media (min-width: 1024px) {
+  :root {
+    --tt-header-height: 64px;
+    --tt-page-gutter: 24px;
+  }
+
+  .cabecalho-dashboard {
+    height: var(--tt-header-height);
+    min-height: var(--tt-header-height);
+    padding-inline: 24px;
+  }
+
+  .area-dashboard {
+    display: grid !important;
+    grid-template-columns: 198px minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+    padding: calc(var(--tt-header-height) + 20px) 24px 42px;
+  }
+
+  .menu-lateral {
+    position: sticky !important;
+    inset: auto;
+    top: calc(var(--tt-header-height) + 18px);
+    width: 198px !important;
+    min-width: 198px !important;
+    min-height: 0;
+    height: fit-content !important;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--cor-borda, rgba(255,255,255,.08));
+    border-radius: 12px;
+    background: var(--cor-superficie, #0d1012);
+    box-shadow: none;
+  }
+
+  .menu-lateral nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    height: auto;
+  }
+
+  .menu-lateral nav a {
+    min-height: 42px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    font-size: .73rem;
+    text-align: left;
+  }
+
+  .menu-lateral nav a span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .perfil-menu-lateral {
+    display: flex !important;
+    min-width: 0;
+    margin-top: 20px;
+  }
+
+  .area-dashboard {
+    padding-bottom: 40px;
+  }
+
+  .cards-desempenho,
+  .metricas-resumo-eventos,
+  .cards-fornecedor,
+  .cards-administrador {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .grid-eventos-recentes,
+  .grid-cards-meus-eventos,
+  .lista-propostas-recentes,
+  .grid-cards-fornecedores {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .relatorio-indicadores,
+  .relatorio-metas-grade,
+  .precificacao-resumo {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .area-dashboard {
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .menu-lateral {
+    width: 210px !important;
+    min-width: 210px !important;
+  }
+
+  .cards-desempenho,
+  .metricas-resumo-eventos,
+  .cards-fornecedor,
+  .cards-administrador {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .relatorio-indicadores {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .relatorio-metas-grade {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .precificacao-resumo {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Telas pequenas: evita que ações e textos fiquem comprimidos. */
+@media (max-width: 380px) {
+  :root {
+    --tt-page-gutter: 10px;
+    --tt-bottom-nav-height: 66px;
+  }
+
+  .dashboard-logo-texto {
+    font-size: .76rem;
+  }
+
+  .cabecalho-dashboard {
+    padding-inline: 9px;
+  }
+
+  .menu-lateral nav a {
+    font-size: .48rem;
+    padding-inline: 1px;
+  }
+
+  .menu-lateral nav a svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .area-dashboard {
+    padding-inline: 10px;
+  }
+
+  .card-evento,
+  .card-evento-gestao,
+  .card-proposta,
+  .card-requisicao,
+  .painel-detalhe-fornecedor,
+  .painel-detalhe-evento,
+  .relatorio-secao,
+  .precificacao-componentes-secao {
+    padding-inline: 12px;
+  }
+
+  .cabecalho-publico {
+    padding-inline: 10px;
+  }
+
+  .cabecalho-publico nav a {
+    padding-inline: 8px;
+    font-size: .66rem;
+  }
+}
+
+/* Acessibilidade: respeitar quem prefere movimento reduzido. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Impressão: não imprimir menus fixos nem navegação inferior. */
+@media print {
+  .menu-lateral,
+  .cabecalho-dashboard,
+  .cabecalho-publico,
+  .rodape-publico {
+    display: none !important;
+  }
+
+  .area-dashboard {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}

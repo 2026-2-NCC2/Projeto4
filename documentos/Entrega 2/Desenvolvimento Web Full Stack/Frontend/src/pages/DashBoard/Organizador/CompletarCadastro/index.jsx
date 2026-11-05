@@ -102,7 +102,7 @@ function CompletarCadastroOrganizador() {
     setSucesso('Cadastro enviado para análise.')
 
     setTimeout(() => {
-      navigate('/organizador/perfil')
+      navigate('/organizador')
     }, 1000)
   }
 

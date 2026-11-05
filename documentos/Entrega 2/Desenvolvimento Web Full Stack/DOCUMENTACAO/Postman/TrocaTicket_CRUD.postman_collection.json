@@ -1,0 +1,401 @@
+{
+  "info": {
+    "_postman_id": "a9c8bf64-6f48-4ce6-a2c4-4e7c6b9b8c21",
+    "name": "TrocaTicket - CRUD de eventos e erros",
+    "description": "Collection de evidência para o requisito de CRUD do PI. Configure baseUrl, emailOrganizador e senhaOrganizador. O organizador deve estar APROVADO. As requisições criam, consultam, alteram e por fim excluem um evento de teste.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3333/api"
+    },
+    {
+      "key": "emailOrganizador",
+      "value": "organizador-aprovado@exemplo.com"
+    },
+    {
+      "key": "senhaOrganizador",
+      "value": "troque-esta-senha"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "eventId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "0 - Login de organizador aprovado",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{emailOrganizador}}\",\n  \"senha\": \"{{senhaOrganizador}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Login retorna HTTP 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Resposta inclui token', () => pm.expect(body.token).to.be.a('string').and.not.empty);",
+              "if (body.token) pm.collectionVariables.set('token', body.token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "1 - CREATE - Criar evento",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set('eventId', pm.variables.replaceIn('{{$guid}}'));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Evento criado com HTTP 201', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "if (body.evento && body.evento.id) pm.collectionVariables.set('eventId', body.evento.id);",
+              "pm.test('Resposta contém id do evento', () => pm.expect(body.evento && body.evento.id).to.be.a('string').and.not.empty);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": \"{{eventId}}\",\n  \"nome\": \"Evento de teste CRUD TrocaTicket\",\n  \"categoria\": \"Acadêmico\",\n  \"descricao\": \"Evento temporário para validar POST, GET, PUT e DELETE no Postman.\",\n  \"dataInicio\": \"2026-12-01\",\n  \"horaInicio\": \"18:00\",\n  \"dataFim\": \"2026-12-01\",\n  \"horaFim\": \"23:00\",\n  \"local\": \"Campus de teste\",\n  \"cidade\": \"São Paulo - SP\",\n  \"publicoMinimo\": 50,\n  \"publicoMaximo\": 100,\n  \"margemLucro\": 20,\n  \"status\": \"Planejamento\",\n  \"capa\": null,\n  \"requisicoesFornecedores\": [],\n  \"itensCusto\": []\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2 - READ - Listar eventos do organizador",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Listagem retorna HTTP 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Resposta contém array de eventos', () => pm.expect(body.eventos).to.be.an('array'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - READ - Consultar evento por id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/events/{{eventId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "{{eventId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Consulta retorna HTTP 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Retorna o evento de teste', () => pm.expect(body.evento.id).to.eql(pm.collectionVariables.get('eventId')));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4 - UPDATE - Alterar dados do evento",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Evento CRUD atualizado\",\n  \"categoria\": \"Acadêmico\",\n  \"descricao\": \"Teste de atualização via PUT.\",\n  \"dataInicio\": \"2026-12-02\",\n  \"horaInicio\": \"19:00\",\n  \"dataFim\": \"2026-12-02\",\n  \"horaFim\": \"22:00\",\n  \"local\": \"Campus atualizado\",\n  \"cidade\": \"São Paulo - SP\",\n  \"publicoMinimo\": 60,\n  \"publicoMaximo\": 120,\n  \"margemLucro\": 25,\n  \"status\": \"Planejamento\",\n  \"capa\": null,\n  \"requisicoesFornecedores\": [],\n  \"itensCusto\": []\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/events/{{eventId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "{{eventId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Alteração retorna HTTP 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Nome foi atualizado', () => pm.expect(body.evento.nome).to.eql('Evento CRUD atualizado'));",
+              "pm.test('Evento volta para análise após alteração', () => pm.expect(body.evento.statusAprovacao).to.eql('PENDENTE'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5 - DELETE - Excluir evento de teste",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/events/{{eventId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "{{eventId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Exclusão retorna HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('API confirma exclusão', () => pm.expect(pm.response.json().ok).to.eql(true));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "6 - Erro 400 - Evento sem campos obrigatórios",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"\",\n  \"publicoMinimo\": 0,\n  \"publicoMaximo\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Validação retorna HTTP 400', () => pm.response.to.have.status(400));",
+              "pm.test('Resposta informa o erro', () => pm.expect(pm.response.json().erro).to.be.a('string'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "7 - Erro 404 - Evento inexistente",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/events/nao-existe-000",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "nao-existe-000"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Registro inexistente retorna HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "8 - Relatório financeiro do evento",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/events/{{eventId}}/report",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "{{eventId}}",
+            "report"
+          ]
+        },
+        "description": "Retorna o relatório preliminar ou consolidado do evento, com custos, serviços pendentes, cenários de ticket e contatos apenas das propostas aceitas pelo organizador autenticado."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Relatório responde com status válido', () => pm.expect([200, 403, 404]).to.include(pm.response.code));",
+              "if (pm.response.code === 200) { const body = pm.response.json(); pm.test('Resposta inclui relatório', () => pm.expect(body.relatorio).to.be.an('object')); pm.test('Resposta inclui precificação', () => pm.expect(body.relatorio.precificacao).to.be.an('object')); }"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

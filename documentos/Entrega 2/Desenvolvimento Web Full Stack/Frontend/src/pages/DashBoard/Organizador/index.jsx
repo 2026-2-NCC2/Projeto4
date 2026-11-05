@@ -75,7 +75,7 @@ function Organizador() {
       <section className="desempenho-geral">
         <div className="titulo-secao">
           <h2>Planejamento dos eventos</h2>
-          <span className="atualizacao-tempo">Valores estimados</span>
+          <span className="atualizacao-tempo">Informações relevantes</span>
         </div>
         <div className="cards-desempenho">
           <CardDesempenho titulo="EVENTOS CADASTRADOS" valor={eventos.length} detalhe="Eventos no seu painel" />
@@ -147,7 +147,7 @@ function Organizador() {
           <div className="banner-icone-raio">+</div>
           <div>
             <h4 className="banner-titulo">Organize os próximos custos</h4>
-            <p className="banner-descricao">Cadastre um evento, organize os serviços requeridos e compare as propostas dos fornecedores.</p>
+            <p className="banner-descricao">Cadastre um evento, organize os serviços requeridos, compare as propostas dos fornecedores e obtenha o preços dos tickets.</p>
           </div>
         </div>
         {usuario?.status === 'APROVADO' ? (

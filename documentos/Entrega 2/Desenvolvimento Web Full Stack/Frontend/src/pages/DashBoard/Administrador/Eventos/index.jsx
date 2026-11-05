@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { BadgeCheck, Building2, CalendarDays, Check, Clock3, FileText, ImageOff, MapPin, ReceiptText, RotateCcw, Users, X } from 'lucide-react'
 import DashboardLayout from '../../../../layouts/DashboardLayout'
 import menuAdministrador from '../menuAdministrador'
-import { alterarStatusAprovacaoEvento, listarEventosAdministracao } from '../../../../services/eventos'
+import { alterarStatusAprovacaoEvento, listarEventosAdministracao, atualizarTaxaPlataformaEvento } from '../../../../services/eventos'
 
 const moeda = (valor) => Number.isFinite(Number(valor))
   ? Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -28,6 +28,7 @@ function EventosAdministrador() {
   const [atualizandoId, setAtualizandoId] = useState('')
   const [erro, setErro] = useState('')
   const [sucesso, setSucesso] = useState('')
+  const [taxas, setTaxas] = useState({})
 
   const carregarEventos = useCallback(async () => {
     setCarregando(true)
@@ -35,6 +36,7 @@ function EventosAdministrador() {
     try {
       const lista = await listarEventosAdministracao()
       setEventos(Array.isArray(lista) ? lista : [])
+      setTaxas(Object.fromEntries((Array.isArray(lista) ? lista : []).map((evento) => [evento.id, String(evento.taxaPlataforma ?? 0)])))
     } catch (e) {
       setErro(e.message || 'Não foi possível carregar os eventos.')
     } finally {
@@ -46,7 +48,17 @@ function EventosAdministrador() {
 
   const pendentes = useMemo(() => eventos.filter((evento) => (evento.statusAprovacao || 'PENDENTE') === 'PENDENTE'), [eventos])
   const verificados = useMemo(() => eventos.filter((evento) => (evento.statusAprovacao || 'PENDENTE') !== 'PENDENTE'), [eventos])
-  const exibidos = aba === 'PENDENTES' ? pendentes : verificados
+  const exibidos = aba === 'VERIFICADOS' ? verificados : pendentes
+
+  async function salvarTaxa(evento) {
+    setAtualizandoId(evento.id); setErro(''); setSucesso('');
+    try {
+      const atualizado = await atualizarTaxaPlataformaEvento(evento.id, taxas[evento.id] ?? evento.taxaPlataforma ?? 0);
+      setEventos((anteriores) => anteriores.map((item) => String(item.id) === String(evento.id) ? atualizado : item));
+      setSucesso(`Taxa da TrocaTicket atualizada para ${Number(atualizado.taxaPlataforma || 0).toLocaleString('pt-BR')}% no evento “${evento.nome}”.`);
+    } catch (e) { setErro(e.message || 'Não foi possível salvar a taxa da plataforma.'); }
+    finally { setAtualizandoId(''); }
+  }
 
   async function definirStatus(evento, status) {
     const rotulos = { APROVADO: 'aprovado', REJEITADO: 'rejeitado', PENDENTE: 'devolvido para análise' }
@@ -141,10 +153,10 @@ function EventosAdministrador() {
                       <h3><ReceiptText size={16} /> Resumo financeiro estimado</h3>
                       <div className="evento-admin-grade-campos">
                         <Campo titulo="Custo consolidado" valor={evento.precificacao ? moeda(evento.precificacao.totalCustos) : 'Não calculado'} />
-                        <Campo titulo="Ticket-alvo (público mínimo)" valor={evento.precificacao?.cenarios?.minimo ? moeda(evento.precificacao.cenarios.minimo.ticketAlvo) : 'Dados insuficientes'} />
-                        <Campo titulo="Ticket-alvo (público máximo)" valor={evento.precificacao?.cenarios?.maximo ? moeda(evento.precificacao.cenarios.maximo.ticketAlvo) : 'Dados insuficientes'} />
-                        <Campo titulo="Ticket de equilíbrio (público mínimo)" valor={evento.precificacao?.cenarios?.minimo ? moeda(evento.precificacao.cenarios.minimo.ticketEquilibrio) : 'Dados insuficientes'} />
-                        <Campo titulo="Ticket de equilíbrio (público máximo)" valor={evento.precificacao?.cenarios?.maximo ? moeda(evento.precificacao.cenarios.maximo.ticketEquilibrio) : 'Dados insuficientes'} />
+                        <Campo titulo="Ticket de cobertura dos custos (público mínimo)" valor={evento.precificacao?.cenarios?.minimo ? moeda(evento.precificacao.cenarios.minimo.ticketCoberturaCustos ?? evento.precificacao.cenarios.minimo.ticketEquilibrio) : 'Dados insuficientes'} />
+                        <Campo titulo="Ticket de cobertura dos custos (público máximo)" valor={evento.precificacao?.cenarios?.maximo ? moeda(evento.precificacao.cenarios.maximo.ticketCoberturaCustos ?? evento.precificacao.cenarios.maximo.ticketEquilibrio) : 'Dados insuficientes'} />
+                        <Campo titulo="Ticket com margem do organizador (público mínimo)" valor={evento.precificacao?.cenarios?.minimo?.ticketAlvo != null ? moeda(evento.precificacao.cenarios.minimo.ticketAlvo) : 'Indisponível'} />
+                        <Campo titulo="Ticket com margem do organizador (público máximo)" valor={evento.precificacao?.cenarios?.maximo?.ticketAlvo != null ? moeda(evento.precificacao.cenarios.maximo.ticketAlvo) : 'Indisponível'} />
                       </div>
                       {Array.isArray(evento.precificacao?.componentes) && evento.precificacao.componentes.length > 0 && (
                         <ul className="evento-admin-financeiro-lista">
@@ -153,6 +165,16 @@ function EventosAdministrador() {
                           ))}
                         </ul>
                       )}
+                      <div className="evento-admin-comissao">
+                        <div className="evento-admin-comissao-edicao">
+                          <label htmlFor={`taxa-${evento.id}`}>Taxa da TrocaTicket neste evento (%)</label>
+                          <div><input id={`taxa-${evento.id}`} type="number" min="0" max={Math.max(0, 99.99 - Number(evento.margemLucro || 0))} step="0.01" value={taxas[evento.id] ?? String(evento.taxaPlataforma ?? 0)} onChange={(e) => setTaxas((anteriores) => ({ ...anteriores, [evento.id]: e.target.value }))}/><button type="button" disabled={ocupado} onClick={() => salvarTaxa(evento)}>{ocupado ? 'Salvando…' : 'Salvar taxa'}</button></div>
+                          <small>A taxa da TrocaTicket incide sobre a receita bruta nos dois tickets. O ticket de cobertura paga custos + taxa; o ticket com margem paga custos + a mesma taxa + a margem desejada pelo organizador. A soma da taxa e da margem precisa ser menor que 100%.</small>
+                        </div>
+                        <div className="evento-admin-comissao-cenarios">
+                          {['minimo', 'medio', 'maximo'].map((chave) => { const cenario = evento.comissao?.[chave]; return <div key={chave}><span>Público {chave === 'medio' ? 'médio' : chave}</span><strong>{cenario?.comissaoTrocaTicket != null ? moeda(cenario.comissaoTrocaTicket) : (cenario?.comissaoTicketCobertura != null ? moeda(cenario.comissaoTicketCobertura) : 'Sem projeção')}</strong><small>{cenario ? `${cenario.publico} pessoas · taxa no ticket de cobertura ${moeda(cenario.comissaoTicketCobertura)} · taxa no ticket com margem ${cenario.comissaoTrocaTicket == null ? 'indisponível' : moeda(cenario.comissaoTrocaTicket)} · ticket com margem ${cenario.ticketAlvo == null ? 'indisponível' : moeda(cenario.ticketAlvo)} · lucro estimado do organizador ${cenario.resultadoOrganizador == null ? 'indisponível' : moeda(cenario.resultadoOrganizador)}` : 'Cadastre custos e público para projetar.'}</small></div> })}
+                        </div>
+                      </div>
                     </div>
 
                     <div className="evento-admin-organizador">

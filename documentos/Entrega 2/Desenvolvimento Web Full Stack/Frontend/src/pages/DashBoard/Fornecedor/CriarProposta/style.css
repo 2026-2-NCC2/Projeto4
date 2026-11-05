@@ -198,3 +198,4 @@
 .orcamento-referencia-proposta span { display: block; color: var(--cor-branco-texto); font-size: .62rem; }
 .orcamento-referencia-proposta strong { display: block; margin-top: 5px; color: var(--cor-verde); font-size: .95rem; }
 .orcamento-referencia-proposta p { margin-top: 6px; color: var(--cor-branco-texto); font-size: .62rem; line-height: 1.5; }
+.proposta-duplicada-aviso{padding:18px;border:1px solid var(--cor-borda);border-radius:11px;background:var(--cor-superficie);color:var(--cor-texto-principal)}.proposta-duplicada-aviso p{margin:7px 0;color:var(--cor-texto-secundario);font-size:.72rem}.proposta-duplicada-aviso a{display:inline-flex;margin-top:7px;padding:8px 11px;border-radius:8px;background:var(--cor-verde);color:#fff;text-decoration:none;font-size:.68rem;font-weight:700}

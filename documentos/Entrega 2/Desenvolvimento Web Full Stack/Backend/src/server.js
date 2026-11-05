@@ -150,6 +150,12 @@ async function salvarEvento(dados, organizadorId, id) {
     e.status = 400;
     throw e;
   }
+  const taxaPlataformaAtual = Number(atual?.taxa_plataforma || 0);
+  if (!Number.isFinite(taxaPlataformaAtual) || taxaPlataformaAtual < 0 || margemLucro + taxaPlataformaAtual >= 100) {
+    const e = new Error('A soma da margem do organizador com a comissão da TrocaTicket precisa ser menor que 100%. Peça ao administrador para ajustar a comissão ou reduza a margem desejada.');
+    e.status = 400;
+    throw e;
+  }
   const itensCusto = Array.isArray(dados.itensCusto) ? dados.itensCusto : [];
   const requisicoes = Array.isArray(dados.requisicoesFornecedores) ? dados.requisicoesFornecedores : [];
   for (const item of [...itensCusto, ...requisicoes]) {
@@ -175,12 +181,12 @@ async function salvarEvento(dados, organizadorId, id) {
 
   await run(`INSERT INTO eventos
     (id, organizador_id, nome, categoria, descricao, data_inicio, hora_inicio, data_fim, hora_fim, \`local\`, cidade,
-     publico_minimo, publico_maximo, margem_lucro, capa, status, status_aprovacao, dados_json)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDENTE', ?)
+     publico_minimo, publico_maximo, margem_lucro, taxa_plataforma, capa, status, status_aprovacao, dados_json)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDENTE', ?)
     ON DUPLICATE KEY UPDATE nome=VALUES(nome), categoria=VALUES(categoria), descricao=VALUES(descricao),
      data_inicio=VALUES(data_inicio), hora_inicio=VALUES(hora_inicio), data_fim=VALUES(data_fim), hora_fim=VALUES(hora_fim),
      \`local\`=VALUES(\`local\`), cidade=VALUES(cidade), publico_minimo=VALUES(publico_minimo), publico_maximo=VALUES(publico_maximo),
-     margem_lucro=VALUES(margem_lucro), capa=VALUES(capa), status=VALUES(status), status_aprovacao='PENDENTE', dados_json=VALUES(dados_json)`, [
+     margem_lucro=VALUES(margem_lucro), taxa_plataforma=VALUES(taxa_plataforma), capa=VALUES(capa), status=VALUES(status), status_aprovacao='PENDENTE', dados_json=VALUES(dados_json)`, [
     id,
     organizadorId,
     nome,
@@ -195,6 +201,7 @@ async function salvarEvento(dados, organizadorId, id) {
     publicoMinimo,
     publicoMaximo,
     margemLucro,
+    atual?.taxa_plataforma ?? 0,
     typeof dados.capa === 'string' && (dados.capa.startsWith('data:') || dados.capa.startsWith('https://')) ? dados.capa : null,
     preparar(dados.status) || 'Planejamento',
     json(conteudo),
@@ -241,9 +248,12 @@ async function eventoAdministrativo(row) {
   const evento = await eventoPublico(row);
   const organizadorRow = await get('SELECT * FROM usuarios WHERE id = ?', [row.organizador_id]);
   const organizador = userPublico(organizadorRow);
+  const precificacao = await precificacaoDeEvento(row);
   return {
     ...evento,
-    precificacao: await precificacaoDeEvento(row),
+    taxaPlataforma: Number(row.taxa_plataforma || 0),
+    precificacao,
+    comissao: projetarComissaoPlataforma(precificacao, row.taxa_plataforma),
     organizador: organizador ? {
       id: organizador.id,
       nome: organizador.nome,
@@ -273,6 +283,30 @@ async function precificacaoDeEvento(row) {
     all("SELECT * FROM propostas WHERE evento_id = ? AND status = 'ACEITA' ORDER BY atualizada_em DESC, criada_em DESC", [row.id]),
   ]);
   return calcularPrecificacao(row, itens, propostas);
+}
+
+function projetarComissaoPlataforma(precificacao, taxa) {
+  const percentual = Number(taxa || 0);
+  const cenarios = precificacao?.cenarios || {};
+  const montar = (cenario) => {
+    if (!cenario) return null;
+    return {
+      publico: cenario.publico,
+      ticketCoberturaCustos: cenario.ticketCoberturaCustos ?? cenario.ticketEquilibrio,
+      comissaoTicketCobertura: cenario.comissaoCobertura,
+      ticketAlvo: cenario.ticketAlvo,
+      receitaBruta: cenario.receitaEstimada,
+      comissaoTrocaTicket: cenario.comissaoTrocaTicket,
+      custos: Number(precificacao?.totalCustos || 0),
+      resultadoOrganizador: cenario.lucroEstimado,
+    };
+  };
+  return {
+    taxaPlataforma: percentual,
+    minimo: montar(cenarios.minimo),
+    medio: montar(cenarios.medio),
+    maximo: montar(cenarios.maximo),
+  };
 }
 
 // Resposta explicativa para quem abre por engano a raiz da API (porta 3333).
@@ -462,13 +496,26 @@ app.get('/api/suppliers/:id', autenticado, exigirPerfil('ORGANIZADOR', 'ADMINIST
   } catch (e) { next(e); }
 });
 
+
+app.get('/api/organizers/:id', autenticado, exigirPerfil('FORNECEDOR', 'ADMINISTRADOR'), async (req, res, next) => {
+  try {
+    if (req.usuario.perfil === 'FORNECEDOR' && req.usuario.status !== 'APROVADO') return erro(res, 403, 'Seu cadastro precisa ser aprovado para consultar organizadores.');
+    const row = await get("SELECT * FROM usuarios WHERE id = ? AND perfil = 'ORGANIZADOR' AND status = 'APROVADO'", [req.params.id]);
+    if (!row) return erro(res, 404, 'Organizador não encontrado ou indisponível.');
+    const usuario = userPublico(row);
+    const eventos = await all("SELECT id, nome, categoria, descricao, data_inicio, data_fim, `local`, cidade, publico_minimo, publico_maximo, capa, status FROM eventos WHERE organizador_id = ? AND status_aprovacao = 'APROVADO' ORDER BY data_inicio DESC", [row.id]);
+    res.json({ organizador: { id: usuario.id, nome: usuario.razaoSocial || usuario.nome, responsavel: usuario.responsavel || '', email: usuario.email, telefone: usuario.telefone || '', cidade: usuario.cidade || '', estado: usuario.estado || '', descricao: usuario.descricao || '', site: usuario.site || '', fotoPerfil: usuario.fotoPerfil || '', status: usuario.status }, eventos: eventos.map((evento) => ({ id: evento.id, nome: evento.nome, categoria: evento.categoria, descricao: evento.descricao, dataInicio: evento.data_inicio, dataFim: evento.data_fim, local: evento.local, cidade: evento.cidade, publicoMinimo: evento.publico_minimo, publicoMaximo: evento.publico_maximo, capa: evento.capa, status: evento.status })) });
+  } catch (e) { next(e); }
+});
+
 app.get('/api/events', autenticado, async (req, res, next) => {
   try {
     let rows;
     if (req.usuario.perfil === 'ORGANIZADOR') {
       rows = await all('SELECT * FROM eventos WHERE organizador_id = ? ORDER BY criado_em DESC', [req.usuario.id]);
     } else if (req.usuario.perfil === 'FORNECEDOR') {
-      // Fornecedores só veem eventos que a administração já aprovou.
+      // Fornecedores só consultam oportunidades após concluir o cadastro e obter aprovação.
+      if (req.usuario.status !== 'APROVADO') return res.json({ eventos: [] });
       rows = await all("SELECT e.* FROM eventos e INNER JOIN usuarios u ON u.id = e.organizador_id WHERE e.status_aprovacao = 'APROVADO' AND u.status = 'APROVADO' ORDER BY e.criado_em DESC");
     } else {
       rows = await all('SELECT * FROM eventos ORDER BY criado_em DESC');
@@ -493,10 +540,17 @@ app.get('/api/events/:id', autenticado, async (req, res, next) => {
     if (!row) return erro(res, 404, 'Evento não encontrado.');
     if (req.usuario.perfil === 'ORGANIZADOR' && row.organizador_id !== req.usuario.id) return erro(res, 403, 'Você não tem acesso a este evento.');
     if (req.usuario.perfil === 'FORNECEDOR') {
+      if (req.usuario.status !== 'APROVADO') return erro(res, 403, 'Complete e aguarde a aprovação do seu cadastro para consultar oportunidades.');
       const organizador = await get('SELECT status FROM usuarios WHERE id = ?', [row.organizador_id]);
       if (row.status_aprovacao !== 'APROVADO' || organizador?.status !== 'APROVADO') return erro(res, 404, 'Evento não encontrado.');
     }
-    res.json({ evento: await eventoParaPerfil(row, req.usuario.perfil) });
+    const eventoPublicoAtual = await eventoParaPerfil(row, req.usuario.perfil);
+    if (req.usuario.perfil === 'FORNECEDOR') {
+      const organizadorRow = await get("SELECT * FROM usuarios WHERE id = ? AND perfil = 'ORGANIZADOR'", [row.organizador_id]);
+      const organizador = organizadorRow ? userPublico(organizadorRow) : null;
+      eventoPublicoAtual.organizador = organizador ? { id: organizador.id, nome: organizador.razaoSocial || organizador.nome, responsavel: organizador.responsavel || '', email: organizador.email, telefone: organizador.telefone || '', cidade: organizador.cidade || '', estado: organizador.estado || '', descricao: organizador.descricao || '', site: organizador.site || '', status: organizador.status } : null;
+    }
+    res.json({ evento: eventoPublicoAtual });
   } catch (e) { next(e); }
 });
 
@@ -639,6 +693,19 @@ app.get('/api/proposals', autenticado, async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
+
+app.get('/api/supplier/summary', autenticado, exigirPerfil('FORNECEDOR'), async (req, res, next) => {
+  try {
+    const resumo = await get(`SELECT COUNT(*) AS total,
+      SUM(status = 'ACEITA') AS aceitas,
+      SUM(status = 'RECUSADA') AS recusadas,
+      SUM(status = 'EM ANÁLISE') AS emAnalise,
+      COALESCE(SUM(CASE WHEN status = 'ACEITA' THEN valor ELSE 0 END), 0) AS valorBrutoAceito
+      FROM propostas WHERE fornecedor_id = ?`, [req.usuario.id]);
+    res.json({ resumo: { total: Number(resumo?.total || 0), aceitas: Number(resumo?.aceitas || 0), recusadas: Number(resumo?.recusadas || 0), emAnalise: Number(resumo?.emAnalise || 0), valorBrutoAceito: Number(resumo?.valorBrutoAceito || 0) } });
+  } catch (e) { next(e); }
+});
+
 app.post('/api/proposals', autenticado, exigirPerfil('FORNECEDOR'), async (req, res, next) => {
   try {
     const evento = await get('SELECT * FROM eventos WHERE id = ?', [String(req.body.eventoId || '')]);
@@ -647,10 +714,11 @@ app.post('/api/proposals', autenticado, exigirPerfil('FORNECEDOR'), async (req, 
     if (organizadorDoEvento?.status !== 'APROVADO') return erro(res, 404, 'O evento não existe ou ainda não está disponível para propostas.');
     if (req.usuario.status !== 'APROVADO') return erro(res, 403, 'Seu cadastro precisa ser aprovado antes de enviar propostas.');
     const itemId = req.body.itemId ? String(req.body.itemId) : null;
-    if (itemId) {
-      const item = await get('SELECT id FROM itens_custo WHERE id = ? AND evento_id = ?', [itemId, evento.id]);
-      if (!item) return erro(res, 400, 'O item selecionado não pertence a este evento.');
-    }
+    if (!itemId) return erro(res, 400, 'Selecione um serviço requerido específico para enviar a proposta.');
+    const item = await get('SELECT id FROM itens_custo WHERE id = ? AND evento_id = ?', [itemId, evento.id]);
+    if (!item) return erro(res, 400, 'O serviço selecionado não pertence a este evento.');
+    const propostaExistente = await get('SELECT id, status FROM propostas WHERE fornecedor_id = ? AND evento_id = ? AND item_id = ? LIMIT 1', [req.usuario.id, evento.id, itemId]);
+    if (propostaExistente) return erro(res, 409, `Você já enviou uma proposta para este serviço (status: ${propostaExistente.status}). Consulte ou edite a proposta em Minhas Propostas.`);
     const valor = Number(req.body.valor);
     const validade = preparar(req.body.validade);
     const descricao = preparar(req.body.descricao);
@@ -662,6 +730,73 @@ app.post('/api/proposals', autenticado, exigirPerfil('FORNECEDOR'), async (req, 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'EM ANÁLISE', ?)`,
     [id, evento.id, itemId, req.usuario.id, evento.organizador_id, valor, validade, descricao, preparar(req.body.observacoes) || null, json(dados)]);
     res.status(201).json({ proposta: await propostaPublica(await get('SELECT * FROM propostas WHERE id = ?', [id])) });
+  } catch (e) {
+    // Proteção adicional para envios simultâneos quando o índice único estiver ativo.
+    if (e?.code === 'ER_DUP_ENTRY') return erro(res, 409, 'Você já enviou uma proposta para este serviço. Consulte ou edite a proposta em Minhas Propostas.');
+    next(e);
+  }
+});
+
+
+app.patch('/api/proposals/:id', autenticado, exigirPerfil('FORNECEDOR'), async (req, res, next) => {
+  try {
+    const proposta = await get('SELECT * FROM propostas WHERE id = ?', [req.params.id]);
+    if (!proposta) return erro(res, 404, 'Proposta não encontrada.');
+    if (proposta.fornecedor_id !== req.usuario.id) return erro(res, 403, 'Você não pode editar esta proposta.');
+    if (proposta.status !== 'EM ANÁLISE') return erro(res, 409, 'Somente propostas em análise podem ser editadas.');
+    const atual = parseJson(proposta.dados_json, {});
+    if (atual.contraproposta?.status === 'AGUARDANDO_FORNECEDOR') return erro(res, 409, 'Aguarde a resposta do organizador à contraproposta antes de editar.');
+    const valor = Number(req.body.valor);
+    const validade = preparar(req.body.validade);
+    const descricao = preparar(req.body.descricao);
+    if (!(valor > 0) || !Number.isFinite(valor) || !validade || !descricao) return erro(res, 400, 'Informe valor, validade e descrição válidos.');
+    const observacoes = preparar(req.body.observacoes) || null;
+    const dados = { ...atual, ...req.body, valor, validade, descricao, observacoes, editadaEm: new Date().toISOString() };
+    await run('UPDATE propostas SET valor = ?, validade = ?, descricao = ?, observacoes = ?, dados_json = ?, atualizada_em = CURRENT_TIMESTAMP WHERE id = ?', [valor, validade, descricao, observacoes, json(dados), proposta.id]);
+    res.json({ proposta: await propostaPublica(await get('SELECT * FROM propostas WHERE id = ?', [proposta.id])) });
+  } catch (e) { next(e); }
+});
+
+app.post('/api/proposals/:id/counteroffer', autenticado, exigirPerfil('ORGANIZADOR'), async (req, res, next) => {
+  try {
+    const proposta = await get('SELECT * FROM propostas WHERE id = ?', [req.params.id]);
+    if (!proposta) return erro(res, 404, 'Proposta não encontrada.');
+    if (proposta.organizador_id !== req.usuario.id) return erro(res, 403, 'Você não pode negociar esta proposta.');
+    if (proposta.status !== 'EM ANÁLISE') return erro(res, 409, 'A contraproposta só pode ser enviada para uma proposta em análise.');
+    const atual = parseJson(proposta.dados_json, {});
+    if (atual.contraproposta?.status === 'AGUARDANDO_FORNECEDOR') return erro(res, 409, 'Já existe uma contraproposta aguardando resposta.');
+    const valor = Number(req.body.valor);
+    const quantidade = Number(req.body.quantidade);
+    const descricao = preparar(req.body.descricao);
+    if (!(valor > 0) || !Number.isFinite(valor) || !(quantidade > 0) || !Number.isFinite(quantidade) || !descricao) return erro(res, 400, 'Informe valor, quantidade e descrição válidos.');
+    const contraproposta = { valor, quantidade, descricao, observacoes: preparar(req.body.observacoes), status: 'AGUARDANDO_FORNECEDOR', enviadaEm: new Date().toISOString(), enviadaPor: req.usuario.id };
+    await run('UPDATE propostas SET dados_json = ?, atualizada_em = CURRENT_TIMESTAMP WHERE id = ?', [json({ ...atual, contraproposta }), proposta.id]);
+    res.json({ proposta: await propostaPublica(await get('SELECT * FROM propostas WHERE id = ?', [proposta.id])) });
+  } catch (e) { next(e); }
+});
+
+app.patch('/api/proposals/:id/counteroffer-response', autenticado, exigirPerfil('FORNECEDOR'), async (req, res, next) => {
+  try {
+    const proposta = await get('SELECT * FROM propostas WHERE id = ?', [req.params.id]);
+    if (!proposta) return erro(res, 404, 'Proposta não encontrada.');
+    if (proposta.fornecedor_id !== req.usuario.id) return erro(res, 403, 'Você não pode responder a esta contraproposta.');
+    if (proposta.status !== 'EM ANÁLISE') return erro(res, 409, 'Esta proposta não está mais em negociação.');
+    const aceitar = req.body.aceitar === true;
+    const atual = parseJson(proposta.dados_json, {});
+    const contraproposta = atual.contraproposta;
+    if (!contraproposta || contraproposta.status !== 'AGUARDANDO_FORNECEDOR') return erro(res, 409, 'Não existe contraproposta pendente para esta proposta.');
+    const atualizada = { ...contraproposta, status: aceitar ? 'ACEITA' : 'RECUSADA', respondidaEm: new Date().toISOString(), respondidaPor: req.usuario.id };
+    if (aceitar) {
+      const novaDescricao = `${proposta.descricao}\nContraproposta aceita: ${contraproposta.descricao} (quantidade: ${contraproposta.quantidade}).`;
+      await run("UPDATE propostas SET valor = ?, descricao = ?, status = 'ACEITA', dados_json = ?, atualizada_em = CURRENT_TIMESTAMP WHERE id = ?", [Number(contraproposta.valor), novaDescricao, json({ ...atual, contraproposta: atualizada, valorFinal: Number(contraproposta.valor), quantidadeFinal: Number(contraproposta.quantidade), descricaoFinal: contraproposta.descricao, status: 'ACEITA' }), proposta.id]);
+      if (proposta.item_id) {
+        const anteriores = await all("SELECT * FROM propostas WHERE evento_id = ? AND item_id = ? AND status = 'ACEITA' AND id <> ?", [proposta.evento_id, proposta.item_id, proposta.id]);
+        for (const anterior of anteriores) { const dadosAnt = parseJson(anterior.dados_json, {}); await run('UPDATE propostas SET status = ?, dados_json = ?, atualizada_em = CURRENT_TIMESTAMP WHERE id = ?', ['RECUSADA', json({ ...dadosAnt, status: 'RECUSADA' }), anterior.id]); }
+      }
+    } else {
+      await run('UPDATE propostas SET dados_json = ?, atualizada_em = CURRENT_TIMESTAMP WHERE id = ?', [json({ ...atual, contraproposta: atualizada }), proposta.id]);
+    }
+    res.json({ proposta: await propostaPublica(await get('SELECT * FROM propostas WHERE id = ?', [proposta.id])) });
   } catch (e) { next(e); }
 });
 
@@ -673,6 +808,10 @@ app.patch('/api/proposals/:id/status', autenticado, exigirPerfil('ORGANIZADOR'),
     if (!proposta) return erro(res, 404, 'Proposta não encontrada.');
     if (proposta.organizador_id !== req.usuario.id) return erro(res, 403, 'Você não pode responder a esta proposta.');
     if (proposta.status !== 'EM ANÁLISE') return erro(res, 409, 'Esta proposta já recebeu uma resposta.');
+    const dadosProposta = parseJson(proposta.dados_json, {});
+    if (dadosProposta.contraproposta?.status === 'AGUARDANDO_FORNECEDOR') {
+      return erro(res, 409, 'Há uma contraproposta aguardando resposta do fornecedor. Aguarde a decisão antes de aceitar ou recusar a proposta original.');
+    }
     if (status === 'ACEITA' && proposta.item_id) {
       const aceitasAnteriores = await all("SELECT * FROM propostas WHERE evento_id = ? AND item_id = ? AND status = 'ACEITA' AND id <> ?", [proposta.evento_id, proposta.item_id, proposta.id]);
       for (const anterior of aceitasAnteriores) {
@@ -680,8 +819,7 @@ app.patch('/api/proposals/:id/status', autenticado, exigirPerfil('ORGANIZADOR'),
         await run('UPDATE propostas SET status = ?, dados_json = ?, atualizada_em = CURRENT_TIMESTAMP WHERE id = ?', ['RECUSADA', json({ ...dadosAnteriores, status: 'RECUSADA' }), anterior.id]);
       }
     }
-    const dados = parseJson(proposta.dados_json, {});
-    await run('UPDATE propostas SET status = ?, dados_json = ?, atualizada_em = CURRENT_TIMESTAMP WHERE id = ?', [status, json({ ...dados, status }), proposta.id]);
+    await run('UPDATE propostas SET status = ?, dados_json = ?, atualizada_em = CURRENT_TIMESTAMP WHERE id = ?', [status, json({ ...dadosProposta, status }), proposta.id]);
     res.json({ proposta: await propostaPublica(await get('SELECT * FROM propostas WHERE id = ?', [proposta.id])) });
   } catch (e) { next(e); }
 });
@@ -719,6 +857,23 @@ app.patch('/api/admin/events/:id/status', autenticado, exigirPerfil('ADMINISTRAD
     }
     await run('UPDATE eventos SET status_aprovacao = ? WHERE id = ?', [status, row.id]);
     const atualizado = await get('SELECT * FROM eventos WHERE id = ?', [row.id]);
+    res.json({ evento: await eventoAdministrativo(atualizado) });
+  } catch (e) { next(e); }
+});
+
+
+app.patch('/api/admin/events/:id/commission', autenticado, exigirPerfil('ADMINISTRADOR'), async (req, res, next) => {
+  try {
+    const taxa = Number(req.body.taxaPlataforma);
+    if (!Number.isFinite(taxa) || taxa < 0 || taxa >= 100) return erro(res, 400, 'A taxa da TrocaTicket deve ficar entre 0% e menos de 100%.');
+    const evento = await get('SELECT * FROM eventos WHERE id = ?', [req.params.id]);
+    if (!evento) return erro(res, 404, 'Evento não encontrado.');
+    const margem = Number(evento.margem_lucro || 0);
+    if (!Number.isFinite(margem) || margem < 0 || margem + taxa >= 100) {
+      return erro(res, 400, 'A soma da margem do organizador com a comissão da TrocaTicket precisa ser menor que 100%. Ajuste uma das porcentagens antes de salvar.');
+    }
+    await run('UPDATE eventos SET taxa_plataforma = ? WHERE id = ?', [taxa, evento.id]);
+    const atualizado = await get('SELECT * FROM eventos WHERE id = ?', [evento.id]);
     res.json({ evento: await eventoAdministrativo(atualizado) });
   } catch (e) { next(e); }
 });
@@ -772,7 +927,7 @@ app.use((err, _req, res, _next) => {
   if (err?.type === 'entity.parse.failed') return erro(res, 400, 'O corpo da requisição contém JSON inválido.');
   if (err?.type === 'entity.too.large') return erro(res, 413, 'Os dados enviados ultrapassam o limite permitido.');
   if (err?.message?.includes('Formato inválido')) return erro(res, 400, err.message);
-  if (err?.code === 'ER_DUP_ENTRY') return erro(res, 409, 'Já existe um registro com esses dados.');
+  if (err?.code === 'ER_DUP_ENTRY') return erro(res, 409, 'Já existe uma proposta sua para este serviço. Consulte Minhas Propostas para editar a proposta existente.');
   if (err?.code === 'ER_NO_REFERENCED_ROW_2' || err?.code === 'ER_ROW_IS_REFERENCED_2') return erro(res, 400, 'Não foi possível salvar porque existem registros relacionados inválidos.');
   if (err?.message?.includes('CORS')) return erro(res, 403, err.message);
   console.error(err);

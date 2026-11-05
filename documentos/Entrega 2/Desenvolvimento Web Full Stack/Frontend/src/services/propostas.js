@@ -30,10 +30,46 @@ export async function atualizarStatusProposta(id, status) {
   } catch {
     salvarCache(CHAVE_PROPOSTAS, listarPropostas().map((p) => String(p.id) === String(id) ? proposta : p))
   }
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('trocaticket-api-ok'))
   return proposta
+}
+
+
+export async function atualizarProposta(id, dados) {
+  const { proposta } = await requisicaoApi(`/proposals/${encodeURIComponent(id)}`, { method: 'PATCH', body: dados })
+  await atualizarCachePropostas()
+  return proposta
+}
+
+export async function enviarContraproposta(id, dados) {
+  const { proposta } = await requisicaoApi(`/proposals/${encodeURIComponent(id)}/counteroffer`, { method: 'POST', body: dados })
+  await atualizarCachePropostas()
+  return proposta
+}
+
+export async function responderContraproposta(id, aceitar) {
+  const { proposta } = await requisicaoApi(`/proposals/${encodeURIComponent(id)}/counteroffer-response`, { method: 'PATCH', body: { aceitar } })
+  await atualizarCachePropostas()
+  return proposta
+}
+
+export async function obterResumoFornecedor() {
+  const { resumo } = await requisicaoApi('/supplier/summary')
+  return resumo || { total: 0, aceitas: 0, recusadas: 0, emAnalise: 0, valorBrutoAceito: 0 }
+}
+
+async function atualizarCachePropostas() {
+  try {
+    const resposta = await requisicaoApi('/proposals')
+    salvarCache(CHAVE_PROPOSTAS, Array.isArray(resposta.propostas) ? resposta.propostas : [])
+  } catch {
+    // A próxima sincronização completa atualiza o cache se a rede estiver indisponível.
+  }
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('trocaticket-api-ok'))
 }
 
 export async function excluirProposta(id) {
   await requisicaoApi(`/proposals/${encodeURIComponent(id)}`, { method: 'DELETE' })
   salvarCache(CHAVE_PROPOSTAS, listarPropostas().filter((p) => String(p.id) !== String(id)))
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('trocaticket-api-ok'))
 }

@@ -23,6 +23,8 @@ import ProcurarEvento from './pages/DashBoard/Fornecedor/ProcurarEvento'
 import EventoDisponivel from './pages/DashBoard/Fornecedor/EventoDisponivel'
 import CriarProposta from './pages/DashBoard/Fornecedor/CriarProposta'
 import MinhasPropostas from './pages/DashBoard/Fornecedor/MinhasPropostas'
+import RelatorioFornecedor from './pages/DashBoard/Fornecedor/RelatorioPropostas'
+import DetalheOrganizador from './pages/DashBoard/Fornecedor/DetalheOrganizador'
 import PerfilFornecedor from './pages/DashBoard/Fornecedor/Perfil'
 import CompletarCadastroFornecedor from './pages/DashBoard/Fornecedor/CompletarCadastro'
 
@@ -66,10 +68,12 @@ function App() {
         {/* Área do fornecedor: busca de eventos e envio de propostas. */}
         <Route path="/fornecedor/completar-cadastro" element={<RotaProtegida perfis={['FORNECEDOR']}><CompletarCadastroFornecedor /></RotaProtegida>} />
         <Route path="/fornecedor" element={<RotaProtegida perfis={['FORNECEDOR']}><Fornecedor /></RotaProtegida>} />
-        <Route path="/fornecedor/procurar-evento" element={<RotaProtegida perfis={['FORNECEDOR']}><ProcurarEvento /></RotaProtegida>} />
-        <Route path="/fornecedor/eventos/:id" element={<RotaProtegida perfis={['FORNECEDOR']}><EventoDisponivel /></RotaProtegida>} />
-        <Route path="/fornecedor/criar-proposta" element={<RotaProtegida perfis={['FORNECEDOR']}><CriarProposta /></RotaProtegida>} />
+        <Route path="/fornecedor/procurar-evento" element={<RotaProtegida perfis={['FORNECEDOR']} statusNecessario="APROVADO"><ProcurarEvento /></RotaProtegida>} />
+        <Route path="/fornecedor/eventos/:id" element={<RotaProtegida perfis={['FORNECEDOR']} statusNecessario="APROVADO"><EventoDisponivel /></RotaProtegida>} />
+        <Route path="/fornecedor/criar-proposta" element={<RotaProtegida perfis={['FORNECEDOR']} statusNecessario="APROVADO"><CriarProposta /></RotaProtegida>} />
         <Route path="/fornecedor/propostas" element={<RotaProtegida perfis={['FORNECEDOR']}><MinhasPropostas /></RotaProtegida>} />
+        <Route path="/fornecedor/relatorio" element={<RotaProtegida perfis={['FORNECEDOR']}><RelatorioFornecedor /></RotaProtegida>} />
+        <Route path="/fornecedor/organizadores/:id" element={<RotaProtegida perfis={['FORNECEDOR']} statusNecessario="APROVADO"><DetalheOrganizador /></RotaProtegida>} />
         <Route path="/fornecedor/perfil" element={<RotaProtegida perfis={['FORNECEDOR']}><PerfilFornecedor /></RotaProtegida>} />
 
         {/* Telas de administração da plataforma. */}

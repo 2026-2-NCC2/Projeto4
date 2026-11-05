@@ -102,7 +102,7 @@ function CompletarCadastroFornecedor() {
     setSucesso('Cadastro enviado para análise.')
 
     setTimeout(() => {
-      navigate('/fornecedor/perfil')
+      navigate('/fornecedor')
     }, 1000)
   }
 

@@ -4,34 +4,78 @@ const paraCentavos = (valor) => {
 };
 
 const valorMoeda = (centavos) => Number((centavos / 100).toFixed(2));
+const arredondarDivisaoParaCima = (numeradorCentavos, participantes, fatorReceita) =>
+  Math.ceil(numeradorCentavos / (participantes * fatorReceita) - 1e-9);
 
-function montarCenario(totalCustosCentavos, publico, margemPercentual) {
+function montarCenario(totalCustosCentavos, publico, margemPercentual, taxaPlataformaPercentual) {
   const participantes = Number(publico);
+  const margem = Number(margemPercentual);
+  const taxa = Number(taxaPlataformaPercentual);
   if (!Number.isInteger(participantes) || participantes <= 0) return null;
-  if (!Number.isFinite(margemPercentual) || margemPercentual < 0 || margemPercentual >= 100) return null;
+  if (!Number.isFinite(margem) || margem < 0 || margem >= 100) return null;
+  if (!Number.isFinite(taxa) || taxa < 0 || taxa >= 100) return null;
 
-  const fatorReceita = 1 - margemPercentual / 100;
-  const ticketEquilibrioCentavos = Math.ceil(totalCustosCentavos / participantes - 1e-9);
-  const ticketAlvoCentavos = Math.ceil(totalCustosCentavos / (participantes * fatorReceita) - 1e-9);
-  const receitaEstimadaCentavos = ticketAlvoCentavos * participantes;
+  // As duas porcentagens incidem sobre a receita bruta do ingresso.
+  // 1º preço: depois da comissão, a receita líquida cobre os custos.
+  const fatorCobertura = 1 - taxa / 100;
+  const ticketEquilibrioCentavos = arredondarDivisaoParaCima(
+    totalCustosCentavos,
+    participantes,
+    fatorCobertura,
+  );
+  const receitaCoberturaCentavos = ticketEquilibrioCentavos * participantes;
+  const comissaoCoberturaCentavos = Math.round(receitaCoberturaCentavos * taxa / 100);
+  const resultadoCoberturaCentavos = receitaCoberturaCentavos - comissaoCoberturaCentavos - totalCustosCentavos;
+
+  // 2º preço: depois da comissão e da margem desejada, a parcela restante cobre os custos.
+  const fatorTicketAlvo = 1 - (taxa + margem) / 100;
+  let ticketAlvoCentavos = null;
+  let receitaAlvoCentavos = null;
+  let comissaoAlvoCentavos = null;
+  let lucroAlvoCentavos = null;
+
+  if (fatorTicketAlvo > 0) {
+    ticketAlvoCentavos = arredondarDivisaoParaCima(
+      totalCustosCentavos,
+      participantes,
+      fatorTicketAlvo,
+    );
+    receitaAlvoCentavos = ticketAlvoCentavos * participantes;
+    comissaoAlvoCentavos = Math.round(receitaAlvoCentavos * taxa / 100);
+    lucroAlvoCentavos = receitaAlvoCentavos - comissaoAlvoCentavos - totalCustosCentavos;
+  }
 
   return {
     publico: participantes,
+    // Mantém ticketEquilibrio como alias para compatibilidade com componentes antigos.
     ticketEquilibrio: valorMoeda(ticketEquilibrioCentavos),
-    ticketAlvo: valorMoeda(ticketAlvoCentavos),
-    receitaEstimada: valorMoeda(receitaEstimadaCentavos),
-    lucroEstimado: valorMoeda(receitaEstimadaCentavos - totalCustosCentavos),
+    ticketCoberturaCustos: valorMoeda(ticketEquilibrioCentavos),
+    receitaCobertura: valorMoeda(receitaCoberturaCentavos),
+    comissaoCobertura: valorMoeda(comissaoCoberturaCentavos),
+    resultadoAposComissaoECustos: valorMoeda(resultadoCoberturaCentavos),
+    ticketAlvo: ticketAlvoCentavos == null ? null : valorMoeda(ticketAlvoCentavos),
+    receitaEstimada: receitaAlvoCentavos == null ? null : valorMoeda(receitaAlvoCentavos),
+    comissaoTrocaTicket: comissaoAlvoCentavos == null ? null : valorMoeda(comissaoAlvoCentavos),
+    lucroEstimado: lucroAlvoCentavos == null ? null : valorMoeda(lucroAlvoCentavos),
+    resultadoOrganizador: lucroAlvoCentavos == null ? null : valorMoeda(lucroAlvoCentavos),
+    margemEfetiva: receitaAlvoCentavos > 0 ? Number(((lucroAlvoCentavos / receitaAlvoCentavos) * 100).toFixed(4)) : null,
+    margemLucroEfetiva: receitaAlvoCentavos > 0
+      ? Number(((lucroAlvoCentavos / receitaAlvoCentavos) * 100).toFixed(4))
+      : null,
+    taxaPlataforma: taxa,
+    margemLucro: margem,
   };
 }
 
 /**
- * Calcula o ticket de equilíbrio e o ticket-alvo a partir de custos realmente
- * consolidados. Uma proposta ACEITA substitui a estimativa manual do mesmo item,
- * evitando contar o custo duas vezes. Propostas sem item vinculado são custos
- * independentes quando aceitas.
+ * Calcula dois preços por cenário de público:
+ * 1) cobertura: cobre custos + comissão da TrocaTicket, sem lucro planejado;
+ * 2) ticket-alvo: cobre custos + comissão + margem desejada pelo organizador.
+ * Uma proposta ACEITA substitui a estimativa manual do mesmo serviço.
  */
 export function calcularPrecificacao(evento, itens = [], propostasAceitas = []) {
   const margem = Number(evento?.margem_lucro ?? evento?.margemLucro ?? 0);
+  const taxaPlataforma = Number(evento?.taxa_plataforma ?? evento?.taxaPlataforma ?? 0);
   const publicoMinimo = Number(evento?.publico_minimo ?? evento?.publicoMinimo ?? 0);
   const publicoMaximo = Number(evento?.publico_maximo ?? evento?.publicoMaximo ?? 0);
   const alertas = [];
@@ -55,7 +99,6 @@ export function calcularPrecificacao(evento, itens = [], propostasAceitas = []) 
   }
 
   const componentes = [];
-
   for (const item of itensValidos) {
     const itemId = String(item.id);
     const proposta = propostasPorItem.get(itemId);
@@ -111,10 +154,14 @@ export function calcularPrecificacao(evento, itens = [], propostasAceitas = []) 
   const totalCustosCentavos = componentes.reduce((total, item) => total + paraCentavos(item.valor), 0);
   const totalCustos = valorMoeda(totalCustosCentavos);
   const margemValida = Number.isFinite(margem) && margem >= 0 && margem < 100;
+  const taxaValida = Number.isFinite(taxaPlataforma) && taxaPlataforma >= 0 && taxaPlataforma < 100;
   const publicoInteiroValido = Number.isInteger(publicoMinimo) && publicoMinimo > 0 && Number.isInteger(publicoMaximo) && publicoMaximo > 0;
   const publicoValido = publicoInteiroValido && publicoMinimo <= publicoMaximo;
-  const cenarioMinimo = margemValida && publicoValido ? montarCenario(totalCustosCentavos, publicoMinimo, margem) : null;
-  const cenarioMaximo = margemValida && publicoValido ? montarCenario(totalCustosCentavos, publicoMaximo, margem) : null;
+  const publicoMedio = publicoValido ? Math.round((publicoMinimo + publicoMaximo) / 2) : 0;
+  const podeCalcular = margemValida && taxaValida && publicoValido;
+  const cenarioMinimo = podeCalcular ? montarCenario(totalCustosCentavos, publicoMinimo, margem, taxaPlataforma) : null;
+  const cenarioMedio = podeCalcular ? montarCenario(totalCustosCentavos, publicoMedio, margem, taxaPlataforma) : null;
+  const cenarioMaximo = podeCalcular ? montarCenario(totalCustosCentavos, publicoMaximo, margem, taxaPlataforma) : null;
 
   if (!componentes.length) alertas.push('Ainda não há custos com valor informado nem propostas aceitas. Adicione custos estimados ou selecione propostas para calcular o ticket.');
   if (!publicoInteiroValido) {
@@ -123,6 +170,10 @@ export function calcularPrecificacao(evento, itens = [], propostasAceitas = []) 
     alertas.push('O público mínimo não pode ser maior que o público máximo.');
   }
   if (!margemValida) alertas.push('A margem de lucro precisa estar entre 0% e menos de 100%.');
+  if (!taxaValida) alertas.push('A comissão da TrocaTicket precisa estar entre 0% e menos de 100%.');
+  if (taxaValida && margemValida && taxaPlataforma + margem >= 100) {
+    alertas.push('A soma da margem do organizador com a comissão da TrocaTicket precisa ser menor que 100% para calcular o segundo ticket. O primeiro ticket para cobrir custos + comissão continua disponível.');
+  }
 
   return {
     eventoId: evento?.id || null,
@@ -130,15 +181,18 @@ export function calcularPrecificacao(evento, itens = [], propostasAceitas = []) 
     publicoMinimo: Number.isInteger(publicoMinimo) ? publicoMinimo : null,
     publicoMaximo: Number.isInteger(publicoMaximo) ? publicoMaximo : null,
     margemLucro: margemValida ? margem : null,
+    taxaPlataforma: taxaValida ? taxaPlataforma : null,
     margemSobreReceita: true,
+    taxaPlataformaSobreReceita: true,
+    taxaCombinada: margemValida && taxaValida ? margem + taxaPlataforma : null,
     totalCustos,
     componentes,
     temCustos: componentes.length > 0,
-    cenarios: { minimo: cenarioMinimo, maximo: cenarioMaximo },
+    cenarios: { minimo: cenarioMinimo, medio: cenarioMedio, maximo: cenarioMaximo },
     formulas: {
-      equilibrio: 'Ticket de equilíbrio = Custo total consolidado / Público',
-      alvo: 'Ticket-alvo = Custo total consolidado / [Público × (1 − Margem de lucro)]',
-      margem: 'A margem é considerada sobre a receita total, conforme o enunciado do projeto.',
+      equilibrio: 'Ticket para cobrir custos + comissão = Custo total / [Público × (1 − Comissão da TrocaTicket)]',
+      alvo: 'Ticket com lucro do organizador = Custo total / [Público × (1 − Comissão da TrocaTicket − Margem do organizador)]',
+      margem: 'A comissão da TrocaTicket e a margem do organizador são percentuais sobre a receita bruta do ingresso.',
       arredondamento: 'Os tickets são arredondados para cima ao centavo para não subestimar o valor necessário.',
     },
     alertas: [...new Set(alertas)],

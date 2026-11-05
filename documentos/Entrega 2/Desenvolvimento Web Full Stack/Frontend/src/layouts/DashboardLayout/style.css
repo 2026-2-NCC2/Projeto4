@@ -77,3 +77,5 @@
 @media (max-width: 640px) {
   .alerta-sincronizacao { align-items: flex-start; flex-direction: column; }
 }
+
+.navegacao-voltar-pagina{display:flex;justify-content:flex-start;margin:0 0 12px}.navegacao-voltar-pagina button{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid var(--cor-borda);border-radius:8px;background:var(--cor-superficie);color:var(--cor-texto-secundario);font-size:.67rem;cursor:pointer;transition:background .15s,color .15s}.navegacao-voltar-pagina button:hover{color:var(--cor-verde);border-color:var(--cor-verde)}

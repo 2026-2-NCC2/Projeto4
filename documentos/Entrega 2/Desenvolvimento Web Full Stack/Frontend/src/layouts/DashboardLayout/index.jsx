@@ -1,5 +1,7 @@
 import './style.css'
 import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 
 import CabecalhoDashboard from '../../componentes/cabecalhoDashboard'
 import MenuLateral from '../../componentes/menuLateral'
@@ -25,6 +27,8 @@ function classeStatusConta(status, tipoUsuario) {
 }
 
 function DashboardLayout({ tipoUsuario, statusVerificacao, itensMenu = [], children }) {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [erroApi, setErroApi] = useState(() => localStorage.getItem('trocaticket_api_erro') || '')
   const [sessao, setSessao] = useState(() => obterSessao() || {})
 
@@ -54,12 +58,19 @@ function DashboardLayout({ tipoUsuario, statusVerificacao, itensMenu = [], child
     ? (statusVerificacao || 'Gestão da plataforma')
     : textoStatusConta(sessao.status)
   const classeStatus = classeStatusConta(sessao.status, tipoUsuario)
+  const rotaInicio = tipoUsuario === 'ADMINISTRADOR' ? '/administrador' : tipoUsuario === 'FORNECEDOR' ? '/fornecedor' : '/organizador'
+  const podeVoltar = location.pathname !== rotaInicio
+  const voltar = () => {
+    const indiceHistorico = Number(window.history.state?.idx ?? 0)
+    if (indiceHistorico > 0) navigate(-1)
+    else navigate(rotaInicio)
+  }
 
   return (
     <div className="dashboard-layout">
       <CabecalhoDashboard
         textoBotao="Sair"
-        destino="/"
+        destino={rotaInicio}
         tipoUsuario={tipoUsuario}
         statusVerificacao={textoStatus}
         classeStatus={classeStatus}
@@ -73,6 +84,7 @@ function DashboardLayout({ tipoUsuario, statusVerificacao, itensMenu = [], child
               <button type="button" onClick={() => window.location.reload()}>Tentar novamente</button>
             </div>
           )}
+          {podeVoltar && <div className="navegacao-voltar-pagina"><button type="button" onClick={voltar}><ArrowLeft size={15}/> Voltar</button></div>}
           {children}
         </main>
       </div>

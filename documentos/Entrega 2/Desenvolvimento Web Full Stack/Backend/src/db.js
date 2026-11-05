@@ -66,6 +66,29 @@ export async function garantirMigracoes() {
   if (!indice) {
     await db.query('CREATE INDEX idx_eventos_aprovacao ON eventos (status_aprovacao)');
   }
+  const colunaTaxaPlataforma = await get(
+    "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'eventos' AND COLUMN_NAME = 'taxa_plataforma'"
+  );
+  if (!colunaTaxaPlataforma) {
+    await db.query('ALTER TABLE eventos ADD COLUMN taxa_plataforma DECIMAL(8,2) NOT NULL DEFAULT 0 AFTER margem_lucro');
+  }
+
+  // Evita propostas duplicadas para o mesmo serviço. Se já houver duplicidades
+  // antigas, preserva os dados e informa que a proteção será aplicada após a revisão.
+  const indicePropostas = await get(
+    "SELECT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'propostas' AND INDEX_NAME = 'uq_proposta_fornecedor_servico' LIMIT 1"
+  );
+  if (!indicePropostas) {
+    const duplicadas = await get(`SELECT COUNT(*) AS total FROM (
+      SELECT fornecedor_id, evento_id, item_id FROM propostas WHERE item_id IS NOT NULL
+      GROUP BY fornecedor_id, evento_id, item_id HAVING COUNT(*) > 1
+    ) AS repetidas`);
+    if (Number(duplicadas?.total || 0) === 0) {
+      await db.query('CREATE UNIQUE INDEX uq_proposta_fornecedor_servico ON propostas (fornecedor_id, evento_id, item_id)');
+    } else {
+      console.warn('Existem propostas duplicadas antigas; a API bloqueará novos envios repetidos, mas o índice único não foi criado para preservar o histórico.');
+    }
+  }
 }
 
 export function parseJson(value, fallback = {}) {
@@ -99,7 +122,10 @@ export function userPublico(row) {
 
 export async function eventoPublico(row) {
   if (!row) return null;
-  const dados = parseJson(row.dados_json, {});
+  const dadosArmazenados = parseJson(row.dados_json, {});
+  // A taxa da plataforma é informação administrativa e nunca deve sair nas
+  // respostas públicas de evento (organizador/fornecedor).
+  const { taxaPlataforma: _taxaPrivadaCamel, taxa_plataforma: _taxaPrivadaSnake, ...dados } = dadosArmazenados;
   const [itens, requisicoes] = await Promise.all([
     all('SELECT * FROM itens_custo WHERE evento_id = ? ORDER BY criado_em, id', [row.id]),
     all('SELECT * FROM requisicoes_fornecedor WHERE evento_id = ? ORDER BY criado_em, id', [row.id]),

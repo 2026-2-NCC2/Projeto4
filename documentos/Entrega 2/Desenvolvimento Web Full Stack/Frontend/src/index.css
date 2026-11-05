@@ -445,3 +445,259 @@ body {
   color: #ffffff !important;
   border-color: #2563eb !important;
 }
+
+
+/* Componentes de cards e avisos em todos os dashboards: tema claro branco/azul. */
+:root[data-theme='light'] .card-oportunidade,
+:root[data-theme='light'] .evento-disponivel,
+:root[data-theme='light'] .formulario-proposta,
+:root[data-theme='light'] .resumo-oportunidade,
+:root[data-theme='light'] .orcamento-referencia-proposta,
+:root[data-theme='light'] .orcamento-referencia-fornecedor,
+:root[data-theme='light'] .nenhuma-proposta,
+:root[data-theme='light'] .nenhum-evento-disponivel,
+:root[data-theme='light'] .sem-oportunidades,
+:root[data-theme='light'] .proposta-fornecedor-detalhada,
+:root[data-theme='light'] .proposta-organizador,
+:root[data-theme='light'] .resumo-financeiro-fornecedor,
+:root[data-theme='light'] .fornecedor-acesso-bloqueado,
+:root[data-theme='light'] .propostas-vazio,
+:root[data-theme='light'] .resumo-minhas-propostas article,
+:root[data-theme='light'] .detalhe-organizador-card,
+:root[data-theme='light'] .detalhe-organizador-cabecalho,
+:root[data-theme='light'] .relatorio-fornecedor-resumo article,
+:root[data-theme='light'] .relatorio-fornecedor-tabela,
+:root[data-theme='light'] .relatorio-fornecedor-nota,
+:root[data-theme='light'] .evento-fornecedor-inexistente,
+:root[data-theme='light'] .painel-edicao-proposta,
+:root[data-theme='light'] .contraproposta-fornecedor,
+:root[data-theme='light'] .contraproposta-organizador,
+:root[data-theme='light'] .form-contraproposta-organizador,
+:root[data-theme='light'] .editar-proposta-fornecedor,
+:root[data-theme='light'] .evento-admin-comissao {
+  background: #fff !important;
+  color: #172b4d !important;
+  border-color: #d8e3f2 !important;
+  box-shadow: 0 7px 22px rgba(31,65,114,.055);
+}
+
+:root[data-theme='light'] .aviso-status-cadastro,
+:root[data-theme='light'] .aviso-status-fornecedor,
+:root[data-theme='light'] .aviso-verificacao,
+:root[data-theme='light'] .texto-estado-aviso,
+:root[data-theme='light'] .card-cadastro-pendente,
+:root[data-theme='light'] .fornecedor-acesso-bloqueado {
+  background: #eff6ff !important;
+  color: #1e3a8a !important;
+  border-color: #bfdbfe !important;
+}
+
+:root[data-theme='light'] .card-oportunidade h3,
+:root[data-theme='light'] .evento-disponivel h2,
+:root[data-theme='light'] .formulario-proposta label,
+:root[data-theme='light'] .proposta-fornecedor-detalhada h2,
+:root[data-theme='light'] .proposta-organizador h2,
+:root[data-theme='light'] .detalhe-organizador-card h2,
+:root[data-theme='light'] .detalhe-organizador-cabecalho h1,
+:root[data-theme='light'] .resumo-minhas-propostas strong,
+:root[data-theme='light'] .relatorio-fornecedor-topo h1,
+:root[data-theme='light'] .relatorio-fornecedor-secao-titulo h2 {
+  color: #12284a !important;
+}
+
+:root[data-theme='light'] .card-oportunidade small,
+:root[data-theme='light'] .evento-disponivel p,
+:root[data-theme='light'] .formulario-proposta input,
+:root[data-theme='light'] .formulario-proposta textarea,
+:root[data-theme='light'] .proposta-fornecedor-detalhada p,
+:root[data-theme='light'] .proposta-organizador p,
+:root[data-theme='light'] .detalhe-organizador-card p,
+:root[data-theme='light'] .detalhe-organizador-card span,
+:root[data-theme='light'] .relatorio-fornecedor-nota p {
+  color: #526783 !important;
+}
+
+:root[data-theme='light'] .formulario-proposta input,
+:root[data-theme='light'] .formulario-proposta textarea,
+:root[data-theme='light'] .editar-proposta-fornecedor input,
+:root[data-theme='light'] .editar-proposta-fornecedor textarea,
+:root[data-theme='light'] .form-contraproposta-organizador input,
+:root[data-theme='light'] .form-contraproposta-organizador textarea {
+  background: #fff !important;
+  color: #172b4d !important;
+  border-color: #cbd8e9 !important;
+}
+
+:root[data-theme='light'] .evento-disponivel a,
+:root[data-theme='light'] .card-oportunidade a,
+:root[data-theme='light'] .acoes-contraproposta-fornecedor button:first-child,
+:root[data-theme='light'] .acoes-proposta-organizador button:first-child,
+:root[data-theme='light'] .form-contraproposta-organizador button[type='submit'],
+:root[data-theme='light'] .editar-proposta-fornecedor button[type='submit'] {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+  color: #fff !important;
+}
+
+:root[data-theme='light'] .servico-ja-enviado,
+:root[data-theme='light'] .form-contraproposta-organizador,
+:root[data-theme='light'] .editar-proposta-fornecedor {
+  background: #f8fbff !important;
+  border-color: #d8e3f2 !important;
+}
+
+:root[data-theme='light'] .relatorio-fornecedor-acoes a,
+:root[data-theme='light'] .acoes-proposta-fornecedor button,
+:root[data-theme='light'] .acoes-proposta-organizador button,
+:root[data-theme='light'] .form-contraproposta-organizador button,
+:root[data-theme='light'] .navegacao-voltar-pagina button {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+:root[data-theme='light'] .resumo-financeiro-fornecedor-icone,
+:root[data-theme='light'] .detalhe-organizador-avatar {
+  background: #eaf1ff !important;
+  color: #1d4ed8 !important;
+}
+
+
+/* Ajustes adicionais da paleta clara nas páginas de cadastro, eventos e administração. */
+:root[data-theme='light'] .card-cadastro-admin,
+:root[data-theme='light'] .proposta-organizador,
+:root[data-theme='light'] .evento-admin-card,
+:root[data-theme='light'] .evento-admin-vazio,
+:root[data-theme='light'] .evento-admin-detalhes,
+:root[data-theme='light'] .evento-admin-precificacao,
+:root[data-theme='light'] .evento-admin-organizador,
+:root[data-theme='light'] .evento-admin-listas-relacionadas,
+:root[data-theme='light'] .evento-admin-comissao,
+:root[data-theme='light'] .card-fornecedor-pro,
+:root[data-theme='light'] .card-evento,
+:root[data-theme='light'] .card-evento-gestao,
+:root[data-theme='light'] .card-evento-recente,
+:root[data-theme='light'] .banner-novo-evento,
+:root[data-theme='light'] .card-desempenho,
+:root[data-theme='light'] .card-metrica-rapida,
+:root[data-theme='light'] .card-requisicao,
+:root[data-theme='light'] .card-proposta,
+:root[data-theme='light'] .card-cadastro-pendente,
+:root[data-theme='light'] .estado-edicao-evento,
+:root[data-theme='light'] .bloco-card-form,
+:root[data-theme='light'] .precificacao-resumo-card,
+:root[data-theme='light'] .precificacao-total-card,
+:root[data-theme='light'] .relatorio-secao,
+:root[data-theme='light'] .relatorio-tabela-wrap,
+:root[data-theme='light'] .relatorio-alerta,
+:root[data-theme='light'] .painel-detalhe-fornecedor,
+:root[data-theme='light'] .painel-lateral-detalhe,
+:root[data-theme='light'] .contatos-fornecedor-card,
+:root[data-theme='light'] .descricao-servicos-fornecedor {
+  background-color: #fff !important;
+  color: #172b4d !important;
+  border-color: #d8e3f2 !important;
+}
+
+:root[data-theme='light'] .evento-admin-status-planejamento,
+:root[data-theme='light'] .evento-admin-linha-resumo,
+:root[data-theme='light'] .evento-admin-campo span,
+:root[data-theme='light'] .evento-admin-listas-relacionadas p,
+:root[data-theme='light'] .evento-admin-listas-relacionadas li span,
+:root[data-theme='light'] .titulo-secao-fornecedor span,
+:root[data-theme='light'] .resumo-financeiro-fornecedor small,
+:root[data-theme='light'] .status-proposta,
+:root[data-theme='light'] .proposta-fornecedor-topo small {
+  color: #526783 !important;
+}
+
+:root[data-theme='light'] .evento-admin-card h2,
+:root[data-theme='light'] .evento-admin-card h3,
+:root[data-theme='light'] .evento-admin-campo strong,
+:root[data-theme='light'] .proposta-organizador strong,
+:root[data-theme='light'] .card-cadastro-admin strong,
+:root[data-theme='light'] .card-fornecedor-pro h2,
+:root[data-theme='light'] .card-evento h2,
+:root[data-theme='light'] .card-evento-gestao h2,
+:root[data-theme='light'] .card-evento-recente h3 {
+  color: #12284a !important;
+}
+
+:root[data-theme='light'] .evento-admin-atualizar,
+:root[data-theme='light'] .evento-admin-acoes .reanalisar,
+:root[data-theme='light'] .evento-admin-acoes .rejeitar,
+:root[data-theme='light'] .acoes-editar-evento button,
+:root[data-theme='light'] .btn-gerenciar-evento,
+:root[data-theme='light'] .atalho-detalhe-evento,
+:root[data-theme='light'] .botoes-abas-filtro button,
+:root[data-theme='light'] .abas-cadastros-admin button {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+}
+
+:root[data-theme='light'] .evento-admin-acoes .aprovar,
+:root[data-theme='light'] .evento-admin-comissao-edicao button,
+:root[data-theme='light'] .btn-publicar-evento,
+:root[data-theme='light'] .botao-salvar-edicao,
+:root[data-theme='light'] .botao-enviar-cadastro,
+:root[data-theme='light'] .enviar-cadastro-fornecedor {
+  background: #2563eb !important;
+  color: #fff !important;
+  border-color: #2563eb !important;
+}
+
+:root[data-theme='light'] .alerta-erro-evento,
+:root[data-theme='light'] .erro-proposta,
+:root[data-theme='light'] .mensagem-erro-perfil,
+:root[data-theme='light'] .mensagem-erro-perfil-fornecedor {
+  background: #fff1f2 !important;
+  color: #9f1239 !important;
+  border-color: #fecdd3 !important;
+}
+
+:root[data-theme='light'] .alerta-sucesso-evento,
+:root[data-theme='light'] .mensagem-sucesso-perfil,
+:root[data-theme='light'] .mensagem-sucesso-perfil-fornecedor {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+}
+:root[data-theme='light'] .aviso-contraproposta-pendente{background:#eff6ff!important;color:#1d4ed8!important;border-color:#bfdbfe!important}
+
+/* Refinos adicionais do tema claro nas telas de fornecedor, negociação e gestão. */
+:root[data-theme='light'] .cabecalho-evento-fornecedor h1,
+:root[data-theme='light'] .titulo-minhas-propostas h1,
+:root[data-theme='light'] .titulo-eventos-administrador h1,
+:root[data-theme='light'] .evento-admin-precificacao h3,
+:root[data-theme='light'] .titulo-secao-fornecedor h2 {
+  color: #12284a !important;
+}
+:root[data-theme='light'] .cabecalho-evento-fornecedor p,
+:root[data-theme='light'] .cabecalho-evento-fornecedor > span,
+:root[data-theme='light'] .titulo-minhas-propostas p,
+:root[data-theme='light'] .titulo-eventos-administrador p {
+  color: #526783 !important;
+}
+:root[data-theme='light'] .evento-fornecedor-voltar,
+:root[data-theme='light'] .ver-organizador-evento,
+:root[data-theme='light'] .link-relatorio-propostas,
+:root[data-theme='light'] .detalhe-organizador-voltar {
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+}
+:root[data-theme='light'] .relatorio-fornecedor-linhas article {
+  border-color: #d8e3f2 !important;
+}
+:root[data-theme='light'] .relatorio-fornecedor-linhas article > div:first-child strong,
+:root[data-theme='light'] .relatorio-fornecedor-linhas article > strong {
+  color: #12284a !important;
+}
+:root[data-theme='light'] .evento-admin-financeiro-lista li {
+  background: #f8fbff !important;
+  color: #172b4d !important;
+  border-color: #d8e3f2 !important;
+}
+:root[data-theme='light'] .evento-admin-financeiro-lista li strong {
+  color: #1d4ed8 !important;
+}
