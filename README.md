@@ -171,7 +171,7 @@ Aqui estão as principais referências utilizadas no desenvolvimento e na docume
 6. [MDN Web Docs — HTML, CSS e JavaScript](https://developer.mozilla.org/pt-BR/docs/Web)
 7. [Stitch with Google](https://stitch.withgoogle.com/)
 8. [Template de README utilizado como referência](https://github.com/fecaphub/Template_PI)
-9. [Creative Commons License Chooser](https://creativecommons.org/chooser/)
+9. [Creative Commons License Chooser](https://creativecommons.org/licenses/by/4.0/)
 10. [Objetivos de Desenvolvimento Sustentável — ONU Brasil](https://brasil.un.org/pt-br/sdgs)
 11. [Cálculo II — aulas em português da UNIVESP](https://www.youtube.com/results?search_query=UNIVESP+C%C3%A1lculo+II+curso+completo)
 12. [Material complementar para Fulstack](https://www.youtube.com/watch?v=0pKBT0tj7Ik&t=2157s)
