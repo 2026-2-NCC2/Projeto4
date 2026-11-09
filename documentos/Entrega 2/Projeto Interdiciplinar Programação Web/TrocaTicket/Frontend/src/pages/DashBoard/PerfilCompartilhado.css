@@ -1,0 +1,130 @@
+.pagina-perfil-centralizada {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0 30px;
+}
+.card-perfil-central {
+  width: 100%;
+  max-width: 900px;
+  background: #0b0f12;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 35px rgba(0,0,0,.22);
+}
+.cabecalho-perfil-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.badge-perfil-oficial {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  background: rgba(0,223,129,.08);
+  border: 1px solid rgba(0,223,129,.22);
+  color: #00df81;
+  font-size: .65rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  letter-spacing: .4px;
+  margin-bottom: 12px;
+}
+.ponto-verde { width: 6px; height: 6px; background: currentColor; border-radius: 50%; }
+.titulo-meu-perfil { font-size: 1.6rem; font-weight: 750; color: #fff; margin: 0; }
+.subtitulo-meu-perfil { font-size: .82rem; color: #94a3b8; margin: 7px 0 20px; line-height: 1.55; }
+.secao-avatar-perfil {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px;
+  margin-bottom: 18px;
+  background: #10161b;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+}
+.avatar-circulo-verde {
+  position: relative;
+  flex: 0 0 82px;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  border: 2px solid #00df81;
+  background: #091310;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.iniciais-avatar { font-size: 1.35rem; font-weight: 750; color: #00df81; letter-spacing: 1px; }
+.imagem-foto { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.btn-icone-camera {
+  position: absolute; right: 0; bottom: 0; width: 28px; height: 28px; border-radius: 50%;
+  background: #00df81; color: #05140d; border: 2px solid #10161b; display: grid; place-items: center; cursor: pointer;
+}
+.secao-avatar-acoes { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; min-width: 0; }
+.secao-avatar-acoes strong { display: flex; align-items: center; gap: 7px; color: var(--cor-branco-titulo); font-size: .9rem; }
+.secao-avatar-acoes small { color: var(--cor-branco-texto); font-size: .72rem; }
+.link-alterar-foto { color: var(--cor-verde); font-size: .75rem; font-weight: 650; background: transparent; border: 0; cursor: pointer; padding: 2px 0; }
+.input-foto-perfil-compartilhado, .input-documento-perfil { display: none; }
+.status-conta-perfil {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 13px 15px; margin-bottom: 18px; border-radius: 10px;
+  background: rgba(245,158,11,.07); border: 1px solid rgba(245,158,11,.2); color: #aebccc; font-size: .78rem;
+}
+.status-conta-perfil strong { color: #fbbf24; font-size: .76rem; }
+.formulario-meu-perfil {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.campo-grupo { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.campo-grupo.largo { grid-column: 1 / -1; }
+.campo-grupo label { display: flex; align-items: center; gap: 7px; color: #8496a5; font-size: .67rem; font-weight: 700; letter-spacing: .35px; text-transform: uppercase; }
+.campo-grupo input, .campo-grupo select, .campo-grupo textarea {
+  width: 100%; min-width: 0; color: #fff; background: #080b0d; border: 1px solid rgba(255,255,255,.1);
+  border-radius: 9px; padding: 11px 13px; font: inherit; font-size: .82rem; outline: none; transition: border-color .2s ease;
+}
+.campo-grupo textarea { min-height: 94px; resize: vertical; line-height: 1.5; }
+.campo-grupo input:focus, .campo-grupo select:focus, .campo-grupo textarea:focus { border-color: var(--cor-verde); }
+.campo-grupo input:disabled { opacity: .7; cursor: not-allowed; }
+.campo-grupo .dica-campo { color: #64748b; font-size: .68rem; line-height: 1.4; }
+.upload-documento-perfil {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 13px; border: 1px dashed rgba(148,163,184,.35); border-radius: 10px; background: rgba(148,163,184,.035);
+}
+.upload-documento-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.upload-documento-info strong { color: var(--cor-branco-titulo); font-size: .8rem; overflow-wrap: anywhere; }
+.upload-documento-info span { color: var(--cor-branco-texto); font-size: .68rem; }
+.upload-documento-perfil button { border: 1px solid rgba(40,201,74,.35); color: var(--cor-verde); background: transparent; border-radius: 999px; padding: 8px 12px; cursor: pointer; font: inherit; font-size: .72rem; font-weight: 650; }
+.linha-seguranca { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-top: 2px; }
+.link-alterar-senha { color: var(--cor-branco-texto); background: transparent; border: 0; display: inline-flex; align-items: center; gap: 7px; font: inherit; font-size: .75rem; cursor: pointer; }
+.link-alterar-senha:hover { color: var(--cor-verde); }
+.texto-seguranca { color: #64748b; font-size: .7rem; }
+.painel-alterar-senha { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; padding: 16px; background: #10161b; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; }
+.painel-alterar-senha h3 { grid-column: 1 / -1; color: var(--cor-branco-titulo); font-size: 1rem; }
+.painel-alterar-senha label { color: var(--cor-branco-texto); font-size: .72rem; }
+.painel-alterar-senha input { min-width: 0; padding: 10px 12px; background: #080b0d; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; color: #fff; }
+.acoes-alterar-senha { grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 8px; }
+.acoes-alterar-senha button { padding: 9px 13px; border: 1px solid var(--cor-borda); border-radius: 8px; background: transparent; color: var(--cor-branco); cursor: pointer; }
+.acoes-alterar-senha button:last-child { background: var(--cor-verde); color: #07110b; border-color: var(--cor-verde); }
+.btn-salvar-perfil { grid-column: 1 / -1; width: 100%; margin-top: 4px; padding: 13px 16px; display: inline-flex; justify-content: center; align-items: center; gap: 8px; border: 0; border-radius: 10px; color: #05140d; background: var(--cor-verde); font-size: .85rem; font-weight: 750; cursor: pointer; }
+.mensagem-erro-perfil, .mensagem-erro-perfil-fornecedor { grid-column: 1 / -1; margin: 0; color: #fca5a5; font-size: .8rem; }
+.mensagem-sucesso-perfil, .mensagem-sucesso-perfil-fornecedor { grid-column: 1 / -1; margin: 0; color: #4ade80; font-size: .8rem; }
+.garantias-rodape-perfil { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 16px; color: var(--cor-verde); font-size: .72rem; flex-wrap: wrap; }
+.garantias-rodape-perfil span { display: inline-flex; align-items: center; gap: 6px; }
+@media (max-width: 760px) {
+  .card-perfil-central { padding: 22px 17px; }
+  .formulario-meu-perfil { grid-template-columns: 1fr; }
+  .campo-grupo.largo, .linha-seguranca, .painel-alterar-senha, .btn-salvar-perfil, .mensagem-erro-perfil, .mensagem-sucesso-perfil, .mensagem-erro-perfil-fornecedor, .mensagem-sucesso-perfil-fornecedor { grid-column: 1; }
+  .painel-alterar-senha { grid-template-columns: 1fr; }
+  .cabecalho-perfil-pagina { flex-direction: column; }
+}

@@ -1,0 +1,165 @@
+.card-evento-recente {
+    background-color: #0e1317;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .card-evento-recente:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+  
+  .card-evento-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  
+  /* Badges de Status */
+  .tag-status-evento {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  
+  .tag-status-evento.tag-verde {
+    color: #00df81;
+    background-color: rgba(0, 223, 129, 0.1);
+    border: 1px solid rgba(0, 223, 129, 0.2);
+  }
+  
+  .tag-status-evento.tag-azul {
+    color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+  
+  /* Porcentagem e Lote */
+  .info-lote-porcentagem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .porcentagem-texto {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  
+  .lote-texto {
+    color: #8392a5;
+    font-size: 0.65rem;
+    margin-top: 2px;
+  }
+  
+  /* Título e Local */
+  .card-evento-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .titulo-evento {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .local-data-evento {
+    color: #8392a5;
+    font-size: 0.72rem;
+    margin: 0;
+  }
+  
+  /* Barra de Progresso */
+  .trilho-progresso {
+    width: 100%;
+    height: 4px;
+    background-color: #1b232a;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  
+  .barra-progresso {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+  
+  .barra-progresso.barra-verde {
+    background-color: #00df81;
+  }
+  
+  .barra-progresso.barra-azul {
+    background-color: #3b82f6;
+  }
+  
+  /* Rodapé */
+  .card-evento-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    margin-top: 2px;
+  }
+  
+  .qtd-ingressos {
+    color: #8392a5;
+  }
+  
+  .valor-arrecadado {
+    color: #ffffff;
+    font-weight: 600;
+  }
+  
+  .valor-arrecadado.valor-destaque {
+    color: #00df81;
+  }
+/* Metadados de planejamento; o MVP não registra vendas realizadas. */
+.qtd-itens-custo,
+.publico-previsto {
+  color: #8392a5;
+  font-size: 0.72rem;
+}
+
+.ticket-estimado {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.72rem;
+}
+
+.ticket-estimado.valor-destaque {
+  color: #00df81;
+}
+
+
+.resumo-propostas-evento {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  color: #a5d5ff;
+  background: rgba(59, 130, 246, .08);
+  border: 1px solid rgba(59, 130, 246, .17);
+  border-radius: 7px;
+  padding: 5px 8px;
+  font-size: .65rem;
+  line-height: 1.4;
+}
+.resumo-propostas-evento.resumo-propostas-pendentes {
+  color: #f4d58a;
+  background: rgba(234, 179, 8, .08);
+  border-color: rgba(234, 179, 8, .2);
+}
+.card-evento-rodape { flex-wrap: wrap; gap: 8px; }

@@ -1,0 +1,18 @@
+# Dependências e builds
+node_modules/
+**/node_modules/
+**/dist/
+coverage/
+
+# Segredos e configuração local
+.env
+.env.local
+.env.*.local
+!**/.env.example
+
+# Arquivos locais de banco, uploads e sistema
+*.sqlite
+*.sqlite3
+Backend/uploads/
+.DS_Store
+Thumbs.db

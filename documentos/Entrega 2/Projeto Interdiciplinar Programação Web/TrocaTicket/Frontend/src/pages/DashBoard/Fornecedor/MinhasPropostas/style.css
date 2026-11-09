@@ -1,0 +1,50 @@
+.pagina-minhas-propostas {
+  width: 100%;
+}
+
+.titulo-minhas-propostas {
+  margin-bottom: 18px;
+}
+
+.titulo-minhas-propostas h1 {
+  color: var(--cor-branco-titulo);
+
+  font-size: 1.4rem;
+}
+
+.titulo-minhas-propostas p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.lista-minhas-propostas {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.propostas-vazio {
+  padding: 35px;
+
+  color: var(--cor-branco-texto);
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+  .lista-minhas-propostas {
+    grid-template-columns: 1fr;
+  }
+}
+.titulo-minhas-propostas{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}.link-relatorio-propostas{padding:9px 13px;border:1px solid var(--cor-borda);border-radius:9px;color:var(--cor-verde);text-decoration:none;font-size:.7rem}
+.resumo-minhas-propostas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0 18px}.resumo-minhas-propostas article{display:flex;flex-direction:column;gap:7px;padding:14px;background:var(--cor-superficie);border:1px solid var(--cor-borda);border-radius:11px}.resumo-minhas-propostas span{font-size:.64rem;color:var(--cor-texto-secundario)}.resumo-minhas-propostas strong{font-size:1.1rem;color:var(--cor-texto-principal)}.resumo-minhas-propostas-bruto strong{color:var(--cor-verde)!important}
+.proposta-fornecedor-detalhada{display:flex;flex-direction:column;gap:9px;padding:18px;background:var(--cor-superficie);border:1px solid var(--cor-borda);border-radius:13px;min-width:0}.proposta-fornecedor-topo{display:flex;align-items:center;justify-content:space-between}.proposta-fornecedor-topo small,.proposta-fornecedor-validade{color:var(--cor-texto-secundario);font-size:.6rem}.proposta-fornecedor-status{width:max-content;padding:4px 9px;border:1px solid var(--cor-borda);border-radius:999px;font-size:.58rem;color:var(--cor-verde)}.proposta-fornecedor-detalhada h2{font-size:.9rem;color:var(--cor-texto-principal)}.proposta-fornecedor-item,.proposta-fornecedor-descricao{font-size:.68rem;color:var(--cor-texto-secundario);line-height:1.5}.proposta-fornecedor-valor{font-size:1.15rem;color:var(--cor-texto-principal)}.contraproposta-fornecedor{padding:13px;border-radius:10px;border:1px solid var(--cor-verde);background:color-mix(in srgb,var(--cor-verde) 6%,var(--cor-superficie))}.contraproposta-fornecedor>div:first-child{display:flex;justify-content:space-between;gap:8px}.contraproposta-fornecedor>div:first-child span{font-size:.64rem;color:var(--cor-texto-secundario)}.contraproposta-fornecedor>div:first-child strong{color:var(--cor-verde)}.contraproposta-fornecedor p{margin:7px 0;color:var(--cor-texto-principal);font-size:.7rem}.contraproposta-fornecedor small{color:var(--cor-texto-secundario);font-size:.6rem}.acoes-contraproposta-fornecedor,.acoes-proposta-fornecedor,.editar-proposta-fornecedor>div{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.acoes-contraproposta-fornecedor button,.acoes-proposta-fornecedor button,.editar-proposta-fornecedor button{padding:8px 12px;border:1px solid var(--cor-borda);border-radius:8px;background:var(--cor-superficie);color:var(--cor-texto-principal);font-size:.65rem;cursor:pointer}.acoes-contraproposta-fornecedor button:first-child,.editar-proposta-fornecedor button[type=submit]{background:var(--cor-verde);border-color:var(--cor-verde);color:#fff}.acoes-proposta-fornecedor .cancelar{color:#dc2626}.editar-proposta-fornecedor{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.editar-proposta-fornecedor label{display:flex;flex-direction:column;gap:5px;color:var(--cor-texto-secundario);font-size:.65rem}.editar-proposta-fornecedor label:nth-child(n+3){grid-column:1/-1}.editar-proposta-fornecedor input,.editar-proposta-fornecedor textarea{width:100%;padding:9px;border:1px solid var(--cor-borda);border-radius:8px;background:var(--cor-de-fundo);color:var(--cor-texto-principal)}.editar-proposta-fornecedor textarea{min-height:65px}.erro-cancelar-proposta{margin:10px 0;padding:10px;border-radius:8px;background:#fff1f2;color:#9f1239;font-size:.7rem}
+@media(max-width:760px){.resumo-minhas-propostas{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.editar-proposta-fornecedor{grid-template-columns:1fr}.editar-proposta-fornecedor label:nth-child(n+3){grid-column:auto}}

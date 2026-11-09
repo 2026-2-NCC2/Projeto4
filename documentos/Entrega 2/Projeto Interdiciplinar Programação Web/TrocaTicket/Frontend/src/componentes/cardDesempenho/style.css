@@ -1,0 +1,35 @@
+.card-desempenho {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  background-color: #101416;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.card-desempenho > span {
+  color: var(--cor-branco-texto);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.card-desempenho strong {
+  color: var(--cor-branco-titulo);
+  font-size: 1.5rem;
+}
+
+.card-desempenho small {
+  color: var(--cor-branco-texto);
+  font-size: 0.6rem;
+}
+
+.card-desempenho.destaque-card {
+  border-color: rgba(40, 201, 74, 0.25);
+}
+
+.card-desempenho.destaque-card strong {
+  color: var(--cor-verde);
+}

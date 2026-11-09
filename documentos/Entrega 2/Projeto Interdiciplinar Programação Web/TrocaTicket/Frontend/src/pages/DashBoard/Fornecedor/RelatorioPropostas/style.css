@@ -1,0 +1,26 @@
+.relatorio-fornecedor-pagina{width:100%;display:flex;flex-direction:column;gap:22px;color:var(--cor-texto-principal)}
+.relatorio-fornecedor-topo{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.relatorio-fornecedor-topo span{font-size:.62rem;letter-spacing:.08em;color:var(--cor-verde);font-weight:800}
+.relatorio-fornecedor-topo h1{font-size:1.55rem;color:var(--cor-branco-titulo);margin:6px 0}
+.relatorio-fornecedor-topo p,.relatorio-fornecedor-secao-titulo p{color:var(--cor-texto-secundario);font-size:.78rem}
+.relatorio-fornecedor-acoes{display:flex;gap:9px;flex-wrap:wrap}
+.relatorio-fornecedor-acoes a,.relatorio-fornecedor-acoes button{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:9px;border:1px solid var(--cor-borda);background:var(--cor-superficie);color:var(--cor-texto-principal);text-decoration:none;font:inherit;font-size:.75rem;cursor:pointer}
+.relatorio-fornecedor-acoes button{background:var(--cor-verde);border-color:var(--cor-verde);color:#fff;font-weight:700}
+.relatorio-fornecedor-resumo{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.relatorio-fornecedor-resumo article{padding:17px;background:var(--cor-superficie);border:1px solid var(--cor-borda);border-radius:13px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.relatorio-fornecedor-resumo span{font-size:.66rem;color:var(--cor-texto-secundario)}
+.relatorio-fornecedor-resumo strong{font-size:1.45rem;color:var(--cor-texto-principal);overflow-wrap:anywhere}
+.relatorio-fornecedor-resumo small{font-size:.62rem;color:var(--cor-texto-secundario)}
+.relatorio-fornecedor-resumo .relatorio-fornecedor-bruto{border-color:var(--cor-verde);background:color-mix(in srgb,var(--cor-verde) 7%,var(--cor-superficie))}
+.relatorio-fornecedor-resumo .relatorio-fornecedor-bruto strong{color:var(--cor-verde)}
+.relatorio-fornecedor-nota{display:flex;align-items:flex-start;gap:12px;padding:15px;border:1px solid var(--cor-borda);border-radius:12px;background:var(--cor-superficie)}
+.relatorio-fornecedor-nota svg{color:var(--cor-verde);flex:none}.relatorio-fornecedor-nota p{font-size:.72rem;line-height:1.6;color:var(--cor-texto-secundario)}.relatorio-fornecedor-nota strong{color:var(--cor-texto-principal)}
+.relatorio-fornecedor-tabela{padding:18px;background:var(--cor-superficie);border:1px solid var(--cor-borda);border-radius:14px}
+.relatorio-fornecedor-secao-titulo{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:14px}.relatorio-fornecedor-secao-titulo h2{font-size:1rem;color:var(--cor-texto-principal)}.relatorio-fornecedor-secao-titulo>span{font-size:.65rem;color:var(--cor-texto-secundario)}
+.relatorio-fornecedor-linhas article{display:grid;grid-template-columns:minmax(0,1fr) 150px 140px;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--cor-borda)}
+.relatorio-fornecedor-linhas article>div:first-child{display:flex;flex-direction:column;gap:4px;min-width:0}.relatorio-fornecedor-linhas article>div:first-child strong{color:var(--cor-texto-principal);font-size:.78rem}.relatorio-fornecedor-linhas article>div:first-child span{color:var(--cor-texto-secundario);font-size:.67rem}
+.relatorio-fornecedor-linhas article>strong{color:var(--cor-texto-principal);font-size:.78rem;text-align:right}.relatorio-fornecedor-status{display:flex;align-items:center;gap:6px;color:var(--cor-texto-secundario);font-size:.66rem}.relatorio-fornecedor-status svg{color:var(--cor-verde)}
+.relatorio-fornecedor-vazio{padding:22px;text-align:center;color:var(--cor-texto-secundario);font-size:.75rem}.relatorio-fornecedor-rodape{font-size:.62rem;color:var(--cor-texto-secundario);padding-top:10px;border-top:1px solid var(--cor-borda)}.relatorio-fornecedor-erro{padding:12px;border-radius:9px;background:#fff1f2;color:#9f1239}
+@media(max-width:900px){.relatorio-fornecedor-resumo{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.relatorio-fornecedor-resumo{grid-template-columns:1fr}.relatorio-fornecedor-linhas article{grid-template-columns:1fr 1fr}.relatorio-fornecedor-linhas article>strong{grid-column:2;grid-row:1}.relatorio-fornecedor-status{grid-column:1}}
+@media print{body{background:#fff!important;color:#111!important}.nao-imprimir,.menu-lateral,.cabecalho-dashboard,.theme-toggle,.relatorio-fornecedor-acoes{display:none!important}.dashboard-layout,.area-dashboard,.conteudo-dashboard{display:block!important;background:#fff!important;padding:0!important;margin:0!important}.relatorio-fornecedor-pagina{color:#111!important}.relatorio-fornecedor-resumo article,.relatorio-fornecedor-tabela,.relatorio-fornecedor-nota{background:#fff!important;color:#111!important;box-shadow:none!important;break-inside:avoid}.relatorio-fornecedor-topo h1,.relatorio-fornecedor-resumo strong,.relatorio-fornecedor-linhas article>strong{color:#111!important}}

@@ -1,0 +1,1526 @@
+{
+  "info": {
+    "_postman_id": "5a0a38bb-cf70-4f7f-9437-2fd4c345e804",
+    "name": "TrocaTicket - Entrega 2 Full Stack (fluxo integrado + erros da API)",
+    "description": "Coleção integrada para ambiente local de desenvolvimento: cadastro, autenticação, aprovações, eventos, serviços requeridos, propostas, contraproposta, relatórios e limpeza do evento temporário. Inclui testes negativos de HTTP 400, 401, 403, 404 e 409. Configure baseUrl, emailAdmin e senhaAdmin. Execute somente em banco de desenvolvimento; contas temporárias serão criadas e o evento do teste é removido no final. Os códigos 413, 429 e 500 estão documentados separadamente e não são provocados automaticamente.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3333/api"
+    },
+    {
+      "key": "emailAdmin",
+      "value": "admin@trocaticket.com"
+    },
+    {
+      "key": "senhaAdmin",
+      "value": "TrocaTicket#2026Admin"
+    },
+    {
+      "key": "emailOrganizadorTeste",
+      "value": ""
+    },
+    {
+      "key": "emailFornecedorTeste",
+      "value": ""
+    },
+    {
+      "key": "senhaTeste",
+      "value": ""
+    },
+    {
+      "key": "tokenAdmin",
+      "value": ""
+    },
+    {
+      "key": "tokenOrganizador",
+      "value": ""
+    },
+    {
+      "key": "tokenFornecedor",
+      "value": ""
+    },
+    {
+      "key": "organizadorId",
+      "value": ""
+    },
+    {
+      "key": "fornecedorId",
+      "value": ""
+    },
+    {
+      "key": "eventoTesteId",
+      "value": ""
+    },
+    {
+      "key": "servicoTesteId",
+      "value": ""
+    },
+    {
+      "key": "propostaTesteId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Fluxo integrado + validações e erros HTTP",
+      "description": "Execute em ordem. A sequência cria contas temporárias, aprova perfis e evento, abre uma demanda, testa o fornecedor e conclui uma negociação por contraproposta. A última requisição exclui o evento de teste.",
+      "item": [
+        {
+          "name": "00 - Erro 400 - Cadastro com dados inválidos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/register"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"email\": \"postman.invalido@teste.com\",\n  \"senha\": \"SenhaPostman!2026\",\n  \"perfil\": \"ORGANIZADOR\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Teste negativo seguro: o nome vazio deve ser rejeitado antes da criação de qualquer conta."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Dados inválidos retornam HTTP 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Resposta contém mensagem de erro', () => pm.expect(pm.response.json().erro).to.be.a('string').and.not.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "01 - Cadastro de organizador de teste",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/register"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Organizador Postman\",\n  \"email\": \"{{emailOrganizadorTeste}}\",\n  \"senha\": \"{{senhaTeste}}\",\n  \"perfil\": \"ORGANIZADOR\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Cria conta temporária com e-mail gerado no pre-request. Para repetir a coleção, execute o SQL de limpeza documentado antes da execução."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const sufixo = pm.variables.replaceIn('{{$timestamp}}');",
+                  "pm.collectionVariables.set('emailOrganizadorTeste', `postman.organizador.${sufixo}@teste.com`);",
+                  "pm.collectionVariables.set('senhaTeste', 'TrocaTicketPostman!2026');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Cadastro retorna HTTP 201', () => pm.response.to.have.status(201));",
+                  "const b = pm.response.json();",
+                  "pm.test('Resposta traz usuário e token', () => { pm.expect(b.usuario.id).to.be.a('string'); pm.expect(b.token).to.be.a('string').and.not.empty; });",
+                  "pm.collectionVariables.set('organizadorId', b.usuario.id);",
+                  "pm.collectionVariables.set('tokenOrganizador', b.token);",
+                  "pm.test('Conta começa incompleta', () => pm.expect(b.usuario.status).to.eql('INCOMPLETO'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "01A - Erro 409 - Cadastro com e-mail já utilizado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/register"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Cadastro duplicado Postman\",\n  \"email\": \"{{emailOrganizadorTeste}}\",\n  \"senha\": \"TrocaTicketPostman!2026\",\n  \"perfil\": \"ORGANIZADOR\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Usa o e-mail criado na primeira requisição; deve falhar sem criar uma segunda conta."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('E-mail já cadastrado retorna HTTP 409', () => pm.response.to.have.status(409));",
+                  "pm.test('Resposta explica o conflito', () => pm.expect(pm.response.json().erro).to.include('e-mail'))"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 - Completar perfil do organizador",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/me/profile"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Organizador Postman\",\n  \"email\": \"{{emailOrganizadorTeste}}\",\n  \"responsavel\": \"Responsável Postman\",\n  \"telefone\": \"11999990001\",\n  \"cidade\": \"São Paulo\",\n  \"estado\": \"SP\",\n  \"cadastroCompleto\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Perfil atualizado retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Cadastro passa para PENDENTE', () => pm.expect(pm.response.json().usuario.status).to.eql('PENDENTE'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 - Login com senha incorreta (deve retornar 401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{emailAdmin}}\",\n  \"senha\": \"SenhaIncorretaPostman!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Senha incorreta retorna HTTP 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Mensagem de erro é padronizada', () => pm.expect(pm.response.json().erro).to.be.a('string'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Login de administrador",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{emailAdmin}}\",\n  \"senha\": \"{{senhaAdmin}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Use as mesmas credenciais definidas em Backend/.env (ADMIN_EMAIL e ADMIN_PASSWORD)."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login administrativo retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('Token administrativo presente', () => pm.expect(b.token).to.be.a('string').and.not.empty);",
+                  "pm.test('Perfil autenticado é ADMINISTRADOR', () => pm.expect(b.usuario.perfil).to.eql('ADMINISTRADOR'));",
+                  "pm.collectionVariables.set('tokenAdmin', b.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 - Administrador aprova organizador",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAdmin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/users/{{organizadorId}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"APROVADO\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Aprovação do organizador retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Status do organizador é APROVADO', () => pm.expect(pm.response.json().usuario.status).to.eql('APROVADO'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 - Login do organizador aprovado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{emailOrganizadorTeste}}\",\n  \"senha\": \"{{senhaTeste}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login do organizador retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('Perfil é ORGANIZADOR e status aprovado', () => { pm.expect(b.usuario.perfil).to.eql('ORGANIZADOR'); pm.expect(b.usuario.status).to.eql('APROVADO'); });",
+                  "pm.collectionVariables.set('tokenOrganizador', b.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "07 - Rota protegida com token válido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('GET /auth/me retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Sessão identifica o organizador', () => pm.expect(pm.response.json().usuario.perfil).to.eql('ORGANIZADOR'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "08 - Rota protegida sem token (deve retornar 401)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/me"
+            },
+            "description": "Não incluir Authorization nesta requisição. Demonstra proteção da rota."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Acesso sem token retorna HTTP 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Resposta padronizada contém erro', () => pm.expect(pm.response.json().erro).to.be.a('string'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "08A - Erro 401 - Token inválido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer token-invalido-postman"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/me"
+            },
+            "description": "Confirma que um token malformado ou não assinado pela API não autoriza o acesso."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Token inválido retorna HTTP 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Resposta contém mensagem de autenticação', () => pm.expect(pm.response.json().erro).to.be.a('string'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "09 - Organizador tenta acessar rota administrativa (deve retornar 403)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/overview"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Perfil sem permissão recebe HTTP 403', () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "09A - Erro 400 - Criar evento sem campos obrigatórios",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"publicoMinimo\": 0,\n  \"publicoMaximo\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "O organizador já está autenticado e aprovado. A API deve rejeitar os campos obrigatórios ausentes."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Evento inválido retorna HTTP 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Resposta contém detalhe da validação', () => pm.expect(pm.response.json().erro).to.be.a('string').and.not.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "10 - Criar evento de teste",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Evento integrado Postman\",\n  \"categoria\": \"Acadêmico\",\n  \"descricao\": \"Evento temporário para validar o fluxo completo de cotação.\",\n  \"dataInicio\": \"2026-12-15\",\n  \"horaInicio\": \"18:00\",\n  \"dataFim\": \"2026-12-15\",\n  \"horaFim\": \"23:00\",\n  \"local\": \"Campus de teste\",\n  \"cidade\": \"São Paulo - SP\",\n  \"publicoMinimo\": 80,\n  \"publicoMaximo\": 160,\n  \"margemLucro\": 20,\n  \"status\": \"Planejamento\",\n  \"capa\": null,\n  \"requisicoesFornecedores\": [],\n  \"itensCusto\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Criação do evento retorna HTTP 201', () => pm.response.to.have.status(201));",
+                  "const b = pm.response.json();",
+                  "pm.test('Evento possui identificador', () => pm.expect(b.evento.id).to.be.a('string').and.not.empty);",
+                  "pm.collectionVariables.set('eventoTesteId', b.evento.id);",
+                  "pm.test('Novo evento aguarda aprovação administrativa', () => pm.expect(b.evento.statusAprovacao).to.eql('PENDENTE'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "10A - Erro 404 - Consultar evento inexistente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/id-inexistente-postman-404"
+            },
+            "description": "Consulta autenticada por um identificador reservado para este teste; não altera dados."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Evento inexistente retorna HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Resposta identifica o recurso ausente', () => pm.expect(pm.response.json().erro).to.include('Evento não encontrado'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "10B - Erro 400 - Serviço requerido sem categoria e descrição",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/{{eventoTesteId}}/cost-items"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoria\": \"\",\n  \"descricao\": \"\",\n  \"valorEstimado\": 1000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Testa validação do serviço requerido sem criar um item no banco."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Serviço inválido retorna HTTP 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Resposta informa os campos ausentes', () => pm.expect(pm.response.json().erro).to.include('categoria'))"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "11 - Cadastrar serviço requerido no evento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/{{eventoTesteId}}/cost-items"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"{{servicoTesteId}}\",\n  \"categoria\": \"Alimentação\",\n  \"descricao\": \"Buffet para o evento de teste Postman\",\n  \"valorEstimado\": 2500,\n  \"mostrarOrcamentoFornecedor\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('servicoTesteId', pm.variables.replaceIn('{{$guid}}'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Cadastro do serviço retorna HTTP 201', () => pm.response.to.have.status(201));",
+                  "const b = pm.response.json();",
+                  "pm.test('Serviço retorna identificador', () => pm.expect(b.item.id).to.be.a('string').and.not.empty);",
+                  "pm.collectionVariables.set('servicoTesteId', b.item.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "12 - Administrador aprova evento",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAdmin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/events/{{eventoTesteId}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statusAprovacao\": \"APROVADO\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Aprovação do evento retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Evento fica APROVADO', () => pm.expect(pm.response.json().evento.statusAprovacao).to.eql('APROVADO'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "12A - Erro 400 - Comissão fora do intervalo permitido",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAdmin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/events/{{eventoTesteId}}/commission"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taxaPlataforma\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "A comissão é inválida (deve ser >= 0 e < 100); o valor armazenado não deve ser alterado."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Comissão de 100% retorna HTTP 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Resposta explica o intervalo permitido', () => pm.expect(pm.response.json().erro).to.include('entre 0%'))"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "13 - Cadastro de fornecedor de teste",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/register"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Fornecedor Postman\",\n  \"email\": \"{{emailFornecedorTeste}}\",\n  \"senha\": \"{{senhaTeste}}\",\n  \"perfil\": \"FORNECEDOR\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const sufixo = pm.variables.replaceIn('{{$timestamp}}');",
+                  "pm.collectionVariables.set('emailFornecedorTeste', `postman.fornecedor.${sufixo}@teste.com`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Cadastro do fornecedor retorna HTTP 201', () => pm.response.to.have.status(201));",
+                  "const b = pm.response.json();",
+                  "pm.test('Fornecedor criado com status INCOMPLETO', () => pm.expect(b.usuario.status).to.eql('INCOMPLETO'));",
+                  "pm.collectionVariables.set('fornecedorId', b.usuario.id);",
+                  "pm.collectionVariables.set('tokenFornecedor', b.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "14 - Completar perfil do fornecedor",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/me/profile"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Fornecedor Postman\",\n  \"email\": \"{{emailFornecedorTeste}}\",\n  \"razaoSocial\": \"Fornecedor de Teste Postman Ltda.\",\n  \"responsavel\": \"Contato Postman\",\n  \"cnpj\": \"12345678000199\",\n  \"telefone\": \"11999990002\",\n  \"cidade\": \"São Paulo\",\n  \"estado\": \"SP\",\n  \"segmento\": \"Alimentação\",\n  \"descricao\": \"Fornecedor de buffet para testes de integração.\",\n  \"produtosOferecidos\": [\n    \"Buffet\"\n  ],\n  \"servicosOferecidos\": [\n    \"Alimentação para eventos\"\n  ],\n  \"cadastroCompleto\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Perfil do fornecedor retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Fornecedor aguarda aprovação', () => pm.expect(pm.response.json().usuario.status).to.eql('PENDENTE'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "15 - Fornecedor pendente não recebe oportunidades",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Consulta de eventos retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Fornecedor pendente recebe lista vazia', () => pm.expect(pm.response.json().eventos).to.be.an('array').that.is.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "16 - Fornecedor pendente não consegue enviar proposta (403)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventoId\": \"{{eventoTesteId}}\",\n  \"itemId\": \"{{servicoTesteId}}\",\n  \"valor\": 2300,\n  \"validade\": \"2026-12-10\",\n  \"descricao\": \"Proposta de teste antes da aprovação\",\n  \"observacoes\": \"Esta tentativa deve ser bloqueada.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Envio por fornecedor pendente retorna HTTP 403', () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "17 - Administrador aprova fornecedor",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenAdmin}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/users/{{fornecedorId}}/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"APROVADO\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Aprovação do fornecedor retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Fornecedor fica APROVADO', () => pm.expect(pm.response.json().usuario.status).to.eql('APROVADO'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "18 - Login do fornecedor aprovado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{emailFornecedorTeste}}\",\n  \"senha\": \"{{senhaTeste}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login do fornecedor retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('Perfil e status do fornecedor corretos', () => { pm.expect(b.usuario.perfil).to.eql('FORNECEDOR'); pm.expect(b.usuario.status).to.eql('APROVADO'); });",
+                  "pm.collectionVariables.set('tokenFornecedor', b.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "19 - Fornecedor aprovado visualiza eventos cotáveis",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Listagem do fornecedor retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "const eventos = pm.response.json().eventos || [];",
+                  "pm.test('Evento aprovado aparece para o fornecedor', () => pm.expect(eventos.some(e => e.id === pm.collectionVariables.get('eventoTesteId'))).to.eql(true));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "20 - Fornecedor envia proposta para serviço",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventoId\": \"{{eventoTesteId}}\",\n  \"itemId\": \"{{servicoTesteId}}\",\n  \"valor\": 2300,\n  \"validade\": \"2026-12-10\",\n  \"descricao\": \"Fornecimento de buffet para 80 a 160 pessoas.\",\n  \"observacoes\": \"Inclui equipe de atendimento e montagem.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Envio de proposta retorna HTTP 201', () => pm.response.to.have.status(201));",
+                  "const b = pm.response.json();",
+                  "pm.test('Proposta fica EM ANÁLISE', () => pm.expect(b.proposta.status).to.eql('EM ANÁLISE'));",
+                  "pm.collectionVariables.set('propostaTesteId', b.proposta.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "21 - Impedir proposta duplicada (409)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventoId\": \"{{eventoTesteId}}\",\n  \"itemId\": \"{{servicoTesteId}}\",\n  \"valor\": 2350,\n  \"validade\": \"2026-12-10\",\n  \"descricao\": \"Segunda tentativa que deve ser bloqueada.\",\n  \"observacoes\": \"Teste de duplicidade.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Proposta duplicada retorna HTTP 409', () => pm.response.to.have.status(409));",
+                  "pm.test('Mensagem orienta consultar/editar proposta existente', () => pm.expect(pm.response.json().erro).to.include('já enviou uma proposta'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "22 - Fornecedor edita proposta em análise",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals/{{propostaTesteId}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"valor\": 2250,\n  \"validade\": \"2026-12-12\",\n  \"descricao\": \"Buffet atualizado após revisão de escopo.\",\n  \"observacoes\": \"Valor revisado para o evento de teste.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Edição da proposta retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Novo valor foi persistido', () => pm.expect(Number(pm.response.json().proposta.valor)).to.eql(2250));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "23 - Login do organizador para analisar propostas",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{emailOrganizadorTeste}}\",\n  \"senha\": \"{{senhaTeste}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login do organizador retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('tokenOrganizador', pm.response.json().token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "24 - Organizador consulta proposta pendente (sem contato liberado)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Consulta de propostas retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json(); const p = (b.propostas || []).find(x => x.id === pm.collectionVariables.get('propostaTesteId'));",
+                  "pm.test('Proposta de teste está na lista', () => pm.expect(p).to.be.an('object'));",
+                  "pm.test('Contato comercial não aparece antes do aceite', () => pm.expect(p.contatoFornecedor).to.eql(undefined));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "25 - Organizador envia contraproposta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals/{{propostaTesteId}}/counteroffer"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"valor\": 2150,\n  \"quantidade\": 1,\n  \"descricao\": \"Buffet completo para o evento, com montagem e equipe.\",\n  \"observacoes\": \"Contraproposta para negociação.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Contraproposta retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Resposta contém proposta negociada', () => pm.expect(pm.response.json().proposta.id).to.eql(pm.collectionVariables.get('propostaTesteId')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "26 - Fornecedor retorna para responder contraproposta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{emailFornecedorTeste}}\",\n  \"senha\": \"{{senhaTeste}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login do fornecedor retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('tokenFornecedor', pm.response.json().token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "27 - Fornecedor aceita contraproposta",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals/{{propostaTesteId}}/counteroffer-response"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"aceitar\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Resposta à contraproposta retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Proposta passa para ACEITA', () => pm.expect(pm.response.json().proposta.status).to.eql('ACEITA'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "28 - Relatório resumido do fornecedor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/supplier/summary"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Resumo do fornecedor retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "const r = pm.response.json().resumo;",
+                  "pm.test('Resumo contabiliza a proposta aceita', () => { pm.expect(Number(r.aceitas)).to.be.at.least(1); pm.expect(Number(r.valorBrutoAceito)).to.be.above(0); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "29 - Organizador retorna para consultar aceite",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{emailOrganizadorTeste}}\",\n  \"senha\": \"{{senhaTeste}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login do organizador retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('tokenOrganizador', pm.response.json().token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "30 - Contato comercial liberado após aceite",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Consulta de propostas retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "const p = (pm.response.json().propostas || []).find(x => x.id === pm.collectionVariables.get('propostaTesteId'));",
+                  "pm.test('Proposta está ACEITA', () => pm.expect(p.status).to.eql('ACEITA'));",
+                  "pm.test('Contato comercial do fornecedor foi liberado', () => pm.expect(p.contatoFornecedor).to.be.an('object'));",
+                  "pm.test('Contato contém e-mail', () => pm.expect(p.contatoFornecedor.email).to.be.a('string').and.not.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "31 - Relatório financeiro do evento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/{{eventoTesteId}}/report"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Relatório do evento retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "const r = pm.response.json().relatorio;",
+                  "pm.test('Relatório contém evento, custos e precificação', () => { pm.expect(r.evento.id).to.eql(pm.collectionVariables.get('eventoTesteId')); pm.expect(r.precificacao).to.be.an('object'); pm.expect(r.propostasAceitas).to.be.an('array'); });",
+                  "pm.test('Proposta aceita aparece no relatório', () => pm.expect(r.propostasAceitas.some(x => x.id === pm.collectionVariables.get('propostaTesteId'))).to.eql(true));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "31A - Erro 409 - Impedir exclusão de proposta já aceita",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenFornecedor}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/proposals/{{propostaTesteId}}"
+            },
+            "description": "Executado após a contraproposta ser aceita. Confirma que a API preserva o histórico da proposta aceita."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Proposta aceita não pode ser excluída pelo fluxo de pendentes (HTTP 409)', () => pm.response.to.have.status(409));",
+                  "pm.test('Resposta informa a regra de status', () => pm.expect(pm.response.json().erro).to.include('em análise'))"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "32 - Limpeza: excluir evento temporário e propostas vinculadas",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenOrganizador}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/{{eventoTesteId}}"
+            },
+            "description": "Opcional após salvar as evidências: apaga o evento temporário e suas propostas/serviços relacionados. As contas temporárias permanecem no banco e podem ser removidas com o SQL de limpeza do README."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Exclusão do evento de teste retorna HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('API confirma exclusão', () => pm.expect(pm.response.json().ok).to.eql(true));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

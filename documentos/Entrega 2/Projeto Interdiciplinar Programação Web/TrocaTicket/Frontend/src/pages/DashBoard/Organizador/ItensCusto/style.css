@@ -1,0 +1,308 @@
+.pagina-itens-custo {
+  width: 100%;
+}
+
+.cabecalho-itens-custo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+.cabecalho-itens-custo h1 {
+  color: var(--cor-branco-titulo);
+  font-size: 1.4rem;
+}
+
+.cabecalho-itens-custo p {
+  margin-top: 5px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.7rem;
+}
+
+.cabecalho-itens-custo > button {
+  padding: 8px 14px;
+
+  color: var(--cor-branco-texto);
+  background: transparent;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+
+  cursor: pointer;
+}
+
+.formulario-item-custo {
+  display: grid;
+
+  grid-template-columns: 190px minmax(220px, 1fr) minmax(190px, 250px) auto;
+
+  align-items: end;
+
+  gap: 12px;
+
+  padding: 18px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.formulario-item-custo > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario-item-custo label {
+  margin-bottom: 6px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.6rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+.formulario-item-custo input,
+.formulario-item-custo select {
+  width: 100%;
+
+  height: 40px;
+
+  padding: 0 11px;
+
+  color: var(--cor-branco);
+
+  background-color: #090c0b;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+
+  font-family: 'Poppins', sans-serif;
+
+  outline: none;
+}
+
+.formulario-item-custo input:focus,
+.formulario-item-custo select:focus {
+  border-color: var(--cor-verde);
+}
+
+.formulario-item-custo > button,
+.acoes-formulario-custo > button {
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 0 15px;
+
+  color: #07110b;
+
+  background-color: var(--cor-verde);
+
+  border: none;
+  border-radius: 8px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.formulario-item-custo > button svg,
+.acoes-formulario-custo > button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.erro-item-custo {
+  margin-top: 10px;
+
+  color: #ef7777;
+
+  font-size: 0.65rem;
+}
+
+.itens-custo-vazio {
+  margin-top: 14px;
+  padding: 35px;
+
+  text-align: center;
+
+  color: var(--cor-branco-texto);
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.lista-itens-custo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  margin-top: 14px;
+}
+
+.item-custo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 14px 16px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.item-custo span {
+  color: var(--cor-verde);
+
+  font-size: 0.55rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.item-custo h2 {
+  margin-top: 4px;
+
+  color: var(--cor-branco-titulo);
+
+  font-size: 0.78rem;
+}
+
+.item-custo small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.55rem;
+}
+
+.item-custo-acoes { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.item-custo-acoes > button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  color: #ef7777;
+
+  background-color: rgba(239, 68, 68, 0.06);
+
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.item-custo-acoes > button svg {
+  width: 15px;
+  height: 15px;
+}
+
+@media (max-width: 800px) {
+  .formulario-item-custo {
+    grid-template-columns: 1fr;
+  }
+
+  .formulario-item-custo > button,
+  .acoes-formulario-custo > button {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .cabecalho-itens-custo {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+.acoes-custos-cabecalho{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.acoes-custos-cabecalho button{padding:8px 13px;color:var(--cor-branco-texto);background:#101416;border:1px solid rgba(255,255,255,.12);border-radius:999px;cursor:pointer;font-size:.7rem}.acoes-custos-cabecalho button:first-child{color:#4ade80;border-color:rgba(34,197,94,.3)}.campo-valor-estimado-custo{grid-column:auto}.campo-valor-estimado-custo small{margin-top:6px;color:#829196;font-size:.62rem;line-height:1.45}.valor-item-custo{display:block;margin-top:7px;color:#4ade80;font-size:.82rem}.item-custo>div{min-width:0}.item-custo>div h2{overflow-wrap:anywhere}
+@media(max-width:1000px){.formulario-item-custo{grid-template-columns:minmax(160px,1fr) minmax(200px,2fr)}.campo-valor-estimado-custo{grid-column:1/-1}.formulario-item-custo>button{justify-content:center}}
+
+.acoes-formulario-custo{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.acoes-formulario-custo .cancelar-edicao-custo{color:#fca5a5;background:#251112;border:1px solid rgba(239,68,68,.25)}
+.item-custo-acoes .botao-editar-custo{color:#4ade80;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.22)}
+.item-custo-acoes .botao-excluir-custo{color:#ef7777;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15)}
+.formulario-item-custo .acoes-formulario-custo{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media(max-width:1000px){.formulario-item-custo .acoes-formulario-custo{grid-column:1/-1}}
+
+/* Ações do formulário de custos: adicionar/salvar em linha, com cancelamento opcional. */
+.formulario-item-custo .acoes-formulario-custo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.formulario-item-custo .acoes-formulario-custo > button {
+  height: 40px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px;
+  color: #07110b;
+  background: var(--cor-verde);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.formulario-item-custo .acoes-formulario-custo > .cancelar-edicao-custo {
+  color: #fca5a5;
+  background: #251112;
+  border: 1px solid rgba(239, 68, 68, .25);
+}
+@media (max-width: 1000px) {
+  .formulario-item-custo .acoes-formulario-custo { grid-column: 1 / -1; }
+}
+
+
+/* O orçamento de referência é uma estimativa interna, compartilhada só por opção do organizador. */
+.formulario-item-custo .opcao-compartilhar-orcamento {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--cor-branco-texto);
+  font-size: .66rem;
+  line-height: 1.45;
+  font-weight: 500;
+  text-transform: none;
+  cursor: pointer;
+}
+.formulario-item-custo .opcao-compartilhar-orcamento input[type="checkbox"] {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin: 1px 0 0;
+  padding: 0;
+  accent-color: var(--cor-verde);
+}
+.formulario-item-custo .nota-privacidade-orcamento { margin-top: 5px; }
+.item-custo .orcamento-status { margin-top: 5px; line-height: 1.4; }
+.item-custo .orcamento-status.visivel { color: #4ade80; }
+.item-custo .orcamento-status.privado { color: #94a3b8; }

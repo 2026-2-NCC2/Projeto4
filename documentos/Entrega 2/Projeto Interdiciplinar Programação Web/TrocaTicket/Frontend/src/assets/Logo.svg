@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">TrocaTicket</title>
+  <desc id="desc">Símbolo T em azul-marinho, branco e verde.</desc>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#10223b" stroke="#3b82f6" stroke-width="1.5"/>
+  <path d="M14 15h36v8H36v27h-8V23H14z" fill="#ffffff"/>
+  <circle cx="46" cy="46" r="5" fill="#34d399"/>
+</svg>

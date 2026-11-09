@@ -1,0 +1,345 @@
+.pagina-editar-evento {
+  width: 100%;
+  max-width: 980px;
+  color: var(--cor-branco-texto, #e7e9e8);
+}
+
+.titulo-editar-evento {
+  margin-bottom: 22px;
+}
+
+.titulo-editar-evento h1 {
+  margin: 14px 0 5px;
+  color: var(--cor-branco-titulo, #fff);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.titulo-editar-evento > p {
+  color: var(--cor-branco-texto, #b7bec2);
+  font-size: 0.82rem;
+}
+
+.voltar-edicao-evento {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 0;
+  color: #34d779;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.formulario-editar-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px;
+  background: #101416;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+}
+
+.secao-edicao-evento {
+  min-width: 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.secao-edicao-evento:last-of-type {
+  padding-bottom: 2px;
+  border-bottom: 0;
+}
+
+.subtitulo-secao-edicao {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-bottom: 17px;
+  color: #26d568;
+}
+
+.subtitulo-secao-edicao h2 {
+  margin: 0 0 4px;
+  color: #fff;
+  font-size: 0.92rem;
+}
+
+.subtitulo-secao-edicao p {
+  margin: 0;
+  color: #97a4a9;
+  font-size: 0.73rem;
+  line-height: 1.5;
+}
+
+.preview-capa-edicao {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background: #0a0d0c;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 11px;
+}
+
+.preview-capa-edicao img {
+  display: block;
+  width: 100%;
+  max-height: 260px;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #171b1b;
+}
+
+.acoes-capa-edicao {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acoes-capa-edicao button,
+.area-capa-vazia-edicao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: #151a18;
+  color: #e4e9e6;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.acoes-capa-edicao button:hover,
+.area-capa-vazia-edicao:hover {
+  border-color: #28ca68;
+  background: #102218;
+}
+
+.acoes-capa-edicao .remover-capa-edicao {
+  color: #ff8c8c;
+}
+
+.input-arquivo-capa-edicao {
+  display: none;
+}
+
+.area-capa-vazia-edicao {
+  width: 100%;
+  min-height: 150px;
+  flex-direction: column;
+  padding: 26px;
+  border-style: dashed;
+  color: #31d576;
+}
+
+.area-capa-vazia-edicao span {
+  color: #98a5a0;
+  font-size: 0.73rem;
+}
+
+.grade-campos-edicao {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.campo-edicao {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 7px;
+}
+
+.campo-edicao-largo {
+  grid-column: 1 / -1;
+}
+
+.campo-edicao label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #bdc8c4;
+  font-size: 0.69rem;
+  font-weight: 600;
+}
+
+.campo-edicao input,
+.campo-edicao textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  outline: none;
+  background: #090c0b;
+  color: #f3f5f4;
+  font: inherit;
+  font-size: 0.79rem;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.campo-edicao textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.campo-edicao input:focus,
+.campo-edicao textarea:focus {
+  border-color: #28ce6a;
+  box-shadow: 0 0 0 3px rgba(40, 206, 106, 0.1);
+}
+
+.campo-edicao input::placeholder,
+.campo-edicao textarea::placeholder {
+  color: #697570;
+}
+
+.aviso-revisao-edicao,
+.mensagem-erro-edicao,
+.mensagem-sucesso-edicao,
+.estado-edicao-evento {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.aviso-revisao-edicao {
+  color: #e8c46b;
+  background: rgba(234, 179, 8, 0.08);
+  border: 1px solid rgba(234, 179, 8, 0.22);
+}
+
+.mensagem-erro-edicao {
+  color: #ff9999;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+}
+
+.mensagem-erro-edicao p {
+  margin-top: 4px;
+}
+
+.mensagem-erro-edicao button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  color: #fff;
+  background: #252b29;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.mensagem-sucesso-edicao {
+  color: #76e8a0;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.22);
+}
+
+.estado-edicao-evento {
+  align-items: center;
+  padding: 20px;
+  color: #bac5c0;
+  background: #101416;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.acoes-editar-evento {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 5px;
+}
+
+.acoes-editar-evento button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 10px 17px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.acoes-editar-evento button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.botao-cancelar-edicao {
+  color: #d6ded9;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.botao-salvar-edicao {
+  color: #07110b;
+  background: linear-gradient(135deg, #28ca68, #2fd6b2);
+  border: 0;
+}
+
+.botao-salvar-edicao:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.girar-icone {
+  animation: girar-edicao 1s linear infinite;
+}
+
+@keyframes girar-edicao {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 720px) {
+  .formulario-editar-evento {
+    padding: 15px;
+  }
+
+  .grade-campos-edicao {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .campo-edicao-largo {
+    grid-column: auto;
+  }
+
+  .preview-capa-edicao {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .preview-capa-edicao img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .acoes-capa-edicao {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .acoes-editar-evento {
+    flex-direction: column-reverse;
+  }
+
+  .acoes-editar-evento button {
+    width: 100%;
+  }
+}

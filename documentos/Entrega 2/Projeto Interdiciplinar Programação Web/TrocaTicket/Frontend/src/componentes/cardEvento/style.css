@@ -1,0 +1,140 @@
+.card-evento {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 18px;
+
+  background-color: #101416;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card-evento:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(40, 201, 74, 0.2);
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.topo-card-evento {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-evento {
+  width: fit-content;
+
+  padding: 4px 8px;
+
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.08);
+
+  border: 1px solid rgba(40, 201, 74, 0.2);
+  border-radius: 999px;
+
+  font-size: 0.55rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.id-evento {
+  color: var(--cor-branco-texto);
+  font-size: 0.55rem;
+}
+
+.card-evento h2 {
+  color: var(--cor-branco-titulo);
+
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.informacoes-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.informacoes-evento span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: var(--cor-branco-texto);
+
+  font-size: 0.65rem;
+}
+
+.informacoes-evento svg {
+  width: 14px;
+  height: 14px;
+
+  color: var(--cor-verde);
+}
+
+.acoes-card-evento {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 4px;
+  padding-top: 12px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.acoes-card-evento a,
+.acoes-card-evento button {
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.acoes-card-evento a {
+  color: var(--cor-verde);
+
+  background-color: rgba(40, 201, 74, 0.07);
+
+  border: 1px solid rgba(40, 201, 74, 0.16);
+}
+
+.acoes-card-evento button {
+  color: #e67272;
+
+  background-color: rgba(239, 68, 68, 0.06);
+
+  border: 1px solid rgba(239, 68, 68, 0.14);
+}
+
+.acoes-card-evento a:hover,
+.acoes-card-evento button:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+  .acoes-card-evento {
+    flex-wrap: wrap;
+  }
+}
