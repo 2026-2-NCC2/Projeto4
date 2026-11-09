@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "a9c8bf64-6f48-4ce6-a2c4-4e7c6b9b8c21",
     "name": "TrocaTicket - CRUD de eventos e erros",
-    "description": "Collection de evidência para o requisito de CRUD do PI. Configure baseUrl, emailOrganizador e senhaOrganizador. O organizador deve estar APROVADO. As requisições criam, consultam, alteram e por fim excluem um evento de teste.",
+    "description": "Coleção enxuta para evidenciar CREATE, READ, UPDATE e DELETE de eventos e os cenários HTTP 400 e 404. Use baseUrl=http://localhost:3333/api e configure token de um organizador APROVADO. Execute em banco de desenvolvimento.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -313,7 +313,8 @@
           "path": [
             "events"
           ]
-        }
+        },
+        "description": "O evento não contém nome, datas, local nem público válido; a API deve responder HTTP 400 com {\"erro\":\"...\"}."
       },
       "event": [
         {
@@ -347,7 +348,8 @@
             "events",
             "nao-existe-000"
           ]
-        }
+        },
+        "description": "Consulta de ID inexistente; a API deve responder HTTP 404 com {\"erro\":\"...\"}."
       },
       "event": [
         {
